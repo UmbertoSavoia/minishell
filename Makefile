@@ -1,6 +1,6 @@
 NAME = minishell
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -g
 
 MKDIR = mkdir -p
 RM = rm -f
@@ -24,7 +24,7 @@ $(OBJ_DIR)/%.o : %.c
 $(NAME): $(OBJ)
 	@make bonus -C ./libft
 	@echo "\033[0;32mCreating        libft.a   \033[0;0m"
-	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJ) ./libft/libft.a -o $(NAME)
 	@echo "\033[0;32mCreating        MINISHELL\033[0;0m"
 
 clean:

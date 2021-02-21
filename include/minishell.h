@@ -14,5 +14,22 @@
 # include "../libft/libft.h"
 # include "../get_next_line/get_next_line_bonus.h"
 
+typedef struct	s_env
+{
+	char			*key;
+	char			*value;
+	struct s_env	*next;
+}				t_env;
+
+typedef struct	s_shell
+{
+	t_env	*envp;
+}				t_shell;
+
+extern t_shell		g_shell;
+
+void	init_env(char **env);
+void	ft_push_front_env(t_env **head, t_env *new);
+t_env	*ft_create_node_env(char *env);
 
 #endif
