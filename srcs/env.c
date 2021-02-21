@@ -2,29 +2,21 @@
 
 t_shell		g_shell;
 
-t_env	*ft_create_node_env(char *env)
+t_env	*ft_create_node_env(const char *env)
 {
-	char	*tmp;
 	t_env	*new;
+	int		len_value;
 
 	if (!(new = malloc(sizeof(t_env))))
 		return (0);
-	if (!(tmp = ft_strchr(env, '=')))
-		return (new);
-	new->key = env; //ft_substr(env, 0, tmp - env);
-	//new->value = env; //ft_substr(env, tmp - env + 1, ft_strlen(env) - ft_strlen(tmp) - 1);
-	//ft_strlcpy(new->value, tmp + 1, ft_strlen(env) - ft_strlen(tmp));
+	new->key = get_key_env(env, &len_value);
+	new->value = ft_substr(env, ft_strlen(new->key) + 1, len_value);
 	new->next = 0;
 	return (new);
 }
 
 void	ft_push_front_env(t_env **head, t_env *new)
 {
-	/* if (!(*head))
-	{
-		*head = new;
-		return ;
-	} */
 	new->next = *head;
 	*head = new;
 }
@@ -32,11 +24,14 @@ void	ft_push_front_env(t_env **head, t_env *new)
 void	init_env(char **env)
 {
 	t_env	*head;
+	int		i;
 
-	while (*env)
+	i = 0;
+	head = 0;
+	while (env[i])
 	{
-		ft_push_front_env(&head, ft_create_node_env(*env));
-		(*env)++;
+		ft_push_front_env(&head, ft_create_node_env(env[i]));
+		i++;
 	}
 	g_shell.envp = head;
 }

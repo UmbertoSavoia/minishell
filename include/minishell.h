@@ -28,8 +28,12 @@ typedef struct	s_shell
 
 extern t_shell		g_shell;
 
+// ENV
 void	init_env(char **env);
 void	ft_push_front_env(t_env **head, t_env *new);
-t_env	*ft_create_node_env(char *env);
+t_env	*ft_create_node_env(const char *env);
+
+// UTILS
+char	*get_key_env(const char *env, int *len_value);
 
 #endif
