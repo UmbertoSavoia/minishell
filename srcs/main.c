@@ -12,7 +12,7 @@ int		main(int ac, char **av, char **env)
 		signal(SIGQUIT, ft_sigquit);
 		signal(SIGINT, ft_sigint);
 		print_prompt();
-		parse();
+		parse_exec();
 	}
 	env_clear();
 	printf(RED"\n%s\n"NC, strerror(g_shell.exit_code));

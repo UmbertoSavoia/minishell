@@ -33,6 +33,7 @@ typedef struct	s_shell
 {
 	t_env			*envp;
 	unsigned char	exit_code;
+	char			**c_table;
 }				t_shell;
 
 extern t_shell		g_shell;
@@ -53,7 +54,7 @@ void	ft_sigint(int sig);
 void	print_prompt(void);
 
 /* PARSE */
-void	parse(void);
+void	parse_exec(void);
 
 /* UTILS */
 char	*get_key_env(const char *env, int *len_value);
