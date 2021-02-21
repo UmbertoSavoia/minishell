@@ -10,21 +10,25 @@ SRCS = $(filter-out $(BSRCS), $(wildcard *.c))
 OBJS = $(SRCS:.c=.o)
 BOBJS = $(BSRCS:.c=.o)
 
-all: $(NAME)
+all: $(NAME) bonus
 
 $(NAME): $(OBJS)
-		$(AR) $@ $^
+		@$(AR) $@ $^
 
 bonus: $(BOBJS) $(OBJS)
-		$(AR) $(NAME) $^
+		@$(AR) $(NAME) $^
+		@printf "Making        libft.a \r"
 
 %.o: %.c $(HEADER)
-		gcc $(CFLAGS) -c $< -o $@
+		@gcc $(CFLAGS) -c $< -o $@
+		@printf "Compiling... %-33.33s \r" $@
 
 clean:
-		$(RM) $(OBJS) $(BOBJS)
+		@$(RM) $(OBJS) $(BOBJS)
+		@echo "\033[0;31mCleaning        objs\033[0;0m"
 
 fclean: clean
-		$(RM) $(NAME)
+		@$(RM) $(NAME)
+		@echo "\033[0;31mCleaning        libft.a\033[0;0m"
 
 re: fclean all

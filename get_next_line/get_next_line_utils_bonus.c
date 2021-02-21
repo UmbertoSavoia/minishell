@@ -24,11 +24,11 @@ size_t		ft_strlen(const char *s)
 	return (ret);
 }
 
-t_list		*ft_create_elem(int fd)
+t_list_gnl		*ft_create_elem(int fd)
 {
-	t_list		*ret;
+	t_list_gnl		*ret;
 
-	if (!(ret = (t_list*)malloc(sizeof(t_list))))
+	if (!(ret = (t_list_gnl*)malloc(sizeof(t_list_gnl))))
 		return (0);
 	ret->fd = fd;
 	ret->buf[0] = 0;
@@ -36,9 +36,9 @@ t_list		*ft_create_elem(int fd)
 	return (ret);
 }
 
-t_list		*ft_add_list(t_list **head, int fd)
+t_list_gnl		*ft_add_list(t_list_gnl **head, int fd)
 {
-	t_list *temp;
+	t_list_gnl *temp;
 
 	temp = ft_create_elem(fd);
 	temp->next = *head;
@@ -46,9 +46,9 @@ t_list		*ft_add_list(t_list **head, int fd)
 	return (*head);
 }
 
-t_list		*find_fd(t_list **head, int fd)
+t_list_gnl		*find_fd(t_list_gnl **head, int fd)
 {
-	t_list	*temp;
+	t_list_gnl	*temp;
 
 	temp = *head;
 	while (temp)

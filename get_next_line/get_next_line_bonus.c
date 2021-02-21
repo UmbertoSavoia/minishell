@@ -12,10 +12,10 @@
 
 #include "get_next_line_bonus.h"
 
-void	remove_buf(t_list **head, int fd)
+void	remove_buf(t_list_gnl **head, int fd)
 {
-	t_list *prev;
-	t_list *curr;
+	t_list_gnl *prev;
+	t_list_gnl *curr;
 
 	prev = *head;
 	if (prev->fd == fd)
@@ -32,7 +32,7 @@ void	remove_buf(t_list **head, int fd)
 	free(curr);
 }
 
-int		copy_buf_and_save_rest(t_list *found, char **line)
+int		copy_buf_and_save_rest(t_list_gnl *found, char **line)
 {
 	size_t	i;
 	size_t	j;
@@ -70,8 +70,8 @@ int		error(char **line)
 
 int		get_next_line(int fd, char **line)
 {
-	static t_list	*head;
-	t_list			*found;
+	static t_list_gnl	*head;
+	t_list_gnl			*found;
 	int				size;
 	int				rest;
 

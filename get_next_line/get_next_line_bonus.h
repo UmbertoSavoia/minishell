@@ -16,21 +16,23 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-typedef struct	s_list
+# define BUFFER_SIZE 2048
+
+typedef struct	s_list_gnl
 {
 	int				fd;
 	char			buf[BUFFER_SIZE + 1];
 	struct s_list	*next;
-}				t_list;
+}				t_list_gnl;
 
 int				get_next_line(int fd, char **line);
-t_list			*ft_create_elem(int fd);
-t_list			*ft_add_list(t_list **head, int fd);
-t_list			*find_fd(t_list **head, int fd);
+t_list_gnl		*ft_create_elem(int fd);
+t_list_gnl		*ft_add_list(t_list_gnl **head, int fd);
+t_list_gnl		*find_fd(t_list_gnl **head, int fd);
 int				resize(char **line, size_t len);
 size_t			ft_strlen(const char *s);
-int				copy_buf_and_save_rest(t_list *found, char **line);
-void			remove_buf(t_list **head, int fd);
+int				copy_buf_and_save_rest(t_list_gnl *found, char **line);
+void			remove_buf(t_list_gnl **head, int fd);
 int				error(char **line);
 
 #endif
