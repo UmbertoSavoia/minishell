@@ -69,11 +69,9 @@ t_list	*ft_split_get_token(char *table, char c)
 t_list	**ft_split_list(char **table, char c)
 {
 	int		i;
-	int		wcount;
 	t_list	**ret;
 
 	i = 0;
-	wcount = 0;
 	while (table[i])
 		i++;
 	if (!(ret = malloc(i * sizeof(t_list*))))
