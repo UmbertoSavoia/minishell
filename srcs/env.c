@@ -35,3 +35,30 @@ void	init_env(char **env)
 	}
 	g_shell.envp = head;
 }
+
+t_env	*get_value_env(char *key)
+{
+	t_env	*tmp;
+	int		len_key;
+
+	len_key = ft_strlen(key);
+	tmp = g_shell.envp;
+	while (tmp)
+	{
+		if (!ft_strncmp(tmp->key, key, len_key))
+			return (tmp);
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
+void	set_shlvl(void)
+{
+	t_env	*tmp;
+	int		num;
+
+	tmp = get_value_env("SHLVL");
+	num = ft_atoi(tmp->value) + 1;
+	free(tmp->value);
+	tmp->value = ft_itoa(num);
+}

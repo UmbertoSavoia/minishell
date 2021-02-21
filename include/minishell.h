@@ -32,8 +32,12 @@ extern t_shell		g_shell;
 void	init_env(char **env);
 void	ft_push_front_env(t_env **head, t_env *new);
 t_env	*ft_create_node_env(const char *env);
+/* SHLVL */
+t_env	*get_value_env(char *key);
+void	set_shlvl(void);
 
 /* UTILS */
 char	*get_key_env(const char *env, int *len_value);
+
 
 #endif
