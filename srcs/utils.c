@@ -21,3 +21,20 @@ char	*get_key_env(const char *env, int *len_value)
 	*len_value = ft_strlen(env) - i;
 	return (ret);
 }
+
+void	env_clear(void)
+{
+	t_env	*tmp;
+	t_env	*cur;
+
+	cur = g_shell.envp;
+	while (cur)
+	{
+		tmp = cur->next;
+		free(cur->key);
+		free(cur->value);
+		free(cur);
+		cur = tmp;
+	}
+	cur = 0;
+}

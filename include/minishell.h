@@ -14,6 +14,9 @@
 # include "../libft/libft.h"
 # include "../get_next_line/get_next_line_bonus.h"
 
+# define RED "\x1b[31m"
+# define NC "\033[0m"
+
 typedef struct	s_env
 {
 	char			*key;
@@ -23,7 +26,8 @@ typedef struct	s_env
 
 typedef struct	s_shell
 {
-	t_env	*envp;
+	t_env			*envp;
+	unsigned char	exit_code;
 }				t_shell;
 
 extern t_shell		g_shell;
@@ -36,8 +40,13 @@ t_env	*ft_create_node_env(const char *env);
 t_env	*get_value_env(char *key);
 void	set_shlvl(void);
 
+/* SIGNAL */
+void	ft_sigquit(int sig);
+void	ft_sigint(int sig);
+
 /* UTILS */
 char	*get_key_env(const char *env, int *len_value);
+void	env_clear(void);
 
 
 #endif
