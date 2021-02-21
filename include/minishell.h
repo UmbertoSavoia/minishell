@@ -22,6 +22,9 @@
 # define BGBLK "\x1b[40m"
 # define BGBLUE "\x1b[44m"
 
+# define DISPARI 1
+# define PARI 0
+
 typedef struct	s_env
 {
 	char			*key;
@@ -53,8 +56,10 @@ void	ft_sigint(int sig);
 /* PROMPT */
 void	print_prompt(void);
 
-/* PARSE */
+/* PARSE EXEC */
 void	parse_exec(void);
+int		check_quote(char *line);
+void	exec_commands(void);
 
 /* UTILS */
 char	*get_key_env(const char *env, int *len_value);
