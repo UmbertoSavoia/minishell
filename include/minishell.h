@@ -37,6 +37,7 @@ typedef struct	s_shell
 	t_env			*envp;
 	unsigned char	exit_code;
 	char			**c_table;
+	t_list			**table_list;
 }				t_shell;
 
 extern t_shell		g_shell;
@@ -65,6 +66,8 @@ void	exec_commands(void);
 char	*get_key_env(const char *env, int *len_value);
 t_env	*get_value_env(char *key);
 void	env_clear(void);
+t_list	*ft_split_get_token(char *table, char c);
+t_list	**ft_split_list(char **table, char c);
 
 
 #endif

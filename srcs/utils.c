@@ -38,3 +38,51 @@ void	env_clear(void)
 	}
 	cur = 0;
 }
+
+t_list	*ft_split_get_token(char *table, char c)
+{
+	t_list *ret;
+	int i;
+	int j;
+
+	i = 0;
+	j = -1;
+	ret = 0;
+	while (table[i])
+	{
+		if (table[i] != c && j == -1)
+			j = i;
+		else if (table[i] == c)
+		{
+			table[i] = 0;
+			if (j != -1)
+				ft_lstadd_back(&ret, ft_lstnew(&(table[j])));
+			j = -1;
+		}
+		i++;
+	}
+	if (j != -1)
+		ft_lstadd_back(&ret, ft_lstnew(&(table[j])));
+	return (ret);
+}
+
+t_list	**ft_split_list(char **table, char c)
+{
+	int		i;
+	int		wcount;
+	t_list	**ret;
+
+	i = 0;
+	wcount = 0;
+	while (table[i])
+		i++;
+	if (!(ret = malloc(i * sizeof(t_list*))))
+		return (0);
+	i = 0;
+	while (table[i])
+	{
+		ret[i] = ft_split_get_token(table[i], c);
+		i++;
+	}
+	return (ret);
+}
