@@ -10,6 +10,7 @@
 # include <signal.h>
 # include <sys/stat.h>
 # include <dirent.h>
+# include <string.h>
 
 # include "../libft/libft.h"
 # include "../get_next_line/get_next_line_bonus.h"
@@ -50,6 +51,9 @@ void	ft_sigint(int sig);
 
 /* PROMPT */
 void	print_prompt(void);
+
+/* PARSE */
+void	parse(void);
 
 /* UTILS */
 char	*get_key_env(const char *env, int *len_value);

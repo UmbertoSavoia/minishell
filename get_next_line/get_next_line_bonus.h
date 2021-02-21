@@ -20,9 +20,9 @@
 
 typedef struct	s_list_gnl
 {
-	int				fd;
-	char			buf[BUFFER_SIZE + 1];
-	struct s_list	*next;
+	int					fd;
+	char				buf[BUFFER_SIZE + 1];
+	struct s_list_gnl	*next;
 }				t_list_gnl;
 
 int				get_next_line(int fd, char **line);

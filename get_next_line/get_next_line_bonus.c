@@ -40,7 +40,7 @@ int		copy_buf_and_save_rest(t_list_gnl *found, char **line)
 
 	i = ft_strlen(*line);
 	if (!resize(&(*line), i))
-		return (-1);
+		return (12);
 	ret = 0;
 	j = 0;
 	while (found->buf[j])
