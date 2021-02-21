@@ -11,5 +11,6 @@ int		main(int ac, char **av, char **env)
 	{
 		signal(SIGQUIT, ft_sigquit);
 		signal(SIGINT, ft_sigint);
+		print_prompt();
 	}
 }
