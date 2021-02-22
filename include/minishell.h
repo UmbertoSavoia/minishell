@@ -70,6 +70,7 @@ char	find_dollar(int i);
 /* BUILT_INT */
 void	built_pwd(int i);
 void	built_env(void);
+void	built_echo(int i);
 
 /* UTILS */
 char	*get_key_env(const char *env, int *len_value);

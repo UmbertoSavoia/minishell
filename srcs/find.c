@@ -18,7 +18,7 @@ char	find_redir(int i)
 char	find_builtin(int i)
 {
 	if ((list_search(g_shell.table_list[i], "echo", &ft_memcmp)))
-		printf("trovato echo\n");
+		built_echo(i);
 	else if ((list_search(g_shell.table_list[i], "pwd", &ft_memcmp)))
 		built_pwd(i);
 	else if ((list_search(g_shell.table_list[i], "cd", &ft_memcmp)))

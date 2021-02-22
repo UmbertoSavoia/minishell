@@ -13,7 +13,9 @@ int		main(int ac, char **av, char **env)
 		signal(SIGINT, ft_sigint);
 		print_prompt();
 		parse_exec();
-		clear_table_list();
+		if (g_shell.table_list)
+			clear_table_list();
+		g_shell.table_list = 0;
 	}
 	env_clear();
 	printf(RED"\n%s\n"NC, strerror(g_shell.exit_code));
