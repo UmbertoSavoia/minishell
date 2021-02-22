@@ -62,12 +62,19 @@ void	parse_exec(void);
 int		check_quote(char *line);
 void	exec_commands(void);
 
+/* FIND */
+char	find_redir(int i);
+char	find_builtin(int i);
+char	find_dollar(int i);
+
 /* UTILS */
 char	*get_key_env(const char *env, int *len_value);
 t_env	*get_value_env(char *key);
 void	env_clear(void);
 t_list	*ft_split_get_token(char *table, char c);
 t_list	**ft_split_list(char **table, char c);
+
+char	list_search(t_list *head, char *str, int (*f)(const void*, const void*, size_t));
 
 
 #endif

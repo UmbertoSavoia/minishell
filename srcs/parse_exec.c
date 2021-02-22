@@ -20,7 +20,15 @@ int		check_quote(char *line)
 
 void	exec_commands(void)
 {
+	int i;
 
+	i = 0;
+	while (g_shell.table_list[i])
+	{
+		if (find_redir(i) || find_builtin(i) || find_dollar(i))
+			;
+		i++;
+	}
 }
 
 void	parse_exec(void)
@@ -30,15 +38,12 @@ void	parse_exec(void)
 	int		i;
 
 	i = 0;
-	if ((get_next_line(0, &input)) < 0)
-	{
-		g_shell.exit_code = EBADF;
+	if (((get_next_line(0, &input)) < 0) && (g_shell.exit_code = EBADF))
 		return ;
-	}
-	if (!(check_quote(input)))
+	if (!(check_quote(input)) && (g_shell.exit_code = 22))
 	{
 		free(input);
-		g_shell.exit_code = 22;
+		return ;
 	}
 	g_shell.c_table = ft_split(input, ';');
 	free(input);
@@ -51,16 +56,4 @@ void	parse_exec(void)
 	g_shell.table_list = ft_split_list(g_shell.c_table, ' ');
 	free(g_shell.c_table);
 	exec_commands();
-/* 	int w = 0;
-	while (g_shell.table_list[w])
-	{
-		t_list *tmp = g_shell.table_list[w];
-		while (tmp)
-		{
-			printf("%s ", tmp->content);
-			tmp = tmp->next;
-		}
-		printf("\n");
-		w++;
-	} */
 }

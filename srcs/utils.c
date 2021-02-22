@@ -41,9 +41,9 @@ void	env_clear(void)
 
 t_list	*ft_split_get_token(char *table, char c)
 {
-	t_list *ret;
-	int i;
-	int j;
+	t_list	*ret;
+	int		i;
+	int		j;
 
 	i = 0;
 	j = -1;
@@ -74,7 +74,7 @@ t_list	**ft_split_list(char **table, char c)
 	i = 0;
 	while (table[i])
 		i++;
-	if (!(ret = malloc(i * sizeof(t_list*))))
+	if (!(ret = malloc(i * sizeof(t_list*) + 1)))
 		return (0);
 	i = 0;
 	while (table[i])
@@ -82,5 +82,6 @@ t_list	**ft_split_list(char **table, char c)
 		ret[i] = ft_split_get_token(table[i], c);
 		i++;
 	}
+	ret[i] = 0;
 	return (ret);
 }
