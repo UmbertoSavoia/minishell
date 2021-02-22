@@ -26,6 +26,26 @@ void	built_env(void)
 	}
 }
 
+void	echo_print(char *s)
+{
+	static char	v;
+	int			i;
+
+	i = 0;
+	v = 1;
+	while (s[i])
+	{
+		if (s[i] == '\"' && v != '\'')
+			v = s[i];
+		else if (s[i] == '\'' && v != '\"')
+			v = s[i];
+		if (s[i] != v)
+			ft_putchar_fd(s[i], 1);
+		i++;
+	}
+	ft_putstr_fd(" ", 1);
+}
+
 void	built_echo(i)
 {
 	t_list *tmp;
@@ -33,14 +53,12 @@ void	built_echo(i)
 	tmp = g_shell.table_list[i];
 	if (tmp->next)
 	{
-		if (((char*)tmp->next->content)[0] == '-' &&
-			((char*)tmp->next->content)[1] == 'n')
+		if (!ft_memcmp(tmp->next->content, "-n", 3))
 		{
 			tmp = tmp->next->next;
 			while (tmp)
 			{
-				ft_putstr_fd(tmp->content, 1);
-				ft_putstr_fd(" ", 1);
+				echo_print(tmp->content);
 				tmp = tmp->next;
 			}
 			ft_putstr_fd("\b", 1);
@@ -50,8 +68,7 @@ void	built_echo(i)
 			tmp = tmp->next;
 			while (tmp)
 			{
-				ft_putstr_fd(tmp->content, 1);
-				ft_putstr_fd(" ", 1);
+				echo_print(tmp->content);
 				tmp = tmp->next;
 			}
 			ft_putstr_fd("\b", 1);
