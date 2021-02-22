@@ -31,23 +31,42 @@ static size_t	get_word(char const *s, char c)
 	return (i);
 }
 
+static void		skip(char const **s, char v[], char c)
+{
+	while ((**s && **s != c) || (v[0] == -1 || v[1] == -1))
+	{
+		if (**s == '\"')
+			v[0] *= -1;
+		else if (**s == '\'')
+			v[1] *= -1;
+		++(*s);
+	}
+}
+
+void			init(char v[], size_t *i)
+{
+	v[0] = 1;
+	v[1] = 1;
+	*i = 0;
+}
+
 char			**ft_split(char const *s, char c)
 {
+	char	v[2];
 	char	**ret;
 	char	*from;
 	size_t	i;
 	size_t	size;
 
+	init(v, &i);
 	if (!(ret = (char**)malloc(sizeof(char*) * get_word(s, c) + 1)))
 		return (0);
-	i = 0;
 	while (*s)
 	{
 		if (*s != c)
 		{
 			from = (char*)s;
-			while (*s && *s != c)
-				++s;
+			skip(&s, v, c);
 			size = s - from + 1;
 			if (!(ret[i] = (char*)malloc(size)))
 				return (0);

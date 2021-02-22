@@ -59,7 +59,6 @@ void	print_prompt(void);
 
 /* PARSE EXEC */
 void	parse_exec(void);
-int		check_quote(char *line);
 void	exec_commands(void);
 
 /* FIND */
@@ -81,6 +80,7 @@ t_list	**ft_split_list(char **table, char c);
 
 char	list_search(t_list *head, char *str, int (*f)(const void*, const void*, size_t));
 void	clear_table_list(void);
+int		check_quote(char *line);
 
 
 #endif

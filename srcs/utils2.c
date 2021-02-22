@@ -25,3 +25,21 @@ void	clear_table_list(void)
 	}
 	free(g_shell.table_list);
 }
+
+int		check_quote(char *line)
+{
+	int		i;
+	int		j;
+
+	i = 2;
+	j = 2;
+	while (*line)
+	{
+		if (*line == '\"' && (j & 1) == PARI)
+			i++;
+		if (*line == '\'' && (i & 1) == PARI)
+			j++;
+		line++;
+	}
+	return (!(i & 1) && !(j & 1));
+}
