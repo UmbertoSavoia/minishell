@@ -11,3 +11,17 @@ char	list_search(t_list *head, char *str,
 	}
 	return (0);
 }
+
+void	clear_table_list(void)
+{
+	int		i;
+
+	i = 0;
+	while (g_shell.table_list[i])
+	{
+		free(g_shell.table_list[i]->content);
+		ft_lstclear(&g_shell.table_list[i], 0);
+		i++;
+	}
+	free(g_shell.table_list);
+}

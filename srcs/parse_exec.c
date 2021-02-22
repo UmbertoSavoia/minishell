@@ -25,7 +25,7 @@ void	exec_commands(void)
 	i = 0;
 	while (g_shell.table_list[i])
 	{
-		if (find_redir(i) || find_builtin(i) || find_dollar(i))
+		if (find_redir(i) || find_builtin(i))
 			;
 		i++;
 	}
