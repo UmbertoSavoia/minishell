@@ -22,7 +22,7 @@ char	find_builtin(int i)
 	else if ((list_search(g_shell.table_list[i], "pwd", &ft_memcmp)))
 		built_pwd(i);
 	else if ((list_search(g_shell.table_list[i], "cd", &ft_memcmp)))
-		printf("trovato cd\n");
+		built_cd(i);
 	else if ((list_search(g_shell.table_list[i], "export", &ft_memcmp)))
 		printf("trovato export\n");
 	else if ((list_search(g_shell.table_list[i], "unset", &ft_memcmp)))

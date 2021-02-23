@@ -74,6 +74,7 @@ void	built_env(void);
 void	built_echo(int i);
 void	echo_print(char *s);
 void	built_unset(int i);
+void	built_cd(int i);
 
 /* UTILS */
 char	*get_key_env(const char *env, int *len_value);

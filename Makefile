@@ -14,7 +14,7 @@ GNL_SRC =	./get_next_line/get_next_line_bonus.c \
 
 vpath %.c $(foreach dir, $(SRC_DIR), $(dir):)
 
-SRC = $(foreach dir, $(SRC_DIR), $(foreach file, $(wildcard $(dir)/*c), $(notdir $(file))))
+SRC = $(foreach dir, $(SRC_DIR), $(foreach file, $(wildcard $(dir)/*.c), $(notdir $(file))))
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:%.c=%.o))
 
 all: $(NAME)
