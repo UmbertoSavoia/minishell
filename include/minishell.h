@@ -19,6 +19,7 @@
 # define RED "\x1b[31m"
 # define BLACK "\x1b[30m"
 # define BLUE "\x1b[34m"
+# define GRN "\x1b[32m"
 # define NC "\033[0m"
 # define BGBLK "\x1b[40m"
 # define BGBLUE "\x1b[44m"
@@ -75,6 +76,7 @@ void	built_echo(int i);
 void	echo_print(char *s);
 void	built_unset(int i);
 void	built_cd(int i);
+void	built_exit(void);
 
 /* UTILS */
 char	*get_key_env(const char *env, int *len_value);

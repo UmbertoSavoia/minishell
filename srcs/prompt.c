@@ -15,7 +15,11 @@
 void	print_prompt(void)
 {
 	char tmp[PATH_MAX];
-	
+
+	if (!errno)
+		ft_putstr_fd(GRN"✓"NC, 1);
+	else
+		ft_putstr_fd(RED"𐄂"NC, 1);
 	ft_putstr_fd(BGBLK" ", 1);
 	ft_putstr_fd((get_value_env("USER"))->value, 1);
 	ft_putstr_fd("@minishell"NC, 1);

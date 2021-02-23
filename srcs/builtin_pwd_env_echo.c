@@ -12,6 +12,7 @@ void	built_pwd(int i)
 	}
 	getcwd(tmp, PATH_MAX);
 	ft_putendl_fd(tmp, 1);
+	errno = 0;
 }
 
 void	built_env(void)
@@ -24,6 +25,7 @@ void	built_env(void)
 		printf("%s=%s\n", tmp->key, tmp->value);
 		tmp = tmp->next;
 	}
+	errno = 0;
 }
 
 void	echo_print(char *s)
@@ -80,4 +82,5 @@ void	built_echo(int i)
 			ft_putendl_fd("", 1);
 		}
 	}
+	errno = 0;
 }

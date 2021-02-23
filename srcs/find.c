@@ -30,7 +30,7 @@ char	find_builtin(int i)
 	else if ((list_search(g_shell.table_list[i], "env", &ft_memcmp)))
 		built_env();
 	else if ((list_search(g_shell.table_list[i], "exit", &ft_memcmp)))
-		printf("trovato exit\n");
+		built_exit();
 	else
 		return (0);
 	return (1);
