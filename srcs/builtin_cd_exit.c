@@ -30,7 +30,10 @@ void	built_cd(int i)
 
 void	built_exit(void)
 {
-	env_clear();
-	clear_table_list();
+	if (g_shell.envp)
+		env_clear();
+	if (g_shell.table_list)
+		clear_table_list();
+	ft_putendl_fd("exit", 1);
 	exit(0);
 }
