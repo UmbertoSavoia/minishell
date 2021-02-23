@@ -26,7 +26,7 @@ char	find_builtin(int i)
 	else if ((list_search(g_shell.table_list[i], "export", &ft_memcmp)))
 		printf("trovato export\n");
 	else if ((list_search(g_shell.table_list[i], "unset", &ft_memcmp)))
-		printf("trovato unset\n");
+		built_unset(i);
 	else if ((list_search(g_shell.table_list[i], "env", &ft_memcmp)))
 		built_env();
 	else if ((list_search(g_shell.table_list[i], "exit", &ft_memcmp)))

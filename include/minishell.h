@@ -11,6 +11,7 @@
 # include <sys/stat.h>
 # include <dirent.h>
 # include <string.h>
+# include <limits.h>
 
 # include "../libft/libft.h"
 # include "../get_next_line/get_next_line_bonus.h"
@@ -21,6 +22,7 @@
 # define NC "\033[0m"
 # define BGBLK "\x1b[40m"
 # define BGBLUE "\x1b[44m"
+# define BGBLUEBLACK "\x1b[44m\x1b[30m"
 
 # define DISPARI 1
 # define PARI 0
@@ -35,7 +37,7 @@ typedef struct	s_env
 typedef struct	s_shell
 {
 	t_env			*envp;
-	unsigned char	exit_code;
+	int				exit_code;
 	char			**c_table;
 	t_list			**table_list;
 }				t_shell;
@@ -71,6 +73,7 @@ void	built_pwd(int i);
 void	built_env(void);
 void	built_echo(int i);
 void	echo_print(char *s);
+void	built_unset(int i);
 
 /* UTILS */
 char	*get_key_env(const char *env, int *len_value);

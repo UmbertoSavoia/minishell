@@ -18,6 +18,8 @@ int		main(int ac, char **av, char **env)
 		g_shell.table_list = 0;
 	}
 	env_clear();
-	printf(RED"\n%s\n"NC, strerror(g_shell.exit_code));
+	if (g_shell.exit_code > 0)
+		printf(RED"\n%s"NC, strerror(g_shell.exit_code));
+	write(1, "\n", 1);
 	return (g_shell.exit_code);
 }

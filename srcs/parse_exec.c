@@ -1,5 +1,11 @@
 #include "../include/minishell.h"
 
+char	ft_free(void *data)
+{
+	free(data);
+	return (1);
+}
+
 void	exec_commands(void)
 {
 	int i;
@@ -19,16 +25,18 @@ void	parse_exec(void)
 	char	*tmp;
 	int		i;
 
-	i = 0;
-	if (((get_next_line(0, &input)) < 0) && (g_shell.exit_code = EBADF))
-		return ;
-	if (!(check_quote(input)) && (g_shell.exit_code = 22))
+	if (((i = get_next_line(0, &input))) < 0)
 	{
-		free(input);
+		g_shell.exit_code = EBADF;
 		return ;
 	}
+	if ((i == 0) && (g_shell.exit_code = -5))
+		return ;
+	if (!(check_quote(input)) && (g_shell.exit_code = 22) && ft_free(input))
+		return ;
 	g_shell.c_table = ft_split(input, ';');
 	free(input);
+	i = 0;
 	while (g_shell.c_table[i])
 	{
 		tmp = ft_strtrim(g_shell.c_table[i], " ");

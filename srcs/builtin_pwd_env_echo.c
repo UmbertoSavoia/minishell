@@ -2,7 +2,7 @@
 
 void	built_pwd(int i)
 {
-	t_env *tmp;
+	char tmp[PATH_MAX];
 
 	if (g_shell.table_list[i]->next != 0)
 	{
@@ -10,8 +10,8 @@ void	built_pwd(int i)
 		errno = 1;
 		return ;
 	}
-	tmp = get_value_env("PWD");
-	ft_putendl_fd(tmp->value, 1);
+	getcwd(tmp, PATH_MAX);
+	ft_putendl_fd(tmp, 1);
 }
 
 void	built_env(void)
@@ -46,7 +46,18 @@ void	echo_print(char *s)
 	ft_putstr_fd(" ", 1);
 }
 
-void	built_echo(i)
+void	built_echo_option(t_list *tmp)
+{
+	tmp = tmp->next->next;
+	while (tmp)
+	{
+		echo_print(tmp->content);
+		tmp = tmp->next;
+	}
+	ft_putstr_fd("\b", 1);
+}
+
+void	built_echo(int i)
 {
 	t_list *tmp;
 
@@ -55,13 +66,7 @@ void	built_echo(i)
 	{
 		if (!ft_memcmp(tmp->next->content, "-n", 3))
 		{
-			tmp = tmp->next->next;
-			while (tmp)
-			{
-				echo_print(tmp->content);
-				tmp = tmp->next;
-			}
-			ft_putstr_fd("\b", 1);
+			built_echo_option(tmp);
 		}
 		else
 		{
