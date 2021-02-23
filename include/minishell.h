@@ -41,6 +41,7 @@ typedef struct	s_shell
 	int				exit_code;
 	char			**c_table;
 	t_list			**table_list;
+	char			*cd_string;
 }				t_shell;
 
 extern t_shell		g_shell;
@@ -78,6 +79,7 @@ void	echo_print(char *s);
 void	built_unset(int i);
 void	built_cd(int i);
 void	built_exit(void);
+int		zero_to_space(int i);
 
 /* UTILS */
 char	*get_key_env(const char *env, int *len_value);
@@ -89,6 +91,5 @@ char	echo_chaos_handler(char *k, char *v, int *i, char *s);
 char	list_search(t_list *head, char *str, int (*f)(const void*, const void*, size_t));
 void	clear_table_list(void);
 int		check_quote(char *line);
-
 
 #endif
