@@ -31,7 +31,9 @@ void	built_unset(int i)
 		free(node->key);
 		free(node->value);
 		free(node);
+		errno = 0;
+		return ;
 	}
-	else
-		ft_putendl_fd(RED"unset: not enough arguments"NC, 1);
+	ft_putendl_fd(RED"unset: not enough arguments"NC, 1);
+	errno = 1;
 }

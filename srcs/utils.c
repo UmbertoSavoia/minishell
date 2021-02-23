@@ -1,5 +1,32 @@
 #include "../include/minishell.h"
 
+char	echo_chaos_handler(char *k, char *v, int *i, char *s)
+{
+	if (*k == 5 && s[*i] == '\"' && *v != '\'')
+	{
+		*k = 0;
+		*v = 1;
+	}
+	else if (*k == 5 && s[*i] == '\'' && *v != '\"')
+	{
+		*k = 0;
+		*v = 1;
+	}
+	else if (s[*i] == '\"' && *v != '\'' && !*k)
+	{
+		*v = s[*i];
+		*k = 5;
+	}
+	else if (s[*i] == '\'' && *v != '\"' && !*k)
+	{
+		*v = s[*i];
+		*k = 5;
+	}
+	if ((s[*i] != *v && *k == 5) && ft_putchar_fd(s[*i], 1))
+		return (1);
+	return (0);
+}
+
 char	*get_key_env(const char *env, int *len_value)
 {
 	char	*ret;

@@ -35,19 +35,20 @@ static void		skip(char const **s, char v[], char c)
 {
 	while ((**s && **s != c) || (v[0] == -1 || v[1] == -1))
 	{
-		if (**s == '\"')
+		if ((**s == '\"') && (v[1] == 1))
 			v[0] *= -1;
-		else if (**s == '\'')
+		else if ((**s == '\'') && (v[0] == 1))
 			v[1] *= -1;
 		++(*s);
 	}
 }
 
-void			init(char v[], size_t *i)
+int				init(char v[], size_t *i)
 {
 	v[0] = 1;
 	v[1] = 1;
 	*i = 0;
+	return (1);
 }
 
 char			**ft_split(char const *s, char c)
@@ -63,7 +64,7 @@ char			**ft_split(char const *s, char c)
 		return (0);
 	while (*s)
 	{
-		if (*s != c)
+		if (init(v, &i) && (*s != c))
 		{
 			from = (char*)s;
 			skip(&s, v, c);

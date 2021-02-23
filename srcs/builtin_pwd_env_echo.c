@@ -30,21 +30,22 @@ void	built_env(void)
 
 void	echo_print(char *s)
 {
+	static char k;
 	static char	v;
+	char		ret;
 	int			i;
 
 	i = 0;
 	v = 1;
+	k = 0;
+	ret = 0;
 	while (s[i])
 	{
-		if (s[i] == '\"' && v != '\'')
-			v = s[i];
-		else if (s[i] == '\'' && v != '\"')
-			v = s[i];
-		if (s[i] != v)
-			ft_putchar_fd(s[i], 1);
+		ret += echo_chaos_handler(&k, &v, &i, s);
 		i++;
 	}
+	if (!ret)
+		ft_putstr_fd(s, 1);
 	ft_putstr_fd(" ", 1);
 }
 

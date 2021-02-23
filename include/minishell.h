@@ -49,6 +49,7 @@ extern t_shell		g_shell;
 void	init_env(char **env);
 void	ft_push_front_env(t_env **head, t_env *new);
 t_env	*ft_create_node_env(const char *env);
+t_env	*get_value_env(char *key);
 
 /* SHLVL */
 void	set_shlvl(void);
@@ -80,10 +81,10 @@ void	built_exit(void);
 
 /* UTILS */
 char	*get_key_env(const char *env, int *len_value);
-t_env	*get_value_env(char *key);
 void	env_clear(void);
 t_list	*ft_split_get_token(char *table, char c);
 t_list	**ft_split_list(char **table, char c);
+char	echo_chaos_handler(char *k, char *v, int *i, char *s);
 
 char	list_search(t_list *head, char *str, int (*f)(const void*, const void*, size_t));
 void	clear_table_list(void);
