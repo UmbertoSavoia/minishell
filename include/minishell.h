@@ -40,6 +40,7 @@ typedef struct	s_env
 typedef struct	s_shell
 {
 	t_env			*envp;
+	t_env			*var_list;
 	int				exit_code;
 	char			**c_table;
 	t_list			**table_list;
@@ -53,6 +54,11 @@ void	init_env(char **env);
 void	ft_push_front_env(t_env **head, t_env *new);
 t_env	*ft_create_node_env(const char *env);
 t_env	*get_value_env(char *key);
+
+/* VAR */
+void	add_var_list(int i);
+void	built_set(void);
+char	var_search(t_list *head, char c, char *(*f)(const char*, int));
 
 /* SHLVL */
 void	set_shlvl(void);
