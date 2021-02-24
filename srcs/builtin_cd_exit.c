@@ -1,6 +1,6 @@
 #include "../include/minishell.h"
 
-int		zero_to_space(int i)
+int		zero_to_space(int i, char c)
 {
 	t_list	*tmp;
 	char	*last;
@@ -8,17 +8,23 @@ int		zero_to_space(int i)
 
 	tmp = g_shell.table_list[i]->next;
 	begin = g_shell.table_list[i]->next->content;
+	if (*begin == '\'' || *begin == '\"')
+	{
+		c = *begin++;
+		g_shell.table_list[i]->next->content++;
+	}
 	while (tmp->next)
 		tmp = tmp->next;
 	last = tmp->content;
 	while (*last)
 		last++;
 	while (begin != last)
-	{
-		if (!*begin)
-			*begin = ' ';
-		begin++;
-	}
+		if (!*begin++)
+			*(--begin) = ' ';
+	if (c)
+		while (*last != c)
+			last--;
+	*last = 0;
 	return (1);
 }
 
@@ -38,13 +44,12 @@ void	built_cd(int i)
 		chdir(home->value);
 		errno = 0;
 	}
-	else if (g_shell.table_list[i] && zero_to_space(i))
+	else if (g_shell.table_list[i] && zero_to_space(i, 0))
 	{
 		if (chdir(g_shell.table_list[i]->next->content) < 0)
 		{
-			ft_putstr_fd(RED, 1);
-			ft_putendl_fd(strerror(errno), 1);
-			ft_putstr_fd(NC, 1);
+			printf(RED"cd: %s: %s\n"NC,
+				g_shell.table_list[i]->next->content, strerror(errno));
 			return ;
 		}
 	}

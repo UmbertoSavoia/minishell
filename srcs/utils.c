@@ -77,9 +77,9 @@ t_list	*ft_split_get_token(char *table, char c)
 	ret = 0;
 	while (table[i])
 	{
-		if (table[i] != c && j == -1)
+		if (table[i] != '\t' && table[i] != c && j == -1)
 			j = i;
-		else if (table[i] == c)
+		else if (table[i] == c || table[i] == '\t')
 		{
 			table[i] = 0;
 			if (j != -1)

@@ -24,6 +24,8 @@
 # define BGBLK "\x1b[40m"
 # define BGBLUE "\x1b[44m"
 # define BGBLUEBLACK "\x1b[44m\x1b[30m"
+# define BGBLKGRN "\x1b[40m\x1b[32m"
+# define BGBLKRED "\x1b[40m\x1b[31m"
 
 # define DISPARI 1
 # define PARI 0
@@ -79,7 +81,7 @@ void	echo_print(char *s);
 void	built_unset(int i);
 void	built_cd(int i);
 void	built_exit(void);
-int		zero_to_space(int i);
+int		zero_to_space(int i, char c);
 
 /* UTILS */
 char	*get_key_env(const char *env, int *len_value);

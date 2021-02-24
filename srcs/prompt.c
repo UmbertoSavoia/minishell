@@ -27,9 +27,9 @@ void	print_prompt(void)
 	if (!g_shell.user)
 		g_shell.user = get_user();
 	if (!errno)
-		ft_putstr_fd(GRN"✓"NC, 1);
+		ft_putstr_fd(BGBLKGRN" ✓"NC, 1);
 	else
-		ft_putstr_fd(RED"𐄂"NC, 1);
+		ft_putstr_fd(BGBLKRED" 𐄂"NC, 1);
 	ft_putstr_fd(BGBLK" ", 1);
 	ft_putstr_fd(g_shell.user, 1);
 	ft_putstr_fd("@minishell"NC, 1);
