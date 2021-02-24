@@ -15,7 +15,7 @@ void	built_pwd(int i)
 	errno = 0;
 }
 
-void	built_env(void)
+int		built_env(void)
 {
 	t_env *tmp;
 
@@ -26,6 +26,7 @@ void	built_env(void)
 		tmp = tmp->next;
 	}
 	errno = 0;
+	return (1);
 }
 
 void	echo_print(char *s)

@@ -43,17 +43,22 @@ void	remove_t_env(t_env **head, void *data,
 
 void	built_unset(int i)
 {
-	if (g_shell.table_list[i]->next != 0)
+	t_list *tmp;
+
+	tmp = g_shell.table_list[i]->next;
+	while (tmp != 0)
 	{
 		if (g_shell.envp)
 			remove_t_env(&g_shell.envp,
-				g_shell.table_list[i]->next->content, &ft_memcmp, &free);
+				tmp->content, &ft_memcmp, &free);
 		if (g_shell.var_list)
 			remove_t_env(&g_shell.var_list,
-				g_shell.table_list[i]->next->content, &ft_memcmp, &free);
+				tmp->content, &ft_memcmp, &free);
 		errno = 0;
-		return ;
+		tmp = tmp->next;
 	}
+	if (!tmp)
+		return ;
 	ft_putendl_fd(RED"unset: not enough arguments"NC, 1);
 	errno = 1;
 }

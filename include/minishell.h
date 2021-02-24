@@ -58,10 +58,6 @@ void	env_lstdelone(t_env *lst, void (*del)(void*));
 void	remove_t_env(t_env **head, void *data, int (*cmp)(const void*, const void*, size_t),
 	void (*del)(void*));
 
-/* VAR */
-void	add_var_list(int i);
-void	built_set(void);
-char	var_search(t_list *head, char c, char *(*f)(const char*, int));
 
 /* SHLVL */
 void	set_shlvl(void);
@@ -84,13 +80,19 @@ char	find_dollar(int i);
 
 /* BUILT_INT */
 void	built_pwd(int i);
-void	built_env(void);
+int		built_env(void);
 void	built_echo(int i);
 void	echo_print(char *s);
 void	built_unset(int i);
 void	built_cd(int i);
 void	built_exit(void);
 int		zero_to_space(int i, char c);
+void	built_export(int i);
+
+/* VAR */
+void	add_var_list(int i, char c);
+int		built_set(void);
+char	var_search(t_list *head, char c, char *(*f)(const char*, int));
 
 /* UTILS */
 char	*get_key_env(const char *env, int *len_value);
