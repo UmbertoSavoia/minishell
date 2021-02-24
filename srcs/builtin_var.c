@@ -3,12 +3,8 @@
 char	var_search(t_list *head, char c,
 	char *(*f)(const char*, int))
 {
-	while (head)
-	{
-		if (((*f)(head->content, c)))
-			return (1);
-		head = head->next;
-	}
+	if (((*f)(head->content, c)))
+		return (1);
 	return (0);
 }
 
