@@ -41,7 +41,7 @@ typedef struct	s_shell
 	int				exit_code;
 	char			**c_table;
 	t_list			**table_list;
-	char			*cd_string;
+	char			*user;
 }				t_shell;
 
 extern t_shell		g_shell;
