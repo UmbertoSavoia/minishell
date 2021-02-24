@@ -12,17 +12,24 @@ void	add_var_list(int i, char c)
 {
 	char	*tmp;
 	int		w;
+	t_list	*ptr;
 
 	w = 0;
 	if (c == 1)
 	{
-		tmp = get_key_env(g_shell.table_list[i]->content, &w);
-		remove_t_env(&g_shell.var_list, tmp, &ft_memcmp, &free);
-		if (remove_t_env(&g_shell.envp, tmp, &ft_memcmp, &free))
-			ft_push_front_env(&g_shell.envp,
-			ft_create_node_env(g_shell.table_list[i]->content));
-		ft_push_front_env(&g_shell.var_list,
-			ft_create_node_env(g_shell.table_list[i]->content));
+		ptr = g_shell.table_list[i];
+		while (ptr)
+		{
+			tmp = get_key_env(ptr->content, &w);
+			remove_t_env(&g_shell.var_list, tmp, &ft_memcmp, &free);
+			if (remove_t_env(&g_shell.envp, tmp, &ft_memcmp, &free))
+				ft_push_front_env(&g_shell.envp,
+				ft_create_node_env(ptr->content));
+			ft_push_front_env(&g_shell.var_list,
+				ft_create_node_env(ptr->content));
+			ptr = ptr->next;
+		}
+
 	}
 	else
 	{
