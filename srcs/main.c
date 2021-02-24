@@ -17,7 +17,8 @@ int		main(int ac, char **av, char **env)
 			clear_table_list();
 		g_shell.table_list = 0;
 	}
-	env_clear();
+	env_clear(g_shell.envp);
+	env_clear(g_shell.var_list);
 	if (g_shell.exit_code > 0)
 		printf(RED"\n%s"NC, strerror(g_shell.exit_code));
 	write(1, "\n", 1);

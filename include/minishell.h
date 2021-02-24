@@ -54,6 +54,9 @@ void	init_env(char **env);
 void	ft_push_front_env(t_env **head, t_env *new);
 t_env	*ft_create_node_env(const char *env);
 t_env	*get_value_env(char *key);
+void	env_lstdelone(t_env *lst, void (*del)(void*));
+void	remove_t_env(t_env **head, void *data, int (*cmp)(const void*, const void*, size_t),
+	void (*del)(void*));
 
 /* VAR */
 void	add_var_list(int i);
@@ -91,7 +94,7 @@ int		zero_to_space(int i, char c);
 
 /* UTILS */
 char	*get_key_env(const char *env, int *len_value);
-void	env_clear(void);
+void	env_clear(t_env *head);
 t_list	*ft_split_get_token(char *table, char c);
 t_list	**ft_split_list(char **table, char c);
 char	echo_chaos_handler(char *k, char *v, int *i, char *s);

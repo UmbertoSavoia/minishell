@@ -59,9 +59,11 @@ void	built_cd(int i)
 void	built_exit(void)
 {
 	if (g_shell.envp)
-		env_clear();
+		env_clear(g_shell.envp);
 	if (g_shell.table_list)
 		clear_table_list();
+	if (g_shell.var_list)
+		env_clear(g_shell.var_list);
 	ft_putendl_fd("exit", 1);
 	exit(0);
 }

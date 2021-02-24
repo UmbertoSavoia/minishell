@@ -49,12 +49,12 @@ char	*get_key_env(const char *env, int *len_value)
 	return (ret);
 }
 
-void	env_clear(void)
+void	env_clear(t_env *head)
 {
 	t_env	*tmp;
 	t_env	*cur;
 
-	cur = g_shell.envp;
+	cur = head;
 	while (cur)
 	{
 		tmp = cur->next;

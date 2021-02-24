@@ -1,36 +1,54 @@
-
 #include "../include/minishell.h"
 
-t_env	*get_prev_value_env(char *key)
+void	env_lstdelone(t_env *lst, void (*del)(void*))
 {
-	t_env	*tmp;
-	int		len_key;
-
-	len_key = ft_strlen(key);
-	tmp = g_shell.envp;
-	while (tmp->next)
+	if (lst)
 	{
-		if (!ft_strncmp(tmp->next->key, key, len_key))
-			return (tmp);
-		tmp = tmp->next;
+		if (del)
+		{
+			del(lst->key);
+			del(lst->value);
+		}
+		free(lst);
 	}
-	return (0);
+}
+
+void	remove_t_env(t_env **head, void *data, int (*cmp)(const void*, const void*, size_t),
+	void (*del)(void*))
+{
+	t_env *it;
+	t_env *tmp;
+
+	it = *head;
+	while (it && !cmp(data, it->key, ft_strlen(data)))
+	{
+		*head = it->next;
+		env_lstdelone(it, del);
+		it = *head;
+	}
+	if (!it)
+		return ;
+	while (it->next)
+	{
+		if (!cmp(data, it->next->key, ft_strlen(data)))
+		{
+			tmp = it->next;
+			it->next = tmp->next;
+			env_lstdelone(tmp, del);
+		}
+		else
+			it = it->next;
+	}
 }
 
 void	built_unset(int i)
 {
-	t_env	*prev;
-	t_env	*node;
-
 	if (g_shell.table_list[i]->next != 0)
 	{
-		prev = get_prev_value_env(g_shell.table_list[i]->next->content);
-		node = prev->next;
-		prev->next = node->next;
-		node->next = 0;
-		free(node->key);
-		free(node->value);
-		free(node);
+		if (g_shell.envp)
+			remove_t_env(&g_shell.envp, g_shell.table_list[i]->next->content, &ft_memcmp, &free);
+		if (g_shell.var_list)
+			remove_t_env(&g_shell.var_list, g_shell.table_list[i]->next->content, &ft_memcmp, &free);
 		errno = 0;
 		return ;
 	}

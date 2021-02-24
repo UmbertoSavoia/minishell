@@ -29,12 +29,12 @@ char	find_builtin(int i)
 		built_unset(i);
 	else if ((list_search(g_shell.table_list[i], "env", &ft_memcmp)))
 		built_env();
-	//else if ((list_search(g_shell.table_list[i], "set", &ft_memcmp)))
-		//built_set();
+	else if ((list_search(g_shell.table_list[i], "set", &ft_memcmp)))
+		built_set();
 	else if ((list_search(g_shell.table_list[i], "exit", &ft_memcmp)))
 		built_exit();
 	else if ((var_search(g_shell.table_list[i], '=', &ft_strchr)))
-		printf("trovato =\n");
+		add_var_list(i);
 	else
 	{
 		printf(RED"minishell: %s: command not found\n"NC, g_shell.table_list[i]->content);

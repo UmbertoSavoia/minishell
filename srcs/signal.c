@@ -5,7 +5,10 @@ void	ft_sigquit(int sig)
 	if (sig != SIGQUIT)
 		return ;
 	printf(RED"\nSigquit\n\a"NC);
-	env_clear();
+	if (g_shell.envp)
+		env_clear(g_shell.envp);
+	if (g_shell.var_list)
+		env_clear(g_shell.var_list);
 	exit(0);
 }
 
@@ -14,6 +17,9 @@ void	ft_sigint(int sig)
 	if (sig != SIGINT)
 		return ;
 	printf(RED"\nSigint\n\a"NC);
-	env_clear();
+	if (g_shell.envp)
+		env_clear(g_shell.envp);
+	if (g_shell.var_list)
+		env_clear(g_shell.var_list);
 	exit(0);
 }
