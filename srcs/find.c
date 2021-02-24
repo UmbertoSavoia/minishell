@@ -37,7 +37,8 @@ char	find_builtin(int i)
 		add_var_list(i);
 	else
 	{
-		printf(RED"minishell: %s: command not found\n"NC, g_shell.table_list[i]->content);
+		printf(RED"minishell: %s: command not found\n"NC,
+			g_shell.table_list[i]->content);
 		return (0);
 	}
 	return (1);

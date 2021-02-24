@@ -13,8 +13,8 @@ void	env_lstdelone(t_env *lst, void (*del)(void*))
 	}
 }
 
-void	remove_t_env(t_env **head, void *data, int (*cmp)(const void*, const void*, size_t),
-	void (*del)(void*))
+void	remove_t_env(t_env **head, void *data,
+			int (*cmp)(const void*, const void*, size_t), void (*del)(void*))
 {
 	t_env *it;
 	t_env *tmp;
@@ -46,9 +46,11 @@ void	built_unset(int i)
 	if (g_shell.table_list[i]->next != 0)
 	{
 		if (g_shell.envp)
-			remove_t_env(&g_shell.envp, g_shell.table_list[i]->next->content, &ft_memcmp, &free);
+			remove_t_env(&g_shell.envp,
+				g_shell.table_list[i]->next->content, &ft_memcmp, &free);
 		if (g_shell.var_list)
-			remove_t_env(&g_shell.var_list, g_shell.table_list[i]->next->content, &ft_memcmp, &free);
+			remove_t_env(&g_shell.var_list,
+				g_shell.table_list[i]->next->content, &ft_memcmp, &free);
 		errno = 0;
 		return ;
 	}
