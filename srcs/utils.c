@@ -39,7 +39,7 @@ char	*get_key_env(const char *env, int *len_value)
 	if (!(ret = malloc(i + 1)))
 		return (0);
 	i = 0;
-	while (env[i] != '=')
+	while (env[i] && (env[i] != '='))
 	{
 		ret[i] = env[i];
 		i++;

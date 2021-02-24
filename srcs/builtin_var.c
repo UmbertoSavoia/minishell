@@ -18,6 +18,9 @@ void	add_var_list(int i, char c)
 	{
 		tmp = get_key_env(g_shell.table_list[i]->content, &w);
 		remove_t_env(&g_shell.var_list, tmp, &ft_memcmp, &free);
+		if (remove_t_env(&g_shell.envp, tmp, &ft_memcmp, &free))
+			ft_push_front_env(&g_shell.envp,
+			ft_create_node_env(g_shell.table_list[i]->content));
 		ft_push_front_env(&g_shell.var_list,
 			ft_create_node_env(g_shell.table_list[i]->content));
 	}
@@ -38,7 +41,7 @@ int		built_set(void)
 	tmp = g_shell.var_list;
 	while (tmp)
 	{
-		t = !*tmp->value ? "\'\'" : tmp->value;
+		t = !*tmp->value ? "\"\"" : tmp->value;
 		printf("%s=%s\n", tmp->key, t);
 		tmp = tmp->next;
 	}
@@ -46,13 +49,36 @@ int		built_set(void)
 	return (1);
 }
 
+void	add_env_list(int i)
+{
+	char	*tmp;
+	int		w;
+	int		j;
+
+	j = 0;
+	w = 0;
+	tmp = get_key_env(g_shell.table_list[i]->next->content, &w);
+	if (*(char*)(g_shell.table_list[i]->next->content + w + 1) == 0)
+		return ;
+	remove_t_env(&g_shell.envp, tmp, &ft_memcmp, &free);
+	ft_push_front_env(&g_shell.envp, node_dup(get_value_set(tmp)));
+	remove_t_env(&g_shell.var_list, tmp, &ft_memcmp, &free);
+}
+
 void	built_export(int i)
 {
 	t_list *tmp;
 
 	tmp = g_shell.table_list[i]->next;
-	if (!tmp && (built_env() && built_set()))
+	if (!tmp && print_export())
 		return ;
+	else if (!var_search(tmp, '=', &ft_strchr))
+	{
+		if (get_value_set((char*)tmp->content))
+			add_env_list(i);
+		else
+			add_var_list(i, 0);
+	}
 	else if (var_search(tmp, '=', &ft_strchr))
-		add_var_list(i, 0);
+		add_env_full(i);
 }
