@@ -6,13 +6,13 @@ void	built_dollar(char **node)
 
 	if ((tmp = get_value_set(*node + 1)))
 	{
-		free(*node);
+		//free(*node);
 		*node = ft_strdup(tmp->value);
 		return ;
 	}
 	else if ((tmp = get_value_env(*node + 1)))
 	{
-		free(*node);
+		//free(*node);
 		*node = ft_strdup(tmp->value);
 		return ;
 	}

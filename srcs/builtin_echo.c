@@ -26,6 +26,8 @@ static	void	built_echo_option(t_list *tmp)
 	tmp = tmp->next->next;
 	while (tmp)
 	{
+		if (((char*)tmp->content)[0] == '$')
+			built_dollar((char**)&(tmp->content));
 		echo_print(tmp->content);
 		tmp = tmp->next;
 	}
