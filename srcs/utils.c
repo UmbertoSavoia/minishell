@@ -5,12 +5,12 @@ char	echo_chaos_handler(char *k, char *v, int *i, char *s)
 	if (*k == 5 && s[*i] == '\"' && *v != '\'')
 	{
 		*k = 0;
-		*v = 1;
+		*v = 2;
 	}
 	else if (*k == 5 && s[*i] == '\'' && *v != '\"')
 	{
 		*k = 0;
-		*v = 1;
+		*v = 2;
 	}
 	else if (s[*i] == '\"' && *v != '\'' && !*k)
 	{

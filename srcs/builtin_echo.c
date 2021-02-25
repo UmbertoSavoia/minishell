@@ -1,35 +1,6 @@
 #include "../include/minishell.h"
 
-void	built_pwd(int i)
-{
-	char tmp[PATH_MAX];
-
-	if (g_shell.table_list[i]->next != 0)
-	{
-		ft_putendl_fd(RED"pwd: too many arguments"NC, 1);
-		errno = 1;
-		return ;
-	}
-	getcwd(tmp, PATH_MAX);
-	ft_putendl_fd(tmp, 1);
-	errno = 0;
-}
-
-int		built_env(void)
-{
-	t_env *tmp;
-
-	tmp = g_shell.envp;
-	while (tmp)
-	{
-		printf("%s=%s\n", tmp->key, tmp->value);
-		tmp = tmp->next;
-	}
-	errno = 0;
-	return (1);
-}
-
-void	echo_print(char *s)
+static	void	echo_print(char *s)
 {
 	static char k;
 	static char	v;
@@ -37,20 +8,20 @@ void	echo_print(char *s)
 	int			i;
 
 	i = 0;
-	v = 1;
-	k = 0;
+	if (!v)
+		v = 1;
 	ret = 0;
 	while (s[i])
 	{
 		ret += echo_chaos_handler(&k, &v, &i, s);
 		i++;
 	}
-	if (!ret)
+	if (!ret && ((ft_strlen(s) != 1) || v == 1))
 		ft_putstr_fd(s, 1);
 	ft_putstr_fd(" ", 1);
 }
 
-void	built_echo_option(t_list *tmp)
+static	void	built_echo_option(t_list *tmp)
 {
 	tmp = tmp->next->next;
 	while (tmp)
@@ -61,7 +32,7 @@ void	built_echo_option(t_list *tmp)
 	ft_putstr_fd("\b", 1);
 }
 
-void	built_echo(int i)
+void			built_echo(int i)
 {
 	t_list *tmp;
 

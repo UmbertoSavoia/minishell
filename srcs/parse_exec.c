@@ -1,11 +1,5 @@
 #include "../include/minishell.h"
 
-char	ft_free(void *data)
-{
-	free(data);
-	return (1);
-}
-
 void	exec_commands(void)
 {
 	int i;

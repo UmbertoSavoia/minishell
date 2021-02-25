@@ -54,6 +54,8 @@ void	init_env(char **env);
 void	ft_push_front_env(t_env **head, t_env *new);
 t_env	*ft_create_node_env(const char *env);
 t_env	*get_value_env(char *key);
+
+/* REMOVE_ENV*/
 void	env_lstdelone(t_env *lst, void (*del)(void*));
 int		remove_t_env(t_env **head, void *data, int (*cmp)(const void*, const void*, size_t),
 	void (*del)(void*));
@@ -81,18 +83,24 @@ char	find_dollar(int i);
 /* BUILT_INT */
 void	built_pwd(int i);
 int		built_env(void);
+
 void	built_echo(int i);
-void	echo_print(char *s);
+
 void	built_unset(int i);
+
+int		zero_to_space(int i, char c);
 void	built_cd(int i);
 void	built_exit(void);
-int		zero_to_space(int i, char c);
+
 void	built_export(int i);
 void	add_env_list(int i);
+int		print_export(void);
+void	add_env_full(int i);
+
+int		built_set(void);
 
 /* VAR */
 void	add_var_list(int i, char c);
-int		built_set(void);
 char	var_search(t_list *head, char c, char *(*f)(const char*, int));
 
 /* UTILS */
@@ -105,10 +113,10 @@ char	echo_chaos_handler(char *k, char *v, int *i, char *s);
 char	list_search(t_list *head, char *str, int (*f)(const void*, const void*, size_t));
 void	clear_table_list(void);
 int		check_quote(char *line);
+char	ft_free(void *data);
 
 t_env	*get_value_set(char *key);
 t_env	*node_dup(t_env *node);
-int		print_export(void);
-void	add_env_full(int i);
+
 
 #endif

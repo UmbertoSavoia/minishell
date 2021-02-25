@@ -1,0 +1,78 @@
+#include "../include/minishell.h"
+
+int		print_export(void)
+{
+	t_env	*tmp;
+
+	tmp = g_shell.var_list;
+	while (tmp)
+	{
+		printf("declare -x %s \b", tmp->key);
+		if(*(tmp->value))
+			printf("=%s \b", tmp->value);
+		printf("\n");
+		tmp = tmp->next;
+	}
+	tmp = g_shell.envp;
+	while (tmp)
+	{
+		printf("declare -x %s \b", tmp->key);
+		if(*(tmp->value))
+			printf("=%s \b", tmp->value);
+		printf("\n");
+		tmp = tmp->next;
+	}
+	return (1);
+}
+
+void	add_env_full(int i)
+{
+	char	*tmp;
+	int		w;
+	int		j;
+
+	j = 0;
+	w = 0;
+	tmp = get_key_env(g_shell.table_list[i]->next->content, &w);
+	if (*(char*)(g_shell.table_list[i]->next->content + w + 1) == 0)
+		return ;
+	remove_t_env(&g_shell.envp, tmp, &ft_memcmp, &free);
+	ft_push_front_env(&g_shell.envp,
+			ft_create_node_env(g_shell.table_list[i]->next->content));
+	remove_t_env(&g_shell.var_list, tmp, &ft_memcmp, &free);
+}
+
+void	add_env_list(int i)
+{
+	char	*tmp;
+	int		w;
+	int		j;
+
+	j = 0;
+	w = 0;
+	tmp = get_key_env(g_shell.table_list[i]->next->content, &w);
+	if (*(char*)(g_shell.table_list[i]->next->content + w + 1) == 0)
+		return ;
+	remove_t_env(&g_shell.envp, tmp, &ft_memcmp, &free);
+	ft_push_front_env(&g_shell.envp, node_dup(get_value_set(tmp)));
+	remove_t_env(&g_shell.var_list, tmp, &ft_memcmp, &free);
+}
+
+void	built_export(int i)
+{
+	t_list *tmp;
+
+	tmp = g_shell.table_list[i]->next;
+	if (!tmp && print_export())
+		return ;
+	else if (!var_search(tmp, '=', &ft_strchr))
+	{
+		if (get_value_set((char*)tmp->content))
+			add_env_list(i);
+		else
+			add_var_list(i, 0);
+	}
+	else if (var_search(tmp, '=', &ft_strchr))
+		add_env_full(i);
+	errno = 0;
+}

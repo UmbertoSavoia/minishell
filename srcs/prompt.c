@@ -12,7 +12,7 @@
 
 #include "../include/minishell.h"
 
-char	*get_user(void)
+static char		*get_user(void)
 {
 	char	*user;
 
@@ -20,7 +20,7 @@ char	*get_user(void)
 	return (user);
 }
 
-void	print_prompt(void)
+void			print_prompt(void)
 {
 	char		tmp[PATH_MAX];
 
