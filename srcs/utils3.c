@@ -16,6 +16,13 @@ t_env	*get_value_set(char *key)
 	int		len_key;
 
 	len_key = ft_strlen(key);
+	if (*key ==  '$')
+	{
+		key++;
+		len_key -= 2;
+	}
+	if (key[len_key - 1] == '\'' || key[len_key - 1] == '\"')
+		len_key--;
 	tmp = g_shell.var_list;
 	while (tmp)
 	{

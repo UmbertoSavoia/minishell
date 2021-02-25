@@ -1,6 +1,6 @@
 #include "../include/minishell.h"
 
-static	void	echo_print(char *s)
+static	void	echo_print(int true_i, char *s)
 {
 	static char k;
 	static char	v;
@@ -13,6 +13,11 @@ static	void	echo_print(char *s)
 	ret = 0;
 	while (s[i])
 	{
+		if (true_i != -1 && s[i] == '$')
+		{
+			built_dollar(true_i, &s);
+			i--;
+		}
 		ret += echo_chaos_handler(&k, &v, &i, s);
 		i++;
 	}
@@ -28,7 +33,7 @@ static	void	built_echo_option(int i, t_list *tmp)
 	{
 		if (((char*)tmp->content)[0] == '$')
 			built_dollar(i, (char**)&(tmp->content));
-		echo_print(tmp->content);
+		echo_print(-1, tmp->content);
 		tmp = tmp->next;
 	}
 	ft_putstr_fd("\b", 1);
@@ -42,15 +47,13 @@ void			built_echo(int i)
 	if (tmp->next)
 	{
 		if (!ft_memcmp(tmp->next->content, "-n", 3))
-		{
 			built_echo_option(i, tmp);
-		}
 		else
 		{
 			tmp = tmp->next;
 			while (tmp)
 			{
-				echo_print(tmp->content);
+				echo_print(i, tmp->content);
 				tmp = tmp->next;
 			}
 			ft_putstr_fd("\b", 1);

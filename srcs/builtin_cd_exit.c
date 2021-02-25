@@ -69,9 +69,11 @@ void	built_exit(void)
 		env_clear(g_shell.var_list);
 	free(g_shell.user);
 	if (g_shell.st_t_list)
+	{
 		while (g_shell.st_t_list[i])
 			free(g_shell.st_t_list[i++]);
-	free(g_shell.st_t_list);
+		free(g_shell.st_t_list);
+	}
 	ft_putendl_fd("exit", 1);
 	exit(0);
 }
