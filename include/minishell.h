@@ -45,6 +45,7 @@ typedef struct	s_shell
 	char			**c_table;
 	t_list			**table_list;
 	char			*user;
+	char			**st_t_list;
 }				t_shell;
 
 extern t_shell		g_shell;
@@ -99,7 +100,7 @@ void	add_env_full(int i);
 
 int		built_set(void);
 
-void	built_dollar(char **node);
+void	built_dollar(int i, char **node);
 
 /* VAR */
 void	add_var_list(int i, char c);

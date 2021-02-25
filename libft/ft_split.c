@@ -43,11 +43,12 @@ static void		skip(char const **s, char v[], char c)
 	}
 }
 
-int				init(char v[], size_t *i)
+int				init(char v[], size_t *i, int b)
 {
 	v[0] = 1;
 	v[1] = 1;
-	*i = 0;
+	if (b == 1)
+		*i = 0;
 	return (1);
 }
 
@@ -59,12 +60,12 @@ char			**ft_split(char const *s, char c)
 	size_t	i;
 	size_t	size;
 
-	init(v, &i);
+	init(v, &i, 1);
 	if (!(ret = (char**)malloc(sizeof(char*) * get_word(s, c) + 1)))
 		return (0);
 	while (*s)
 	{
-		if (init(v, &i) && (*s != c))
+		if (init(v, &i, 0) && (*s != c))
 		{
 			from = (char*)s;
 			skip(&s, v, c);

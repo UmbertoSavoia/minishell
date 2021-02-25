@@ -21,13 +21,13 @@ static	void	echo_print(char *s)
 	ft_putstr_fd(" ", 1);
 }
 
-static	void	built_echo_option(t_list *tmp)
+static	void	built_echo_option(int i, t_list *tmp)
 {
 	tmp = tmp->next->next;
 	while (tmp)
 	{
 		if (((char*)tmp->content)[0] == '$')
-			built_dollar((char**)&(tmp->content));
+			built_dollar(i, (char**)&(tmp->content));
 		echo_print(tmp->content);
 		tmp = tmp->next;
 	}
@@ -43,7 +43,7 @@ void			built_echo(int i)
 	{
 		if (!ft_memcmp(tmp->next->content, "-n", 3))
 		{
-			built_echo_option(tmp);
+			built_echo_option(i, tmp);
 		}
 		else
 		{

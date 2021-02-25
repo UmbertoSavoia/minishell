@@ -19,7 +19,7 @@ int		main(int ac, char **av, char **env)
 	}
 	env_clear(g_shell.envp);
 	env_clear(g_shell.var_list);
-	if (g_shell.exit_code > 0)
+	if ((g_shell.exit_code > 0) && ft_free(g_shell.user))
 		printf(RED"\n%s"NC, strerror(g_shell.exit_code));
 	write(1, "\n", 1);
 	return (g_shell.exit_code);

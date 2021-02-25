@@ -31,6 +31,7 @@ void	clear_table_list(void)
 		i++;
 	}
 	free(g_shell.table_list);
+	free(g_shell.st_t_list);
 }
 
 int		check_quote(char *line)
