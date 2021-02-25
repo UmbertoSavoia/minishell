@@ -3,6 +3,7 @@
 char	ft_free(void *data)
 {
 	free(data);
+	data = 0;
 	return (1);
 }
 

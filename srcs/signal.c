@@ -9,6 +9,8 @@ void	ft_sigquit(int sig)
 		env_clear(g_shell.envp);
 	if (g_shell.var_list)
 		env_clear(g_shell.var_list);
+	if (g_shell.table_list)
+		clear_table_list();
 	exit(0);
 }
 
@@ -21,5 +23,7 @@ void	ft_sigint(int sig)
 		env_clear(g_shell.envp);
 	if (g_shell.var_list)
 		env_clear(g_shell.var_list);
+	if (g_shell.table_list)
+		clear_table_list();
 	exit(0);
 }
