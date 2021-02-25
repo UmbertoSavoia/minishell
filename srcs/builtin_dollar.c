@@ -13,7 +13,6 @@ char	*built_dollar(int i, char *node)
 	var_env = get_value_env(key);
 	if ((!var_set->key) && (!var_env->key))
 		return (0);
-	node = (var_set->key) ? var_set->value : 0;
-	node = (!node) ? var_env->value : 0;
+	node = (var_set->key) ? var_set->value : var_env->value;
 	return (node);
 }
