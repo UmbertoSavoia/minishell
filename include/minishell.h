@@ -99,7 +99,7 @@ void	add_env_full(int i);
 
 int		built_set(void);
 
-char	*built_dollar(int i, char *node);
+char	*built_dollar(int i, char **node);
 
 /* VAR */
 void	add_var_list(int i, char c);
