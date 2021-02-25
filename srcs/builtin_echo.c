@@ -55,5 +55,7 @@ void			built_echo(int i)
 			ft_putendl_fd("", 1);
 		}
 	}
+	else
+		printf("\n");
 	errno = 0;
 }

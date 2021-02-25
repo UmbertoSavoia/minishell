@@ -27,9 +27,9 @@ void	add_var_list(int i, char c)
 				ft_create_node_env(ptr->content));
 			ft_push_front_env(&g_shell.var_list,
 				ft_create_node_env(ptr->content));
+			free(tmp);
 			ptr = ptr->next;
 		}
-
 	}
 	else
 	{
@@ -37,5 +37,6 @@ void	add_var_list(int i, char c)
 		remove_t_env(&g_shell.var_list, tmp, &ft_memcmp, &free);
 		ft_push_front_env(&g_shell.var_list,
 			ft_create_node_env(g_shell.table_list[i]->next->content));
+		free(tmp);
 	}
 }

@@ -78,7 +78,7 @@ void	exec_commands(void);
 /* FIND */
 char	find_redir(int i);
 char	find_builtin(int i);
-char	find_dollar(int i);
+char	find_command(int i);
 
 /* BUILT_INT */
 void	built_pwd(int i);
@@ -98,6 +98,8 @@ int		print_export(void);
 void	add_env_full(int i);
 
 int		built_set(void);
+
+char	*built_dollar(int i, char *node);
 
 /* VAR */
 void	add_var_list(int i, char c);

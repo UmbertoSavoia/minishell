@@ -40,6 +40,7 @@ void	add_env_full(int i)
 	ft_push_front_env(&g_shell.envp,
 			ft_create_node_env(g_shell.table_list[i]->next->content));
 	remove_t_env(&g_shell.var_list, tmp, &ft_memcmp, &free);
+	free(tmp);
 }
 
 void	add_env_list(int i)
@@ -56,6 +57,7 @@ void	add_env_list(int i)
 	remove_t_env(&g_shell.envp, tmp, &ft_memcmp, &free);
 	ft_push_front_env(&g_shell.envp, node_dup(get_value_set(tmp)));
 	remove_t_env(&g_shell.var_list, tmp, &ft_memcmp, &free);
+	free(tmp);
 }
 
 void	built_export(int i)
