@@ -64,9 +64,6 @@ void	built_cd(int i)
 
 void	built_exit(void)
 {
-	int i;
-
-	i = 0;
 	if (g_shell.envp)
 		env_clear(g_shell.envp);
 	if (g_shell.table_list)
