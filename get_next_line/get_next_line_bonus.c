@@ -38,7 +38,7 @@ int		copy_buf_and_save_rest(t_list_gnl *found, char **line)
 	size_t	j;
 	int		ret;
 
-	i = ft_strlen(*line);
+	i = ft_stlen(*line);
 	if (!resize(&(*line), i))
 		return (12);
 	ret = 0;
