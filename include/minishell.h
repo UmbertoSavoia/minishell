@@ -45,7 +45,6 @@ typedef struct	s_shell
 	char			**c_table;
 	t_list			**table_list;
 	char			*user;
-	char			**st_t_list;
 }				t_shell;
 
 extern t_shell		g_shell;

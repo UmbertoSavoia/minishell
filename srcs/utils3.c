@@ -19,7 +19,7 @@ t_env	*get_value_set(char *key)
 	if (*key ==  '$')
 	{
 		key++;
-		len_key -= 2;
+		len_key -= 1;
 	}
 	if (key[len_key - 1] == '\'' || key[len_key - 1] == '\"')
 		len_key--;

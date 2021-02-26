@@ -103,12 +103,9 @@ t_list	**ft_split_list(char **table, char c)
 		i++;
 	if (!(ret = malloc(i * sizeof(t_list*) + 1)))
 		return (0);
-	if (!(g_shell.st_t_list = malloc(i * sizeof(char *))))
-		return (0);
 	i = 0;
 	while (table[i])
 	{
-		g_shell.st_t_list[i] = table[i];
 		ret[i] = ft_split_get_token(table[i], c);
 		i++;
 	}
