@@ -2,11 +2,14 @@
 
 void	exec_commands(void)
 {
-	int i;
+	int		i;
+	t_env	*tmp;
 
 	i = 0;
 	while (g_shell.table_list[i])
 	{
+		tmp = get_value_env("?");
+		tmp->value = ft_itoa(errno);
 		if (find_redir(i) || find_builtin(i) || find_command(i))
 			;
 		i++;

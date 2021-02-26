@@ -22,7 +22,8 @@ int		built_env(int i)
 	}
 	while (tmp)
 	{
-		printf("%s=%s\n", tmp->key, tmp->value);
+		if (tmp->key[0] != '?')
+			printf("%s=%s\n", tmp->key, tmp->value);
 		tmp = tmp->next;
 	}
 	errno = 0;

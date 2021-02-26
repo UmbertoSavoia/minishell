@@ -7,6 +7,7 @@ int		built_dollar_support(int j, char **node, t_env *tmp)
 		if (!j)
 			free(*node);
 		*node = ft_strdup(tmp->value);
+		errno = 0;
 		return (1);
 	}
 	else if ((tmp = get_value_env(*node + 1)))
@@ -14,6 +15,7 @@ int		built_dollar_support(int j, char **node, t_env *tmp)
 		if (!j)
 			free(*node);
 		*node = ft_strdup(tmp->value);
+		errno = 0;
 		return (1);
 	}
 	return (0);

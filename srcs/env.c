@@ -33,6 +33,7 @@ void	init_env(char **env)
 		ft_push_front_env(&head, ft_create_node_env(env[i]));
 		i++;
 	}
+	ft_push_front_env(&head, ft_create_node_env("?=2"));
 	g_shell.envp = head;
 }
 
