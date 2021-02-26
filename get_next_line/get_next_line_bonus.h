@@ -30,7 +30,7 @@ t_list_gnl		*ft_create_elem(int fd);
 t_list_gnl		*ft_add_list(t_list_gnl **head, int fd);
 t_list_gnl		*find_fd(t_list_gnl **head, int fd);
 int				resize(char **line, size_t len);
-size_t			ft_strlen(const char *s);
+size_t			ft_stlen(const char *s);
 int				copy_buf_and_save_rest(t_list_gnl *found, char **line);
 void			remove_buf(t_list_gnl **head, int fd);
 int				error(char **line);
