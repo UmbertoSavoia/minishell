@@ -2,9 +2,6 @@
 
 void	ft_sigquit(int sig)
 {
-	int i;
-
-	i = 0;
 	if (sig != SIGQUIT)
 		return ;
 	printf(RED"\nSigquit\n\a"NC);
@@ -19,9 +16,6 @@ void	ft_sigquit(int sig)
 
 void	ft_sigint(int sig)
 {
-	int i;
-
-	i = 0;
 	if (sig != SIGINT)
 		return ;
 	printf(RED"\nSigint\n\a"NC);
