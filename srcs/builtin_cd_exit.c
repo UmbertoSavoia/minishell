@@ -48,7 +48,8 @@ void	built_cd(int i)
 	}
 	else if (g_shell.table_list[i])
 	{
-		if ((((char*)tmp->content)[0] == '\"' && ((char*)tmp->content)[1] == '$')
+		if ((((char*)tmp->content)[0] == '\"' &&
+			((char*)tmp->content)[1] == '$')
 			|| ((char*)tmp->content)[0] == '$')
 			built_dollar(i, (char**)&(tmp->content));
 		if (chdir(tmp->content) < 0)

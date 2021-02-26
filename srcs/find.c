@@ -36,7 +36,7 @@ char	find_builtin(int i)
 	else if ((list_search(g_shell.table_list[i], "exit", &ft_memcmp)))
 		built_exit();
 	else
-		return(0);
+		return (0);
 	return (1);
 }
 

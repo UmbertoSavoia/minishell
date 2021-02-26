@@ -27,7 +27,7 @@ int		add_var_list(int i, char c)
 			remove_t_env(&g_shell.var_list, tmp, &ft_memcmp, &free);
 			if (remove_t_env(&g_shell.envp, tmp, &ft_memcmp, &free))
 				ft_push_front_env(&g_shell.envp,
-				ft_create_node_env(ptr->content));
+					ft_create_node_env(ptr->content));
 			ft_push_front_env(&g_shell.var_list,
 				ft_create_node_env(ptr->content));
 			ft_free(tmp);

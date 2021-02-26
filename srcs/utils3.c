@@ -16,7 +16,7 @@ t_env	*get_value_set(char *key)
 	int		len_key;
 
 	len_key = ft_strlen(key);
-	if (*key ==  '$')
+	if (*key == '$')
 	{
 		key++;
 		len_key -= 1;

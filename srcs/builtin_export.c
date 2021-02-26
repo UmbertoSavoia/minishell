@@ -8,7 +8,7 @@ int		print_export(void)
 	while (tmp)
 	{
 		printf("declare -x %s \b", tmp->key);
-		if(*(tmp->value))
+		if (*(tmp->value))
 			printf("=%s \b", tmp->value);
 		printf("\n");
 		tmp = tmp->next;
@@ -17,7 +17,7 @@ int		print_export(void)
 	while (tmp)
 	{
 		printf("declare -x %s \b", tmp->key);
-		if(*(tmp->value))
+		if (*(tmp->value))
 			printf("=%s \b", tmp->value);
 		printf("\n");
 		tmp = tmp->next;

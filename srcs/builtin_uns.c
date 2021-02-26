@@ -9,7 +9,7 @@ void	built_unset(int i)
 	{
 		(printf(RED"minishell: unset: '%s': not a valid identifier"NC"\n",
 			(char*)tmp->content));
-			return ;
+		return ;
 	}
 	while (tmp != 0)
 	{

@@ -16,7 +16,7 @@ static	void	echo_print(int true_i, char *s)
 	ret = 0;
 	while (s[i[0]])
 	{
-		if ((true_i != -1 && ((s[0] == '\"' && s[1] == '$') || s[0] == '$')) && j !=5 )
+		if ((true_i != -1 && ((s[0] == '\"' && s[1] == '$') || s[0] == '$')) && j != 5)
 		{
 			i[1] = 1;
 			built_dollar(true_i, &s);
@@ -28,7 +28,7 @@ static	void	echo_print(int true_i, char *s)
 		ret += echo_chaos_handler(&k, &v, &i[0], s);
 		i[0]++;
 	}
-	if (!ret && (!((ft_strlen(s) == 1) && (*s == '\'' || *s == '\"' )) || v == 1))
+	if (!ret && (!((ft_strlen(s) == 1) && (*s == '\'' || *s == '\"')) || v == 1))
 		ft_putstr_fd(s, 1);
 	(i[1] == 1) ? ft_free(s) : 0;
 	ft_putstr_fd(" ", 1);
