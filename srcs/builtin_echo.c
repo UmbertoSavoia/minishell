@@ -4,12 +4,13 @@ static	void	echo_print(int true_i, char *s)
 {
 	static char k;
 	static char	v;
-	static char j;
+	char		j;
 	char		ret;
 	int			i[2];
 
 	i[0] = 0;
 	i[1] = 0;
+	j = 0;
 	if (!v)
 		v = 1;
 	ret = 0;

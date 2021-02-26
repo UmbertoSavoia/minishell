@@ -81,8 +81,8 @@ char	find_builtin(int i);
 char	find_command(int i);
 
 /* BUILT_INT */
-void	built_pwd(int i);
-int		built_env(void);
+void	built_pwd(void);
+int		built_env(int i);
 
 void	built_echo(int i);
 
@@ -102,7 +102,7 @@ int		built_set(void);
 void	built_dollar(int i, char **node);
 
 /* VAR */
-void	add_var_list(int i, char c);
+int		add_var_list(int i, char c);
 char	var_search(t_list *head, char c, char *(*f)(const char*, int));
 
 /* UTILS */

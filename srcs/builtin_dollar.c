@@ -30,6 +30,11 @@ void	built_dollar(int i, char **node)
 		return ;
 	}
 	else
-		errno = 0;
-	return ;
+	{
+		if (!j)
+			free(*node);
+		*node = ft_strdup("");
+		errno = 1;
+		return ;
+	}
 }

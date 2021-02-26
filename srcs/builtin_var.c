@@ -8,13 +8,16 @@ char	var_search(t_list *head, char c,
 	return (0);
 }
 
-void	add_var_list(int i, char c)
+int		add_var_list(int i, char c)
 {
 	char	*tmp;
 	int		w;
 	t_list	*ptr;
 
 	w = 0;
+	if (!ft_isalpha(((char*)g_shell.table_list[i]->content)[0]))
+		return (printf(RED"minishell: %s: command not found"NC"\n",
+			g_shell.table_list[i]->content));
 	if (c == 1)
 	{
 		ptr = g_shell.table_list[i];
@@ -39,4 +42,5 @@ void	add_var_list(int i, char c)
 			ft_create_node_env(g_shell.table_list[i]->next->content));
 		ft_free(tmp);
 	}
+	return (0);
 }
