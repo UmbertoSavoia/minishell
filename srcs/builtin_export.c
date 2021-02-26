@@ -29,9 +29,7 @@ void	add_env_full(int i)
 {
 	char	*tmp;
 	int		w;
-	int		j;
 
-	j = 0;
 	w = 0;
 	tmp = get_key_env(g_shell.table_list[i]->next->content, &w);
 	if (*(char*)(g_shell.table_list[i]->next->content + w + 1) == 0)
@@ -47,9 +45,7 @@ void	add_env_list(int i)
 {
 	char	*tmp;
 	int		w;
-	int		j;
 
-	j = 0;
 	w = 0;
 	tmp = get_key_env(g_shell.table_list[i]->next->content, &w);
 	if (*(char*)(g_shell.table_list[i]->next->content + w + 1) == 0)
