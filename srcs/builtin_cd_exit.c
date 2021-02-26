@@ -31,8 +31,10 @@ int		zero_to_space(int i, char c)
 void	built_cd(int i)
 {
 	t_env	*home;
+	t_list	*tmp;
 
 	home = get_value_env("HOME");
+	tmp = g_shell.table_list[i]->next;
 	if ((!g_shell.table_list[i]->next))
 	{
 		if (!home)
@@ -44,12 +46,15 @@ void	built_cd(int i)
 		chdir(home->value);
 		errno = 0;
 	}
-	else if (g_shell.table_list[i] && zero_to_space(i, 0))
+	else if (g_shell.table_list[i])
 	{
-		if (chdir(g_shell.table_list[i]->next->content) < 0)
+		if ((((char*)tmp->content)[0] == '\"' && ((char*)tmp->content)[1] == '$')
+			|| ((char*)tmp->content)[0] == '$')
+			built_dollar(i, (char**)&(tmp->content));
+		if (chdir(tmp->content) < 0)
 		{
-			printf(RED"cd: %s: %s\n"NC,
-				g_shell.table_list[i]->next->content, strerror(errno));
+			printf(RED"minishell: cd: %s: %s\n"NC,
+				tmp->content, strerror(errno));
 			return ;
 		}
 	}

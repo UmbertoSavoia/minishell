@@ -5,8 +5,16 @@ void	built_unset(int i)
 	t_list *tmp;
 
 	tmp = g_shell.table_list[i]->next;
+	if (!ft_isalpha(((char*)tmp->content)[0]))
+	{
+		(printf(RED"minishell: unset: '%s': not a valid identifier"NC"\n",
+			(char*)tmp->content));
+			return ;
+	}
 	while (tmp != 0)
 	{
+		if (((char*)tmp->content)[0] == '?')
+			break ;
 		if (g_shell.envp)
 			remove_t_env(&g_shell.envp,
 				tmp->content, &ft_memcmp, &free);
@@ -18,6 +26,4 @@ void	built_unset(int i)
 	}
 	if (!tmp)
 		return ;
-	ft_putendl_fd(RED"unset: not enough arguments"NC, 1);
-	errno = 1;
 }
