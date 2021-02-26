@@ -46,6 +46,8 @@ char	find_command(int i)
 		return (0);
 	if ((var_search(g_shell.table_list[i], '=', &ft_strchr)))
 		add_var_list(i, 1);
+	else if (findexec(i, 0, 0))
+		return (1);
 	else
 	{
 		printf(RED"minishell: %s: command not found"NC"\n",

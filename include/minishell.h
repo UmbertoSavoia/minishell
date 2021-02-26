@@ -45,6 +45,7 @@ typedef struct	s_shell
 	char			**c_table;
 	t_list			**table_list;
 	char			*user;
+	char			**envp_real;
 }				t_shell;
 
 extern t_shell		g_shell;
@@ -105,6 +106,9 @@ void	built_dollar(int i, char **node);
 int		add_var_list(int i, char c);
 char	var_search(t_list *head, char c, char *(*f)(const char*, int));
 
+/* EXEC */
+int		findexec(int i, int j, char *tmp2, char **tmp3);
+
 /* UTILS */
 char	*get_key_env(const char *env, int *len_value);
 void	env_clear(t_env *head);
@@ -119,6 +123,7 @@ char	ft_free(void *data);
 
 t_env	*get_value_set(char *key);
 t_env	*node_dup(t_env *node);
-
+void	ft_free_arr(char **arr);
+char	**ft_list_to_arr(int i);
 
 #endif

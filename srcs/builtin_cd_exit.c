@@ -6,7 +6,7 @@ int		zero_to_space(int i, char c)
 	char	*last;
 	char	*begin;
 
-	tmp = g_shell.table_list[i]->next;
+	tmp = g_shell.table_list[i]->content;
 	begin = g_shell.table_list[i]->next->content;
 	if (*begin == '\'' || *begin == '\"')
 	{

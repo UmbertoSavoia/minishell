@@ -32,3 +32,35 @@ t_env	*get_value_set(char *key)
 	}
 	return (0);
 }
+
+char	**ft_list_to_arr(int i)
+{
+	int		j;
+	int		len_list;
+	char	**ret;
+	t_list	*tmp;
+
+	j = 0;
+	len_list = ft_lstsize(g_shell.table_list[i]);
+	ret = malloc(len_list * sizeof(char**) + 1);
+	tmp = g_shell.table_list[i];
+	while (tmp)
+	{
+		ret[j] = ft_strdup(tmp->content);
+		tmp = tmp->next;
+		j++;
+	}
+	ret[j] = 0;
+	return (ret);
+}
+
+void	ft_free_arr(char **arr)
+{
+	int i;
+
+	i = 0;
+	while (arr[i])
+		free(arr[i++]);
+	free(arr);
+	arr = 0;
+}
