@@ -23,11 +23,11 @@ int		findexec(int i, int j, char *tmp2, char **tmp3)
 				break ;
 			}
 		}
+		closedir(folder);
 		if (j == -1)
 			break ;
 		j++;
 	}
-	closedir(folder);
 	ft_free_arr(path);
 	if ((j = -1) && tmp2)
 	{
