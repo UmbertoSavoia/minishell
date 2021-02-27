@@ -8,6 +8,7 @@ int		findexec(int i, int j, char *tmp2, char **tmp3)
 	struct dirent	*entry;
 	char			*tmp;
 
+	errno = 0;
 	len_command = ft_strlen((char*)g_shell.table_list[i]->content) + 1;
 	path = ft_split(get_value_env("PATH")->value, ':');
 	while (path[j])
