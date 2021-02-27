@@ -28,22 +28,27 @@ int		findexec(int i, int j, char *tmp2, char **tmp3)
 		j++;
 	}
 	closedir(folder);
-	tmp3 = ft_list_to_arr(i);
 	ft_free_arr(path);
-	path = ft_split(g_shell.table_list[i]->content, ' ');
-	int id = fork();
-	if (id == 0)
+	if ((j = -1) && tmp2)
 	{
-		execve(tmp, tmp3, g_shell.envp_real);
+		path = ft_split(g_shell.table_list[i]->content, ' ');
+		tmp3 = ft_list_to_arr(i);
+		int id = fork();
+		if (id == 0)
+		{
+			execve(tmp, tmp3, g_shell.envp_real);
+			free(tmp);
+			free(tmp2);
+			ft_free_arr(path);
+			ft_free_arr(tmp3);
+			built_exit();
+		}
+		j = 0;
+		wait(NULL);
 		free(tmp);
 		free(tmp2);
 		ft_free_arr(path);
-		built_exit();
+		ft_free_arr(tmp3);
 	}
-	wait(NULL);
-	free(tmp);
-	free(tmp2);
-	ft_free_arr(path);
-	//return (j < 0 ? 0 : 1);
-	return (1);
+	return (j < 0 ? 0 : 1);
 }

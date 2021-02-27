@@ -17,7 +17,7 @@ int		add_var_list(int i, char c)
 	w = 0;
 	if (!ft_isalpha(((char*)g_shell.table_list[i]->content)[0]))
 		return (printf(RED"minishell: %s: command not found"NC"\n",
-			g_shell.table_list[i]->content));
+			((char*)g_shell.table_list[i]->content)));
 	if (c == 1)
 	{
 		ptr = g_shell.table_list[i];

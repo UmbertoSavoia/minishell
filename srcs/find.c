@@ -51,7 +51,7 @@ char	find_command(int i)
 	else
 	{
 		printf(RED"minishell: %s: command not found"NC"\n",
-			g_shell.table_list[i]->content);
+			((char*)g_shell.table_list[i]->content));
 		errno = 127;
 		return (0);
 	}

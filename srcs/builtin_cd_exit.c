@@ -55,7 +55,7 @@ void	built_cd(int i)
 		if (chdir(tmp->content) < 0)
 		{
 			printf(RED"minishell: cd: %s: %s\n"NC,
-				tmp->content, strerror(errno));
+				((char*)tmp->content), strerror(errno));
 			return ;
 		}
 	}

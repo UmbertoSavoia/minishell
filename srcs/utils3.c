@@ -61,6 +61,7 @@ void	ft_free_arr(char **arr)
 	i = 0;
 	while (arr[i])
 		free(arr[i++]);
+	free(arr[i]);
 	free(arr);
 	arr = 0;
 }
