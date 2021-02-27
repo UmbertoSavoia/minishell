@@ -109,6 +109,8 @@ char	var_search(t_list *head, char c, char *(*f)(const char*, int));
 /* EXEC */
 int		findexec(int i, int j, char *tmp2, char **tmp3);
 
+void	relative_path(int i);
+
 /* UTILS */
 char	*get_key_env(const char *env, int *len_value);
 void	env_clear(t_env *head);
@@ -117,6 +119,7 @@ t_list	**ft_split_list(char **table, char c);
 char	echo_chaos_handler(char *k, char *v, int *i, char *s);
 
 char	list_search(t_list *head, char *str, int (*f)(const void*, const void*, size_t));
+char	relative_search(t_list *head, char *str, int (*f)(const void*, const void*, size_t));
 void	clear_table_list(void);
 int		check_quote(char *line);
 char	ft_free(void *data);

@@ -48,6 +48,8 @@ char	find_command(int i)
 		add_var_list(i, 1);
 	else if (findexec(i, 0, 0, 0))
 		return (1);
+	else if ((relative_search(g_shell.table_list[i], "./", &ft_memcmp)))
+		relative_path(i);
 	else
 	{
 		printf(RED"minishell: %s: command not found"NC"\n",
