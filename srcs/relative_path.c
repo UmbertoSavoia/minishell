@@ -9,6 +9,8 @@ void	relative_path(int i)
 	DIR				*folder;
 	struct dirent	*entry;
 	char			**args;
+	int				wstatus;
+	int				status_code;
 
 	pid = 0;
 	tmp = ft_strrchr((char*)g_shell.table_list[i]->content, '/');
@@ -27,8 +29,8 @@ void	relative_path(int i)
 	closedir(folder);
 	if (pid)
 	{
+		wait(&wstatus);
 		pid = fork();
-		wait(NULL);
 		if (pid == 0)
 		{
 			args = ft_split(tmp, ' ');
@@ -36,6 +38,12 @@ void	relative_path(int i)
 			ft_free_arr(args);
 			free(path);
 			built_exit();
+		}
+		else
+		{
+			status_code = WEXITSTATUS(wstatus);
+			if (status_code != 0)
+				printf("\n[%d]\n", status_code);
 		}
 	}
 	free(path);
