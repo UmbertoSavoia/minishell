@@ -107,9 +107,14 @@ int		add_var_list(int i, char c);
 char	var_search(t_list *head, char c, char *(*f)(const char*, int));
 
 /* EXEC */
-int		findexec(int i, int j, char *tmp2, char **tmp3);
+int		findexec(int i);
+char	*get_path_command(t_list *node, int *found);
 
 void	relative_path(int i);
+
+/* REDIR */
+void	redir_maj(t_list *node);
+char	**ft_list_to_arr_delim(t_list *start, t_list *end);
 
 /* UTILS */
 char	*get_key_env(const char *env, int *len_value);

@@ -2,12 +2,12 @@
 
 char	find_redir(int i)
 {
-	if ((list_search(g_shell.table_list[i], ">", &ft_memcmp)))
-		printf("trovato >\n");
+	if ((list_search(g_shell.table_list[i], "|", &ft_memcmp)))
+		printf("trovato |\n");
+	else if ((list_search(g_shell.table_list[i], ">", &ft_memcmp)))
+		redir_maj(g_shell.table_list[i]);
 	else if ((list_search(g_shell.table_list[i], ">>", &ft_memcmp)))
 		printf("trovato >>\n");
-	else if ((list_search(g_shell.table_list[i], "|", &ft_memcmp)))
-		printf("trovato |\n");
 	else if ((list_search(g_shell.table_list[i], "<", &ft_memcmp)))
 		printf("trovato <\n");
 	else
@@ -46,7 +46,7 @@ char	find_command(int i)
 		return (0);
 	if ((var_search(g_shell.table_list[i], '=', &ft_strchr)))
 		add_var_list(i, 1);
-	else if (findexec(i, 0, 0, 0))
+	else if (findexec(i))
 		return (1);
 	else if ((relative_search(g_shell.table_list[i], "./", &ft_memcmp)))
 		relative_path(i);
