@@ -50,7 +50,12 @@ int		findexec(int i)
 		tmp3 = ft_list_to_arr(i);
 		int id = fork();
 		if (id == 0)
+		{
 			execve(path, tmp3, g_shell.envp_real);
+			free(path);
+ 			ft_free_arr(tmp3);
+ 			built_exit();
+ 		}
 		wait(NULL);
 		free(path);
 		ft_free_arr(tmp3);

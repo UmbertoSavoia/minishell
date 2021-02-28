@@ -34,8 +34,10 @@ void	built_dollar(int i, char **node, int *j)
 	while (ptr)
 	{
 		if (!ft_strncmp(ptr->content, *node, ft_strlen(*node)))
+		{
+			(*j)++;
 			break ;
-		(*j)++;
+		}
 		ptr = ptr->next;
 	}
 	if ((*node)[0] == '\'' && (*node)[1] == '$' && (*node)[w - 1] == '\'')

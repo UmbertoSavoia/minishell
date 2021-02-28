@@ -9,7 +9,7 @@ char	find_redir(int i)
 	else if ((list_search(g_shell.table_list[i], ">>", &ft_memcmp)))
 		redir_maj(g_shell.table_list[i], ">>", O_APPEND);
 	else if ((list_search(g_shell.table_list[i], "<", &ft_memcmp)))
-		printf("trovato <\n");
+		redir_min(g_shell.table_list[i], "<");
 	else
 		return (0);
 	return (1);
