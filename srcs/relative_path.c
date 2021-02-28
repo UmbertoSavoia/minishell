@@ -41,9 +41,6 @@ void	relative_path(int i)
 		{
 			args = ft_split(tmp, ' ');
 			execve((char*)g_shell.table_list[i]->content, args, g_shell.envp_real);
-			ft_free_arr(args);
-			free(path);
-			built_exit();
 		}
 	}
 	free(path);
