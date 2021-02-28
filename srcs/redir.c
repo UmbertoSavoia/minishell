@@ -82,12 +82,46 @@ void	redir_maj(t_list *node, char *sign, int flag)
 			while (fd > 2)
 				close(fd--);
 			execve(path, args, g_shell.envp_real);
-			free(path);
-			ft_free_arr(args);
-			built_exit();
 		}
 		while (fd > 2)
 			close(fd--);
+		wait(NULL);
+		free(path);
+		ft_free_arr(args);
+	}
+}
+
+void	redir_min(t_list *node, char *sign)
+{
+	t_list		*tmp;
+	t_list		*finded;
+	char		*args;
+	int			fd;
+	int			j;
+	char		*path;
+	int			id;
+
+	j = 0;
+	tmp = node;
+	if (check_error_syntax_redir(node, sign) == -1)
+		return ;
+	while (ft_memcmp((char*)tmp->content, sign, ft_strlen(sign) + 1))
+		tmp = tmp->next;
+	finded = tmp;
+	while (tmp->next)
+		tmp = tmp->next;
+	fd = open(tmp->content, O_RDWR | O_APPEND);
+	args = ft_list_to_arr_delim(node, finded);
+	path = get_path_command(node, &j);
+	if (j == -1)
+	{
+		id = fork();
+		if (id == 0)
+		{
+			dup2(fd, 0);
+			execve(path, args, g_shell.envp_real);
+		}
+		close(fd);
 		wait(NULL);
 		free(path);
 		ft_free_arr(args);

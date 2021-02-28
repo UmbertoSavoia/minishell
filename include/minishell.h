@@ -116,6 +116,7 @@ void	relative_path(int i);
 void	redir_maj(t_list *node, char *sign, int flag);
 char	**ft_list_to_arr_delim(t_list *start, t_list *end);
 int		check_error_syntax_redir(t_list *node, char *sign);
+void	redir_min(t_list *node, char *sign);
 
 /* UTILS */
 char	*get_key_env(const char *env, int *len_value);
