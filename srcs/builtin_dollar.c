@@ -51,7 +51,7 @@ void	built_dollar(int i, char **node, int *j)
 		else
 			(*node)++;
 		(*node)[w - 2] = 0;
-		*j = 0;
+		*j = 0;  // mod da ipad, qui leak caso -: echo '$cosa'
 		return ;
 	}
 	if ((*j = built_dollar_support(j, node, 0)))
