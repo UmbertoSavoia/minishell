@@ -27,7 +27,26 @@ char	**ft_list_to_arr_delim(t_list *start, t_list *end)
 	return (ret);
 }
 
-void	redir_maj(t_list *node)
+int		check_error_syntax_redir(t_list *node, char *sign)
+{
+	t_list		*tmp;
+
+	tmp = node;
+	while (tmp)
+	{
+		if (tmp->next && !(ft_memcmp((char*)tmp->content, sign, ft_strlen(sign) + 1)) &&
+			!(ft_memcmp((char*)tmp->next->content, sign, ft_strlen(sign) + 1)))
+		{
+			printf(RED"minishell: syntax error near unexpected token '%s'"NC"\n", sign);
+			errno = 1;
+			return (-1);
+		}
+		tmp = tmp->next;
+	}
+	return (0);
+}
+
+void	redir_maj(t_list *node, char *sign, int flag)
 {
 	t_list		*tmp;
 	t_list		*finded;
@@ -40,22 +59,15 @@ void	redir_maj(t_list *node)
 	j = 0;
 	tmp = node;
 	fd = 20;
-	while (((char*)tmp->content)[0] != '>')
+	if (check_error_syntax_redir(node, sign) == -1)
+		return ;
+	while (ft_memcmp((char*)tmp->content, sign, ft_strlen(sign) + 1))
 		tmp = tmp->next;
 	finded = tmp;
 	while (tmp)
 	{
-		if (ft_memcmp((char*)tmp->content, ">", 2))
-		{
-			//close(fd);
-			fd = open(tmp->content, O_CREAT | O_RDWR | O_TRUNC, 0666);
-		}
-		else if (tmp->next && ((char*)tmp->next->content)[0] == '>')
-		{
-			printf(RED"minishell: syntax error near unexpected token '>'"NC"\n");
-			errno = 1;
-			return ;
-		}
+		if (ft_memcmp((char*)tmp->content, sign, ft_strlen(sign) + 1))
+			fd = open(tmp->content, O_CREAT | O_RDWR | flag, 0666);
 		tmp = tmp->next;
 	}
 	args = ft_list_to_arr_delim(node, finded);
