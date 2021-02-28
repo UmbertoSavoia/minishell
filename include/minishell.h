@@ -134,5 +134,6 @@ t_env	*get_value_set(char *key);
 t_env	*node_dup(t_env *node);
 void	ft_free_arr(char **arr);
 char	**ft_list_to_arr(int i);
+void	skip_quote(char **str);
 
 #endif

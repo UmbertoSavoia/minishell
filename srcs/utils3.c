@@ -65,3 +65,25 @@ void	ft_free_arr(char **arr)
 	free(arr);
 	arr = 0;
 }
+
+void	skip_quote(char **str)
+{
+	char	c = 0;
+	int		i = 0;
+
+	while ((*str)[i])
+	{
+		if (c == 0 && ((*str)[i] == '\'' || (*str)[i] == '\"'))
+		{
+			c = (*str)[i];
+			ft_memmove(&((*str)[i]), &((*str)[i + 1]), ft_strlen(*str) - i);
+		}
+		if ((*str)[i] == c)
+		{
+			ft_memmove(&((*str)[i]), &((*str)[i + 1]), ft_strlen(*str) - i);
+			c = 0;
+			continue;
+		}
+		i++;
+	}
+}
