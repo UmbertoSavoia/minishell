@@ -66,13 +66,15 @@ void	redir_maj(t_list *node)
 		if (id == 0)
 		{
 			dup2(fd, 1);
-			close(fd);
+			while (fd > 2)
+				close(fd--);
 			execve(path, args, g_shell.envp_real);
 			free(path);
 			ft_free_arr(args);
 			built_exit();
 		}
-		close(fd);
+		while (fd > 2)
+			close(fd--);
 		wait(NULL);
 		free(path);
 		ft_free_arr(args);
