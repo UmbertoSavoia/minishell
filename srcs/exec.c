@@ -45,7 +45,7 @@ int		findexec(int i)
 	j = 0;
 	errno = 0;
 	path = get_path_command(g_shell.table_list[i], &j);
-	if ((j = -1))
+	if (j == -1)
 	{
 		tmp3 = ft_list_to_arr(i);
 		int id = fork();
@@ -56,10 +56,9 @@ int		findexec(int i)
 			ft_free_arr(tmp3);
 			built_exit();
 		}
-		j = 0;
 		wait(NULL);
 		free(path);
 		ft_free_arr(tmp3);
 	}
-	return (j < 0 ? 0 : 1);
+	return (j >= 0 ? 0 : 1);
 }

@@ -73,7 +73,7 @@ void	skip_quote(char **str)
 
 	while ((*str)[i])
 	{
-		if (c == 0 && ((*str)[i] == '\'' || (*str)[i] == '\"') && (*str)[i + 1] != '$')
+		if (c == 0 && ((*str)[i] == '\'' || (*str)[i] == '\"') && ((*str)[i] + 1 != '$' && (*str)[i] != '\''))
 		{
 			c = (*str)[i];
 			ft_memmove(&((*str)[i]), &((*str)[i + 1]), ft_strlen(*str) - i);

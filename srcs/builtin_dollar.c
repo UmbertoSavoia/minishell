@@ -24,9 +24,13 @@ int		built_dollar_support(int j, char **node, t_env *tmp)
 void	built_dollar(int i, char **node)
 {
 	t_list				*ptr;
+	char				*tmp;
 	int					j;
+	char				c;
 
 	j = 0;
+	c = 0;
+	int w = ft_strlen(*node);
 	ptr = g_shell.table_list[i];
 	while (ptr)
 	{
@@ -35,14 +39,19 @@ void	built_dollar(int i, char **node)
 		j++;
 		ptr = ptr->next;
 	}
-	if (built_dollar_support(j, node, 0))
-		return ;
-	else
+	if ((*node)[0] == '\'' && (*node)[w - 1] == '\'')
 	{
 		if (!j)
+		{
+			tmp = ft_strdup((*node) + 1);
 			free(*node);
-		*node = ft_strdup("");
-		errno = 1;
+			*node = tmp;
+		}
+		else
+			(*node)++;
+		(*node)[w - 2] = 0;
 		return ;
 	}
+	if (built_dollar_support(j, node, 0))
+		return ;
 }

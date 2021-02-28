@@ -42,8 +42,6 @@ char	find_builtin(int i)
 
 char	find_command(int i)
 {
-	if (((char*)g_shell.table_list[i]->content)[0] == '$')
-		return (0);
 	if ((var_search(g_shell.table_list[i], '=', &ft_strchr)))
 		add_var_list(i, 1);
 	else if (findexec(i))
