@@ -73,7 +73,7 @@ void	redir_maj(t_list *node, char *sign, int flag)
 	}
 	args = ft_list_to_arr_delim(node, finded);
 	path = get_path_command(node, &j);
-	if ((j == -1))
+	if (j == -1)
 	{
 		id = fork();
 		if (id == 0)
