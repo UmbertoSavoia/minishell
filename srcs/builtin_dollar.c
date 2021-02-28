@@ -35,7 +35,7 @@ void	built_dollar(int i, char **node, int *j)
 	{
 		if (!ft_strncmp(ptr->content, *node, ft_strlen(*node)))
 		{
-			(*j)++;
+			(*j)++; //forse sbagliato perche se strncmp mai 0 j resta a zero
 			break ;
 		}
 		ptr = ptr->next;
