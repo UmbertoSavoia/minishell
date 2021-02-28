@@ -78,7 +78,7 @@ void	exec_commands(void);
 
 /* FIND */
 char	find_redir(int i);
-char	find_builtin(int i);
+char	find_builtin(int i, int *unused);
 char	find_command(int i);
 
 /* BUILT_INT */
@@ -100,7 +100,7 @@ void	add_env_full(int i);
 
 int		built_set(void);
 
-void	built_dollar(int i, char **node);
+void	built_dollar(int i, char **node, int *freeable);
 
 /* VAR */
 int		add_var_list(int i, char c);

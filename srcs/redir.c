@@ -54,6 +54,7 @@ void	redir_maj(t_list *node, char *sign, int flag)
 	char		**args;
 	char		*path;
 	int			j;
+	int			id;
 
 	errno = 0;
 	j = 0;
@@ -72,9 +73,9 @@ void	redir_maj(t_list *node, char *sign, int flag)
 	}
 	args = ft_list_to_arr_delim(node, finded);
 	path = get_path_command(node, &j);
-	if ((j = -1))
+	if ((j == -1))
 	{
-		int id = fork();
+		id = fork();
 		if (id == 0)
 		{
 			dup2(fd, 1);

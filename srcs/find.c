@@ -15,10 +15,10 @@ char	find_redir(int i)
 	return (1);
 }
 
-char	find_builtin(int i)
+char	find_builtin(int i, int *unused)
 {
 	if ((var_search(g_shell.table_list[i], '$', &ft_strchr)))
-		built_dollar(i, (char**)&(g_shell.table_list[i]->content));
+		built_dollar(i, (char**)&(g_shell.table_list[i]->content), unused);
 	if ((list_search(g_shell.table_list[i], "echo", &ft_memcmp)))
 		built_echo(i);
 	else if ((list_search(g_shell.table_list[i], "pwd", &ft_memcmp)))

@@ -3,15 +3,17 @@
 void	exec_commands(void)
 {
 	int		i;
+	int		unused;
 	t_env	*tmp;
 
 	i = 0;
+	unused = 0;
 	while (g_shell.table_list[i])
 	{
 		tmp = get_value_env("?");
 		free(tmp->value);
 		tmp->value = ft_itoa(errno);
-		if (find_redir(i) || find_builtin(i) || find_command(i))
+		if (find_redir(i) || find_builtin(i, &unused) || find_command(i))
 			;
 		i++;
 	}
