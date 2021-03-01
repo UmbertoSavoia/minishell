@@ -48,8 +48,8 @@ int		findexec(int i)
 	if (j == -1)
 	{
 		tmp3 = ft_list_to_arr(i);
-		int id = fork();
-		if (id == 0)
+		g_shell.pid = fork();
+		if (g_shell.pid == 0)
 		{
 			execve(path, tmp3, g_shell.envp_real);
 			free(path);

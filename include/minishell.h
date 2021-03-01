@@ -46,6 +46,7 @@ typedef struct	s_shell
 	t_list			**table_list;
 	char			*user;
 	char			**envp_real;
+	int				pid;
 }				t_shell;
 
 extern t_shell		g_shell;

@@ -54,7 +54,6 @@ void	redir_maj(t_list *node, char *sign, int flag)
 	char		**args;
 	char		*path;
 	int			j;
-	int			id;
 
 	errno = 0;
 	j = 0;
@@ -75,8 +74,8 @@ void	redir_maj(t_list *node, char *sign, int flag)
 	path = get_path_command(node, &j);
 	if (j == -1)
 	{
-		id = fork();
-		if (id == 0)
+		g_shell.pid = fork();
+		if (g_shell.pid == 0)
 		{
 			dup2(fd, 1);
 			while (fd > 2)
@@ -110,7 +109,6 @@ void	redir_min(t_list *node, char *sign)
 	int			fd;
 	int			j;
 	char		*path;
-	int			id;
 
 	j = 0;
 	tmp = node;
@@ -137,8 +135,8 @@ void	redir_min(t_list *node, char *sign)
 	path = get_path_command(node, &j);
 	if (j == -1)
 	{
-		id = fork();
-		if (id == 0)
+		g_shell.pid = fork();
+		if (g_shell.pid == 0)
 		{
 			dup2(fd, 0);
 			while (fd > 2)

@@ -34,10 +34,10 @@ void	relative_path(int i)
 	closedir(folder);
 	if (pid)
 	{
-		if ((pid = fork()) == -1)
+		if ((g_shell.pid = fork()) == -1)
 			return ;
 		wait(NULL);
-		if (pid == 0)
+		if (g_shell.pid == 0)
 		{
 			args = ft_split(tmp, ' ');
 			execve((char*)g_shell.table_list[i]->content, args, g_shell.envp_real);
