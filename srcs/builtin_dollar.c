@@ -18,7 +18,14 @@ int		built_dollar_support(int *j, char **node, t_env *tmp)
 		errno = 0;
 		return (1);
 	}
-	return (0);
+	else
+	{
+		if (!*j)
+			free(*node);
+		*node = ft_strdup("");
+		errno = 0;
+		return (1);
+	}
 }
 
 void	built_dollar(int i, char **node, int *j)
@@ -54,7 +61,7 @@ void	built_dollar(int i, char **node, int *j)
 		*j = 0;
 		return ;
 	}
-	if ((*j = built_dollar_support(j, node, 0)))
+	if (!(*j = built_dollar_support(j, node, 0)))
 		;
 	/* if (*node[0])
 	{

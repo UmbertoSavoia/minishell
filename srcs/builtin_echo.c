@@ -5,7 +5,8 @@ static	void	built_echo_option(int i, t_list *tmp, int *freeable)
 	tmp = tmp->next->next;
 	while (tmp)
 	{
-		built_dollar(i, (char**)&(tmp->content), freeable);
+		if (ft_strchr(((char*)tmp->content), '$'))
+			built_dollar(i, (char**)&(tmp->content), freeable);
 		ft_putstr_fd(((char*)tmp->content), 1);
 		ft_putstr_fd(" ", 1);
 		if (*freeable)
@@ -17,7 +18,7 @@ static	void	built_echo_option(int i, t_list *tmp, int *freeable)
 
 void			built_echo(int i)
 {
-	t_list *tmp;
+	t_list	*tmp;
 	int		freeable;
 
 	freeable = 0;
@@ -31,7 +32,8 @@ void			built_echo(int i)
 			tmp = tmp->next;
 			while (tmp)
 			{
-				built_dollar(i, (char**)&(tmp->content), &freeable);
+				if (ft_strchr(((char*)tmp->content), '$'))
+					built_dollar(i, (char**)&(tmp->content), &freeable);
 				ft_putstr_fd(((char*)tmp->content), 1);
 				ft_putstr_fd(" ", 1);
 				if (freeable)
