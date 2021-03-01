@@ -50,7 +50,8 @@ void	built_cd(int i)
 	}
 	else if (g_shell.table_list[i])
 	{
-	 	built_dollar(i, (char**)&(tmp->content), &unused);
+		if (ft_strchr(((char*)tmp->content), '$'))
+	 		built_dollar(i, (char**)&(tmp->content), &unused);
 		if (chdir(tmp->content) < 0)
 		{
 			printf(RED"minishell: cd: %s: %s\n"NC,
