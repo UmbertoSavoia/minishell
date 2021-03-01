@@ -34,7 +34,6 @@ void	parse_exec(void)
 		built_exit();
 	if ((!(check_quote(input)) && (g_shell.exit_code = 22)) && ft_free(input))
 		return ;
-	skip_quote(&input);
 	g_shell.c_table = ft_split(input, ';');
 	free(input);
 	i = 0;
@@ -43,6 +42,12 @@ void	parse_exec(void)
 		tmp = ft_strtrim(g_shell.c_table[i], " ");
 		free(g_shell.c_table[i]);
 		g_shell.c_table[i++] = tmp;
+	}
+	i = 0;
+	while (g_shell.c_table[i])
+	{
+		skip_quote(g_shell.c_table[i]);
+		i++;
 	}
 	g_shell.table_list = ft_split_list(g_shell.c_table, ' ');
 	free(g_shell.c_table);

@@ -43,6 +43,8 @@ t_env	*get_value_env(char *key)
 	int		len_key;
 
 	len_key = ft_strlen(key);
+	if (!len_key)
+		return (0);
 	tmp = g_shell.envp;
 	while (tmp)
 	{

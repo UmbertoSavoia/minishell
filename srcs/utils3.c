@@ -16,6 +16,8 @@ t_env	*get_value_set(char *key)
 	int		len_key;
 
 	len_key = ft_strlen(key);
+	if (!len_key)
+		return (0);
 	if (*key == '$')
 	{
 		key++;
@@ -66,23 +68,25 @@ void	ft_free_arr(char **arr)
 	arr = 0;
 }
 
-void	skip_quote(char **str)
+void	skip_quote(char *str)
 {
 	char	c = 0;
 	int		i = 0;
 
-	while ((*str)[i])
+	while (str[i])
 	{
-		if (c == 0 && ((*str)[i] == '\'' || (*str)[i] == '\"') && ((*str)[i] + 1 != '$' && (*str)[i] != '\''))
+		if (c == 0 &&
+			((str[i] == '\'' && str[i + 1] != '$' && str[i + 1] != '\0')
+				|| str[i] == '\"'))
 		{
-			c = (*str)[i];
-			ft_memmove(&((*str)[i]), &((*str)[i + 1]), ft_strlen(*str) - i);
+			c = str[i];
+			ft_memmove(&str[i], &str[i + 1], ft_strlen(str) - 1);
 		}
-		if ((*str)[i] == c)
+		if (str[i] == c)
 		{
-			ft_memmove(&((*str)[i]), &((*str)[i + 1]), ft_strlen(*str) - i);
+			ft_memmove(&str[i], &str[i + 1], ft_strlen(str) - 1);
 			c = 0;
-			continue;
+			continue ;
 		}
 		i++;
 	}
