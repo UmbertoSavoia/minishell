@@ -8,7 +8,7 @@ static	void	built_echo_option(int i, t_list *tmp, int *freeable)
 		built_dollar(i, (char**)&(tmp->content), freeable);
 		ft_putstr_fd(((char*)tmp->content), 1);
 		ft_putstr_fd(" ", 1);
-		if (freeable)
+		if (*freeable)
 			free(tmp->content);
 		tmp = tmp->next;
 	}

@@ -35,7 +35,7 @@ void	built_dollar(int i, char **node, int *j)
 	{
 		if (!ft_strncmp(ptr->content, *node, ft_strlen(*node)))
 		{
-			(*j)++; //forse sbagliato perche se strncmp mai 0 j resta a zero
+			(*j)++;
 			break ;
 		}
 		ptr = ptr->next;
@@ -51,7 +51,7 @@ void	built_dollar(int i, char **node, int *j)
 		else
 			(*node)++;
 		(*node)[w - 2] = 0;
-		*j = 0;  // mod da ipad, qui leak caso -: echo '$cosa'
+		*j = 0;
 		return ;
 	}
 	if ((*j = built_dollar_support(j, node, 0)))
