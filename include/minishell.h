@@ -69,6 +69,7 @@ void	set_shlvl(void);
 /* SIGNAL */
 void	ft_sigquit(int sig);
 void	ft_sigint(int sig);
+void	ft_sigint_2(int sig);
 
 /* PROMPT */
 void	print_prompt(void);

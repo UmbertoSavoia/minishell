@@ -11,9 +11,9 @@ int		main(int ac, char **av, char **env)
 	while (!g_shell.exit_code)
 	{
 		g_shell.pid = 1;
+		print_prompt();
 		signal(SIGQUIT, ft_sigquit);
 		signal(SIGINT, ft_sigint);
-		print_prompt();
 		parse_exec();
 		if (g_shell.table_list)
 			clear_table_list();

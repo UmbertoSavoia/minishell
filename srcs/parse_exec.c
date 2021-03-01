@@ -10,6 +10,7 @@ void	exec_commands(void)
 	unused = 0;
 	while (g_shell.table_list[i])
 	{
+		signal(SIGINT, ft_sigint_2);
 		tmp = get_value_env("?");
 		free(tmp->value);
 		tmp->value = ft_itoa(errno);
