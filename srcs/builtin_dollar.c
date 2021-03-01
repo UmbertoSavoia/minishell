@@ -2,7 +2,7 @@
 
 int		built_dollar_support(int *j, char **node, t_env *tmp)
 {
-	if ((tmp = get_value_set(*node + 1)))
+	if ((tmp = get_value_set(((*node) + 1))))
 	{
 		if (!*j)
 			free(*node);
@@ -10,7 +10,7 @@ int		built_dollar_support(int *j, char **node, t_env *tmp)
 		errno = 0;
 		return (1);
 	}
-	else if ((tmp = get_value_env(*node + 1)))
+	else if ((tmp = get_value_env((*node) + 1)))
 	{
 		if (!*j)
 			free(*node);

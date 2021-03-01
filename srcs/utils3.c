@@ -80,11 +80,11 @@ void	skip_quote(char *str)
 				|| str[i] == '\"'))
 		{
 			c = str[i];
-			ft_memmove(&str[i], &str[i + 1], ft_strlen(str) - 1);
+			ft_memmove(&(str[i]), &(str[i + 1]), ft_strlen(&(str[i])));
 		}
 		if (str[i] == c)
 		{
-			ft_memmove(&str[i], &str[i + 1], ft_strlen(str) - 1);
+			ft_memmove(&(str[i]), &(str[i + 1]), ft_strlen(&(str[i])));
 			c = 0;
 			continue ;
 		}

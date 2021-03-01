@@ -41,7 +41,8 @@ void	parse_exec(void)
 	{
 		tmp = ft_strtrim(g_shell.c_table[i], " ");
 		free(g_shell.c_table[i]);
-		g_shell.c_table[i++] = tmp;
+		g_shell.c_table[i] = tmp;
+		i++;
 	}
 	i = 0;
 	while (g_shell.c_table[i])
