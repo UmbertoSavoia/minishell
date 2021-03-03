@@ -85,7 +85,7 @@ void	built_exit_code(t_list *value)
 	exit(i);
 }
 
-void	built_exit(i)
+void	built_exit(int i)
 {
 	t_list	*tmp;
 	int		freeable;
