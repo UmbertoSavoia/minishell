@@ -1,6 +1,6 @@
 #include "../include/minishell.h"
 
-char	**ft_list_to_arr_delim(t_list *start, t_list *end)
+char			**ft_list_to_arr_delim(t_list *start, t_list *end)
 {
 	int		j;
 	int		len_list;
@@ -27,7 +27,7 @@ char	**ft_list_to_arr_delim(t_list *start, t_list *end)
 	return (ret);
 }
 
-int		check_error_syntax_redir(t_list *node, char *sign)
+int				check_error_syntax_redir(t_list *node, char *sign)
 {
 	t_list		*tmp;
 
@@ -51,19 +51,45 @@ int		check_error_syntax_redir(t_list *node, char *sign)
 	return (0);
 }
 
-void	redir_maj(t_list *node, char *sign, int flag)
+static	void	child_process(int fd, char *path, char **args)
+{
+	g_shell.pid = fork();
+	if (g_shell.pid == 0)
+	{
+		dup2(fd, 1);
+		while (fd > 2)
+			close(fd--);
+		execve(path, args, g_shell.envp_real);
+		free(path);
+		ft_free_arr(args);
+		built_exit();
+	}
+	while (fd > 2)
+		close(fd--);
+	wait(NULL);
+	free(path);
+	ft_free_arr(args);
+}
+
+static	void	father_process(int fd, char **args, t_list *node)
+{
+	while (fd > 2)
+		close(fd--);
+	ft_free_arr(args);
+	printf(RED"minishell: %s: command not found"NC"\n",
+	((char*)node->content));
+}
+
+void			redir_maj(t_list *node, char *sign, int flag, int fd)
 {
 	t_list		*tmp;
 	t_list		*finded;
-	int			fd;
 	char		**args;
 	char		*path;
 	int			j;
 
-	errno = 0;
 	j = 0;
 	tmp = node;
-	fd = 20;
 	if (check_error_syntax_redir(node, sign) == -1)
 		return ;
 	while (ft_memcmp((char*)tmp->content, sign, ft_strlen(sign) + 1))
@@ -78,29 +104,7 @@ void	redir_maj(t_list *node, char *sign, int flag)
 	args = ft_list_to_arr_delim(node, finded);
 	path = get_path_command(node, &j);
 	if (j == -1)
-	{
-		g_shell.pid = fork();
-		if (g_shell.pid == 0)
-		{
-			dup2(fd, 1);
-			while (fd > 2)
-				close(fd--);
-			execve(path, args, g_shell.envp_real);
-			free(path);
- 			ft_free_arr(args);
- 			built_exit();
-		}
-		while (fd > 2)
-			close(fd--);
-		wait(NULL);
-		free(path);
-		ft_free_arr(args);
-	}
+		child_process(fd, path, args);
 	else
-	{
-		while (fd > 2)
-			close(fd--);
-		ft_free_arr(args);
-		printf(RED"minishell: %s: command not found"NC"\n", ((char*)node->content));
-	}
+		father_process(fd, args, node);
 }

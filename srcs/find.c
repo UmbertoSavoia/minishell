@@ -5,11 +5,14 @@ char	find_redir(int i)
 	if ((list_search(g_shell.table_list[i], "|", &ft_memcmp)))
 		printf("trovato |\n");
 	else if ((list_search(g_shell.table_list[i], ">", &ft_memcmp)))
-		redir_maj(g_shell.table_list[i], ">", O_TRUNC);
+		redir_maj(g_shell.table_list[i], ">", O_TRUNC, 0);
 	else if ((list_search(g_shell.table_list[i], ">>", &ft_memcmp)))
-		redir_maj(g_shell.table_list[i], ">>", O_APPEND);
+	{
+		errno = 0;
+		redir_maj(g_shell.table_list[i], ">>", O_APPEND, 0);
+	}
 	else if ((list_search(g_shell.table_list[i], "<", &ft_memcmp)))
-		redir_min(g_shell.table_list[i], "<");
+		redir_min(g_shell.table_list[i], "<", 0);
 	else
 		return (0);
 	return (1);

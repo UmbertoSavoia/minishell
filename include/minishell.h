@@ -51,38 +51,54 @@ typedef struct		s_shell
 
 extern t_shell		g_shell;
 
-/* ENV */
+/*
+** ENV **
+*/
 void				init_env(char **env);
 void				ft_push_front_env(t_env **head, t_env *new);
 t_env				*ft_create_node_env(const char *env);
 t_env				*get_value_env(char *key);
 
-/* REMOVE_ENV */
+/*
+** REMOVE_ENV **
+*/
 int					env_lstdelone(t_env *lst, void (*del)(void*));
 int					remove_t_env(t_env **head, void *data,
 	int (*cmp)(const void*, const void*, size_t), void (*del)(void*));
 
-/* SHLVL */
+/*
+** SHLVL **
+*/
 void				set_shlvl(void);
 
-/* SIGNAL */
+/*
+** SIGNAL **
+*/
 void				ft_sigquit(int sig);
 void				ft_sigint(int sig);
 void				ft_sigint_2(int sig);
 
-/* PROMPT */
+/*
+** PROMPT **
+*/
 void				print_prompt(void);
 
-/* PARSE EXEC */
+/*
+** PARSE EXEC **
+*/
 void				parse_exec(void);
 void				exec_commands(void);
 
-/* FIND */
+/*
+** FIND **
+*/
 char				find_redir(int i);
 char				find_builtin(int i, int *unused);
 char				find_command(int i);
 
-/* BUILT_INT */
+/*
+** BUILT_INT **
+*/
 void				built_pwd(void);
 int					built_env(int i);
 
@@ -103,24 +119,32 @@ int					built_set(void);
 
 void				built_dollar(int i, char **node, int *freeable);
 
-/* VAR */
+/*
+** VAR **
+*/
 int					add_var_list(int i, char c);
 char				var_search(t_list *head, char c,
 	char *(*f)(const char*, int));
 
-/* EXEC */
+/*
+** EXEC **
+*/
 int					findexec(int i);
 char				*get_path_command(t_list *node, int *found);
 
 void				relative_path(int i);
 
-/* REDIR */
-void				redir_maj(t_list *node, char *sign, int flag);
+/*
+** REDIR **
+*/
+void				redir_maj(t_list *node, char *sign, int flag, int fd);
 char				**ft_list_to_arr_delim(t_list *start, t_list *end);
 int					check_error_syntax_redir(t_list *node, char *sign);
-void				redir_min(t_list *node, char *sign);
+void				redir_min(t_list *node, char *sign, int fd);
 
-/* UTILS */
+/*
+** UTILS **
+*/
 char				*get_key_env(const char *env, int *len_value);
 void				env_clear(t_env *head);
 t_list				*ft_split_get_token(char *table, char c);

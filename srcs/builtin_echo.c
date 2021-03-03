@@ -16,6 +16,20 @@ static	void	built_echo_option(int i, t_list *tmp, int *freeable)
 	ft_putstr_fd("\b", 1);
 }
 
+static	void	echo_no_option(int i, t_list *tmp, int *freeable)
+{
+	while (tmp)
+	{
+		if (ft_strchr(((char*)tmp->content), '$'))
+			built_dollar(i, (char**)&(tmp->content), freeable);
+		ft_putstr_fd(((char*)tmp->content), 1);
+		ft_putstr_fd(" ", 1);
+		if (*freeable)
+			free(tmp->content);
+		tmp = tmp->next;
+	}
+}
+
 void			built_echo(int i)
 {
 	t_list	*tmp;
@@ -30,16 +44,7 @@ void			built_echo(int i)
 		else
 		{
 			tmp = tmp->next;
-			while (tmp)
-			{
-				if (ft_strchr(((char*)tmp->content), '$'))
-					built_dollar(i, (char**)&(tmp->content), &freeable);
-				ft_putstr_fd(((char*)tmp->content), 1);
-				ft_putstr_fd(" ", 1);
-				if (freeable)
-					free(tmp->content);
-				tmp = tmp->next;
-			}
+			echo_no_option(i, tmp, &freeable);
 			ft_putstr_fd("\b", 1);
 			ft_putendl_fd("", 1);
 		}
