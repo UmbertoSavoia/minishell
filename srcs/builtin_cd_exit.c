@@ -28,6 +28,18 @@ int		zero_to_space(int i, char c)
 	return (1);
 }
 
+void	cd_home(t_env *home)
+{
+	if (!home)
+	{
+		ft_putendl_fd(RED"cd : HOME not set"NC, 1);
+		errno = 1;
+		return ;
+	}
+	chdir(home->value);
+	errno = 0;
+}
+
 void	built_cd(int i)
 {
 	t_env	*home;
@@ -38,20 +50,11 @@ void	built_cd(int i)
 	home = get_value_env("HOME");
 	tmp = g_shell.table_list[i]->next;
 	if ((!g_shell.table_list[i]->next))
-	{
-		if (!home)
-		{
-			ft_putendl_fd(RED"cd : HOME not set"NC, 1);
-			errno = 1;
-			return ;
-		}
-		chdir(home->value);
-		errno = 0;
-	}
+		cd_home(home);
 	else if (g_shell.table_list[i])
 	{
 		if (ft_strchr(((char*)tmp->content), '$'))
-	 		built_dollar(i, (char**)&(tmp->content), &unused);
+			built_dollar(i, (char**)&(tmp->content), &unused);
 		if (chdir(tmp->content) < 0)
 		{
 			printf(RED"minishell: cd: %s: %s\n"NC,

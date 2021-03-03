@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_lstremove_if.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: usavoia <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/11 14:28:06 by usavoia           #+#    #+#             */
+/*   Updated: 2021/01/11 14:28:08 by usavoia          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
-void	ft_lstremove_if(t_list **head, void *data, int (*cmp)(void*, void*, size_t),
-	void (*del)(void*))
+void	ft_lstremove_if(t_list **head, void *data,
+	int (*cmp)(void*, void*, size_t), void (*del)(void*))
 {
 	t_list *it;
 	t_list *tmp;

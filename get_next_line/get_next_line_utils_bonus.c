@@ -12,7 +12,7 @@
 
 #include "get_next_line_bonus.h"
 
-size_t		ft_stlen(const char *s)
+size_t			ft_stlen(const char *s)
 {
 	size_t ret;
 
@@ -62,7 +62,7 @@ t_list_gnl		*find_fd(t_list_gnl **head, int fd)
 	return (temp);
 }
 
-int			resize(char **line, size_t len)
+int				resize(char **line, size_t len)
 {
 	char	*new_line;
 	size_t	i;

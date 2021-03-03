@@ -72,8 +72,8 @@ int		get_next_line(int fd, char **line)
 {
 	static t_list_gnl	*head;
 	t_list_gnl			*found;
-	int				size;
-	int				rest;
+	int					size;
+	int					rest;
 
 	if (BUFFER_SIZE <= 0 || !line || (fd < 0)
 			|| !(found = find_fd(&head, fd)))

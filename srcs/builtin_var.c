@@ -8,6 +8,26 @@ char	var_search(t_list *head, char c,
 	return (0);
 }
 
+void	create_var_list(t_list *ptr)
+{
+	char	*tmp;
+	int		w;
+
+	w = 0;
+	while (ptr)
+	{
+		tmp = get_key_env(ptr->content, &w);
+		remove_t_env(&g_shell.var_list, tmp, &ft_memcmp, &free);
+		if (remove_t_env(&g_shell.envp, tmp, &ft_memcmp, &free))
+			ft_push_front_env(&g_shell.envp,
+				ft_create_node_env(ptr->content));
+		ft_push_front_env(&g_shell.var_list,
+			ft_create_node_env(ptr->content));
+		ft_free(tmp);
+		ptr = ptr->next;
+	}
+}
+
 int		add_var_list(int i, char c)
 {
 	char	*tmp;
@@ -17,22 +37,11 @@ int		add_var_list(int i, char c)
 	w = 0;
 	if (!ft_isalpha(((char*)g_shell.table_list[i]->content)[0]))
 		return (printf(RED"minishell: %s: command not found"NC"\n",
-			((char*)g_shell.table_list[i]->content)));
+		((char*)g_shell.table_list[i]->content)));
 	if (c == 1)
 	{
 		ptr = g_shell.table_list[i];
-		while (ptr)
-		{
-			tmp = get_key_env(ptr->content, &w);
-			remove_t_env(&g_shell.var_list, tmp, &ft_memcmp, &free);
-			if (remove_t_env(&g_shell.envp, tmp, &ft_memcmp, &free))
-				ft_push_front_env(&g_shell.envp,
-					ft_create_node_env(ptr->content));
-			ft_push_front_env(&g_shell.var_list,
-				ft_create_node_env(ptr->content));
-			ft_free(tmp);
-			ptr = ptr->next;
-		}
+		create_var_list(ptr);
 	}
 	else
 	{

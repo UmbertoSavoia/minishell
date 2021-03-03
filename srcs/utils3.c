@@ -70,9 +70,11 @@ void	ft_free_arr(char **arr)
 
 void	skip_quote(char *str)
 {
-	char	c = 0;
-	int		i = 0;
+	char	c;
+	int		i;
 
+	c = 0;
+	i = 0;
 	while (str[i])
 	{
 		if (c == 0 &&

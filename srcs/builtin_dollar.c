@@ -63,11 +63,5 @@ void	built_dollar(int i, char **node, int *j)
 	}
 	if (!(*j = built_dollar_support(j, node, 0)))
 		;
-	/* if (*node[0])
-	{
-		if ((*j = built_dollar_support(j, node, 0)))
-			;
-		*j = *j > 0 ? *j : 0;
-	} */
 	return ;
 }
