@@ -54,7 +54,7 @@ int		findexec(int i)
 			execve(path, tmp3, g_shell.envp_real);
 			free(path);
  			ft_free_arr(tmp3);
- 			built_exit();
+ 			built_exit(i);
  		}
 		wait(NULL);
 		free(path);

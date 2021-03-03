@@ -54,7 +54,7 @@ void	parse_exec(void)
 		return ;
 	}
 	if (i == 0)
-		built_exit();
+		built_exit(-1);
 	if ((!(check_quote(input)) && (g_shell.exit_code = 22)) && ft_free(input))
 		return ;
 	g_shell.c_table = ft_split(input, ';');

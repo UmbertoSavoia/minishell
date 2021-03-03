@@ -62,7 +62,7 @@ static	void	child_process(int fd, char *path, char **args)
 		execve(path, args, g_shell.envp_real);
 		free(path);
 		ft_free_arr(args);
-		built_exit();
+		built_exit(-1);
 	}
 	while (fd > 2)
 		close(fd--);

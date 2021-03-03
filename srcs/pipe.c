@@ -3,13 +3,11 @@
 void	exec_pipe(int pip[][2], int j, int i)
 {
 	int k;
-	int pid;
-	int pid2;
 
 	k = 0;
-	pid = fork();
+	g_shell.pid = fork();
 	wait(NULL);
-	if (pid == 0)
+	if (g_shell.pid == 0)
 	{
 			close(pip[k][0]);
 			dup2(pip[k][1], 1);
@@ -23,8 +21,8 @@ void	exec_pipe(int pip[][2], int j, int i)
 		}
 		exit(0);
 	}
-	pid2 = fork();
-	if (pid2 == 0)
+	g_shell.pid = fork();
+	if (g_shell.pid == 0)
 	{
 		close(pip[k][1]);
 		dup2(pip[k][0], 0);

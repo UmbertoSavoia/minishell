@@ -43,7 +43,7 @@ void	relative_path(int i)
 			execve((char*)g_shell.table_list[i]->content, args, g_shell.envp_real);
 			ft_free_arr(args);
  			free(path);
- 			built_exit();
+ 			built_exit(i);
 		}
 	}
 	free(path);

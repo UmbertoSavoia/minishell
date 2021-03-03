@@ -108,7 +108,8 @@ void				built_unset(int i);
 
 int					zero_to_space(int i, char c);
 void				built_cd(int i);
-void				built_exit(void);
+void				built_exit(int i);
+void				built_exit_code(t_list *value);
 
 void				built_export(int i);
 void				add_env_list(int i);
@@ -171,5 +172,7 @@ t_env				*node_dup(t_env *node);
 void				ft_free_arr(char **arr);
 char				**ft_list_to_arr(int i);
 void				skip_quote(char *str);
+
+char				**ft_env_to_arr(void);
 
 #endif
