@@ -14,7 +14,9 @@ void	exec_commands(void)
 		tmp = get_value_env("?");
 		free(tmp->value);
 		tmp->value = ft_itoa(errno);
-		if (find_redir(i) || find_builtin(i, &unused) || find_command(i))
+		if ((list_search(g_shell.table_list[i], "|", &ft_memcmp)))
+			built_pipe(i);
+		else if (find_redir(i) || find_builtin(i, &unused) || find_command(i))
 			;
 		i++;
 	}

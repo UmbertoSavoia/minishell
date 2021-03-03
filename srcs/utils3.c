@@ -48,6 +48,8 @@ char	**ft_list_to_arr(int i)
 	tmp = g_shell.table_list[i];
 	while (tmp)
 	{
+		if (((char*)tmp->content)[0] == '|')
+			break ;
 		ret[j] = ft_strdup(tmp->content);
 		tmp = tmp->next;
 		j++;

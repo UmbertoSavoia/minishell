@@ -16,10 +16,13 @@ int		print_export(void)
 	tmp = g_shell.envp;
 	while (tmp)
 	{
-		printf("declare -x %s \b", tmp->key);
-		if (*(tmp->value))
-			printf("=%s \b", tmp->value);
-		printf("\n");
+		if (tmp->key[0] != '?')
+		{
+			printf("declare -x %s \b", tmp->key);
+			if (*(tmp->value))
+				printf("=%s \b", tmp->value);
+			printf("\n");
+		}
 		tmp = tmp->next;
 	}
 	return (1);

@@ -2,9 +2,7 @@
 
 char	find_redir(int i)
 {
-	if ((list_search(g_shell.table_list[i], "|", &ft_memcmp)))
-		printf("trovato |\n");
-	else if ((list_search(g_shell.table_list[i], ">", &ft_memcmp)))
+	 if ((list_search(g_shell.table_list[i], ">", &ft_memcmp)))
 		redir_maj(g_shell.table_list[i], ">", O_TRUNC, 0);
 	else if ((list_search(g_shell.table_list[i], ">>", &ft_memcmp)))
 	{

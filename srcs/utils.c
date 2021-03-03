@@ -1,30 +1,21 @@
 #include "../include/minishell.h"
 
-char	echo_chaos_handler(char *k, char *v, int *i, char *s)
+void	ft_lstremove_if_until(t_list **head, void *data,
+	int (*cmp)(const void*, const void*, size_t), void (*del)(void*))
 {
-	if (*k == 5 && s[*i] == '\"' && *v != '\'')
+	t_list *it;
+
+	it = *head;
+	while (it && cmp(data, it->content, ft_strlen(data)))
 	{
-		*k = 0;
-		*v = 2;
+		*head = it->next;
+		ft_lstdelone(it, del);
+		it = *head;
 	}
-	else if (*k == 5 && s[*i] == '\'' && *v != '\"')
-	{
-		*k = 0;
-		*v = 2;
-	}
-	else if (s[*i] == '\"' && *v != '\'' && !*k)
-	{
-		*v = s[*i];
-		*k = 5;
-	}
-	else if (s[*i] == '\'' && *v != '\"' && !*k)
-	{
-		*v = s[*i];
-		*k = 5;
-	}
-	if ((s[*i] != *v && *k == 5) && ft_putchar_fd(s[*i], 1))
-		return (1);
-	return (0);
+	if (!it)
+		return ;
+	*head = it->next;
+	ft_lstdelone(it, del);
 }
 
 char	*get_key_env(const char *env, int *len_value)

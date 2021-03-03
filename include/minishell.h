@@ -143,6 +143,11 @@ int					check_error_syntax_redir(t_list *node, char *sign);
 void				redir_min(t_list *node, char *sign, int fd);
 
 /*
+** PIPE **
+*/
+void	built_pipe(int i);
+
+/*
 ** UTILS **
 */
 char				*get_key_env(const char *env, int *len_value);
@@ -150,11 +155,13 @@ void				env_clear(t_env *head);
 t_list				*ft_split_get_token(char *table, char c);
 t_list				**ft_split_list(char **table, char c);
 char				echo_chaos_handler(char *k, char *v, int *i, char *s);
+void				ft_lstremove_if_until(t_list **head, void *data,
+			int (*cmp)(const void*, const void*, size_t), void (*del)(void*));
 
 char				list_search(t_list *head, char *str,
-	int (*f)(const void*, const void*, size_t));
+						int (*f)(const void*, const void*, size_t));
 char				relative_search(t_list *head, char *str,
-	int (*f)(const void*, const void*, size_t));
+						int (*f)(const void*, const void*, size_t));
 void				clear_table_list(void);
 int					check_quote(char *line);
 char				ft_free(void *data);
