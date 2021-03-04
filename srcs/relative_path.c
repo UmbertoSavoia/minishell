@@ -5,13 +5,15 @@ void	relative_path(int i)
 	char			*tmp;
 	int				len_path;
 	char			*path;
-	int				pid;
+	int				finded;
 	DIR				*folder;
 	struct dirent	*entry;
 	char			**args;
+	int				wstatus;
 
-	pid = 0;
+	finded = 0;
 	errno = 0;
+	wstatus = 0;
 	tmp = ft_strrchr((char*)g_shell.table_list[i]->content, '/');
 	len_path = tmp - (char*)g_shell.table_list[i]->content;
 	path = malloc(len_path + 2);
@@ -27,24 +29,24 @@ void	relative_path(int i)
 	{
 		if (!(ft_memcmp(tmp + 1, entry->d_name, ft_strlen(tmp + 1))))
 		{
-			pid = 1;
+			finded = 1;
 			break ;
 		}
 	}
 	closedir(folder);
-	if (pid)
+	if (finded)
 	{
 		if ((g_shell.pid = fork()) == -1)
 			return ;
-		wait(NULL);
 		if (g_shell.pid == 0)
 		{
-			args = ft_split(tmp, ' ');
+			args = ft_list_to_arr(i);
 			execve((char*)g_shell.table_list[i]->content, args, g_shell.envp_real);
-			ft_free_arr(args);
- 			free(path);
- 			built_exit(i);
+			exit(0);
 		}
+		wait(&wstatus);
+		if (WIFEXITED(wstatus))
+			errno = (WEXITSTATUS(wstatus) == 0) ? 0 : 127;
 	}
 	free(path);
 }

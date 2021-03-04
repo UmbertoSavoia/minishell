@@ -91,7 +91,17 @@ void	built_exit(int i)
 	int		freeable;
 
 	freeable = 0;
+	if (i == -1)
+	{
+		ft_putendl_fd("exit", 1);
+		exit(0);
+	}
 	tmp = g_shell.table_list[i];
+	if (tmp->next && tmp->next->next)
+	{
+		printf(RED"exit \nminishell: exit: too many arguments"NC"\n");
+		return ;
+	}
 	if (!tmp->next || i == -1)
 	{
 		if (g_shell.envp)

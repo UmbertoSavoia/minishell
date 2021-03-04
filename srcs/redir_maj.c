@@ -6,8 +6,12 @@ char			**ft_list_to_arr_delim(t_list *start, t_list *end)
 	int		len_list;
 	char	**ret;
 	t_list	*tmp;
+	char	*tmp_content;
 
+	tmp_content = start->content;
 	j = 0;
+	if (((char*)start->content)[0] == '.' || ((char*)start->content)[0] == '/')
+		start->content = ft_strrchr((char*)start->content, '/') + 1;
 	tmp = start;
 	len_list = 0;
 	while (tmp != end)
@@ -24,6 +28,7 @@ char			**ft_list_to_arr_delim(t_list *start, t_list *end)
 		j++;
 	}
 	ret[j] = 0;
+	start->content = tmp_content;
 	return (ret);
 }
 
@@ -52,6 +57,8 @@ int				check_error_syntax_redir(t_list *node, char *sign)
 
 static	void	child_process(int fd, char *path, char **args)
 {
+	int		wstatus;
+
 	g_shell.pid = fork();
 	if (g_shell.pid == 0)
 	{
@@ -59,13 +66,13 @@ static	void	child_process(int fd, char *path, char **args)
 		while (fd > 2)
 			close(fd--);
 		execve(path, args, g_shell.envp_real);
-		free(path);
-		ft_free_arr(args);
-		built_exit(-1);
+		exit(0);
 	}
 	while (fd > 2)
 		close(fd--);
-	wait(NULL);
+	wait(&wstatus);
+		if (WIFEXITED(wstatus))
+			errno = 127;
 	free(path);
 	ft_free_arr(args);
 }

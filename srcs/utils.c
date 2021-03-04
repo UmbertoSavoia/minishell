@@ -62,14 +62,25 @@ t_list	*ft_split_get_token(char *table, char c)
 	t_list	*ret;
 	int		i;
 	int		j;
+	char	x;
 
+	x = 0;
 	i = 0;
 	j = -1;
 	ret = 0;
+
 	while (table[i])
 	{
 		if (table[i] != c && j == -1)
 			j = i;
+		if (table[i] == '\'' || table[i] == '\"')
+		{
+			x = table[i];
+			i++;
+			while (table[i] != x)
+				i++;
+			x = 0;
+		}
 		else if (table[i] == c)
 		{
 			table[i] = 0;

@@ -11,6 +11,8 @@ char	*get_path_command(t_list *node, int *found)
 	char			*ret;
 
 	j = 0;
+	if ((((char*)node->content)[0] == '.' || ((char*)node->content)[0] == '/') && (*found = -1))
+		return ((ret = ft_strdup((char*)node->content)));
 	len_command = ft_strlen((char*)node->content) + 1;
 	path = ft_split(get_value_env("PATH")->value, ':');
 	while (path[j])
@@ -41,6 +43,7 @@ int		findexec(int i)
 	char			*path;
 	int				j;
 	char			**tmp3;
+	int				wstatus;
 
 	j = 0;
 	errno = 0;
@@ -51,12 +54,13 @@ int		findexec(int i)
 		g_shell.pid = fork();
 		if (g_shell.pid == 0)
 		{
-			execve(path, tmp3, g_shell.envp_real);
-			free(path);
- 			ft_free_arr(tmp3);
- 			built_exit(i);
+			if ((execve(path, tmp3, g_shell.envp_real)) == -1)
+				printf(RED"minishell: %s: No such file or directory"NC"\n", path);
+			exit(0);
  		}
-		wait(NULL);
+		wait(&wstatus);
+		if (WIFEXITED(wstatus))
+			errno = 127;
 		free(path);
 		ft_free_arr(tmp3);
 	}

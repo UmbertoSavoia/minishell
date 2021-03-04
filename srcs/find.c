@@ -49,8 +49,6 @@ char	find_command(int i)
 		return (1);
 	else if ((relative_search(g_shell.table_list[i], "./", &ft_memcmp)))
 		relative_path(i);
-	else if ((absolute_search(g_shell.table_list[i], "/", &ft_memcmp)))
-		absolute_path(i);
 	else
 	{
 		ft_putstr_fd(RED, 2);

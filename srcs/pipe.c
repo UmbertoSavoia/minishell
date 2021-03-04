@@ -3,10 +3,13 @@
 void	exec_pipe(int pip[][2], int j, int i)
 {
 	int k;
+	int wstatus;
 
 	k = 0;
 	g_shell.pid = fork();
-	wait(NULL);
+	wait(&wstatus);
+		if (WIFEXITED(wstatus))
+			errno = 127;
 	if (g_shell.pid == 0)
 	{
 		dup2(pip[k][1], 1);
@@ -41,7 +44,9 @@ void	exec_pipe(int pip[][2], int j, int i)
 		}
 		close(pip[k][0]);
 		close(pip[k][1]);
-		wait(NULL);
+		wait(&wstatus);
+		if (WIFEXITED(wstatus))
+			errno = 127;
 		k++;
 	}
 	g_shell.pid = fork();
@@ -57,7 +62,9 @@ void	exec_pipe(int pip[][2], int j, int i)
 	}
 	close(pip[k][0]);
 	close(pip[k][1]);
-	wait(NULL);
+	wait(&wstatus);
+		if (WIFEXITED(wstatus))
+			errno = 127;
 	ft_lstremove_if_until(&g_shell.table_list[i], "|", &ft_memcmp, 0);
 }
 

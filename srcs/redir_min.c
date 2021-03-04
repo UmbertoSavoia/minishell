@@ -2,6 +2,8 @@
 
 static	void	child_process(int fd, char *path, char **args)
 {
+	int	wstatus;
+
 	g_shell.pid = fork();
 	if (g_shell.pid == 0)
 	{
@@ -9,13 +11,13 @@ static	void	child_process(int fd, char *path, char **args)
 		while (fd > 2)
 			close(fd--);
 		execve(path, args, g_shell.envp_real);
-		free(path);
-		ft_free_arr(args);
-		built_exit(-1);
+		exit(0);
 	}
 	while (fd > 2)
 		close(fd--);
-	wait(NULL);
+	wait(&wstatus);
+	if (WIFEXITED(wstatus))
+		errno = 127;
 	free(path);
 	ft_free_arr(args);
 }
