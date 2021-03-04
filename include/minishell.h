@@ -134,6 +134,7 @@ int					findexec(int i);
 char				*get_path_command(t_list *node, int *found);
 
 void				relative_path(int i);
+void				absolute_path(int i);
 
 /*
 ** REDIR **
