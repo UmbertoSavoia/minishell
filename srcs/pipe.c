@@ -55,12 +55,8 @@ void	exec_pipe(int pip[][2], int j, int i)
 			;
 		exit(0);
 	}
-	while (k >= 0)
-	{
-		close(pip[k][0]);
-		close(pip[k][1]);
-		k--;
-	}
+	close(pip[k][0]);
+	close(pip[k][1]);
 	wait(NULL);
 	ft_lstremove_if_until(&g_shell.table_list[i], "|", &ft_memcmp, 0);
 }
