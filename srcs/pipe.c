@@ -9,9 +9,13 @@ void	exec_pipe(int pip[][2], int j, int i)
 	wait(NULL);
 	if (g_shell.pid == 0)
 	{
-		close(pip[k][0]);
 		dup2(pip[k][1], 1);
-		close(pip[k][1]);
+		while (j > 0)
+		{
+			j--;
+			close(pip[j][0]);
+			close(pip[j][1]);
+		}
 		if (find_redir(i) || find_command(i))
 			;
 		exit(0);
@@ -25,8 +29,9 @@ void	exec_pipe(int pip[][2], int j, int i)
 			dup2(pip[k][0], 0);
 			k++;
 			dup2(pip[k][1], 1);
-			while (--j >= 0)
+			while (j > 0)
 			{
+				j--;
 				close(pip[j][0]);
 				close(pip[j][1]);
 			}
@@ -34,21 +39,18 @@ void	exec_pipe(int pip[][2], int j, int i)
 				;
 			exit(0);
 		}
+		close(pip[k][0]);
+		close(pip[k][1]);
 		wait(NULL);
 		k++;
 	}
 	g_shell.pid = fork();
 	if (g_shell.pid == 0)
 	{
+		close(pip[k][1]);
 		dup2(pip[k][0], 0);
-		while (k >= 0)
-		{
-			close(pip[k][0]);
-			close(pip[k][1]);
-			k--;
-		}
-		while (j--)
-		 	ft_lstremove_if_until(&g_shell.table_list[i], "|", &ft_memcmp, 0);
+		close(pip[k][0]);
+		ft_lstremove_if_until(&g_shell.table_list[i], "|", &ft_memcmp, 0);
 		if (find_redir(i) || find_command(i))
 			;
 		exit(0);
@@ -84,6 +86,7 @@ void	built_pipe(int i)
 	int		j;
 
 	j = 0;
+	errno = 0;
 	cpy_content = (char*)g_shell.table_list[i]->content;
 	tmp = g_shell.table_list[i];
 	while (tmp)
