@@ -51,8 +51,11 @@ char	find_command(int i)
 		relative_path(i);
 	else
 	{
-		printf(RED"minishell: %s: command not found"NC"\n",
-			((char*)g_shell.table_list[i]->content));
+		ft_putstr_fd(RED, 2);
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(((char*)g_shell.table_list[i]->content), 2);
+		ft_putstr_fd(": command not found", 2);
+		ft_putendl_fd(NC, 2);
 		errno = 127;
 		return (0);
 	}

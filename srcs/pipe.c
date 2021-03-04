@@ -9,26 +9,46 @@ void	exec_pipe(int pip[][2], int j, int i)
 	wait(NULL);
 	if (g_shell.pid == 0)
 	{
-			close(pip[k][0]);
+		close(pip[k][0]);
+		dup2(pip[k][1], 1);
+		close(pip[k][1]);
+		if (find_redir(i) || find_command(i))
+			;
+		exit(0);
+	}
+	while (k < (j - 1))
+	{
+		ft_lstremove_if_until(&g_shell.table_list[i], "|", &ft_memcmp, 0);
+		g_shell.pid = fork();
+		if (g_shell.pid == 0)
+		{
+			dup2(pip[k][0], 0);
+			k++;
 			dup2(pip[k][1], 1);
-			close(pip[k][1]);
+			while (--j >= 0)
+			{
+				close(pip[j][0]);
+				close(pip[j][1]);
+			}
 			if (find_redir(i) || find_command(i))
 				;
-		ft_lstremove_if_until(&g_shell.table_list[i], "|", &ft_memcmp, 0);
-		while (k < (j - 1))
-		{
-			k++;
+			exit(0);
 		}
-		exit(0);
+		wait(NULL);
+		k++;
 	}
 	g_shell.pid = fork();
 	if (g_shell.pid == 0)
 	{
-		close(pip[k][1]);
 		dup2(pip[k][0], 0);
-		close(pip[k][0]);
+		while (k >= 0)
+		{
+			close(pip[k][0]);
+			close(pip[k][1]);
+			k--;
+		}
 		while (j--)
-			ft_lstremove_if_until(&g_shell.table_list[i], "|", &ft_memcmp, 0);
+		 	ft_lstremove_if_until(&g_shell.table_list[i], "|", &ft_memcmp, 0);
 		if (find_redir(i) || find_command(i))
 			;
 		exit(0);
@@ -73,5 +93,10 @@ void	built_pipe(int i)
 		tmp = tmp->next;
 	}
 	open_pipe(j, i);
+	if (!(g_shell.table_list[i]))
+	{
+		printf(RED"invalid argument"NC"\n");
+		return ;
+	}
 	g_shell.table_list[i]->content = cpy_content;
 }

@@ -38,11 +38,10 @@ int				check_error_syntax_redir(t_list *node, char *sign)
 			!(ft_memcmp((char*)tmp->content, sign, ft_strlen(sign) + 1)) &&
 			!(ft_memcmp((char*)tmp->next->content, sign, ft_strlen(sign) + 1)))
 		{
-			ft_putstr_fd(RED, 1);
-			ft_putstr_fd("minishell: syntax error near unexpected token ", 1);
-			ft_putstr_fd(sign, 1);
-			ft_putstr_fd(NC, 1);
-			ft_putstr_fd("\n", 1);
+			ft_putstr_fd(RED, 2);
+			ft_putstr_fd("minishell: syntax error near unexpected token ", 2);
+			ft_putstr_fd(sign, 2);
+			ft_putendl_fd(NC, 2);
 			errno = 1;
 			return (-1);
 		}
@@ -76,8 +75,11 @@ static	void	father_process(int fd, char **args, t_list *node)
 	while (fd > 2)
 		close(fd--);
 	ft_free_arr(args);
-	printf(RED"minishell: %s: command not found"NC"\n",
-	((char*)node->content));
+	ft_putstr_fd(RED, 2);
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(((char*)node->content), 2);
+	ft_putstr_fd(": command not found", 2);
+	ft_putendl_fd(NC, 2);
 }
 
 void			redir_maj(t_list *node, char *sign, int flag, int fd)
@@ -97,7 +99,9 @@ void			redir_maj(t_list *node, char *sign, int flag, int fd)
 	finded = tmp;
 	while (tmp)
 	{
-		if (ft_memcmp((char*)tmp->content, sign, ft_strlen(sign) + 1))
+		if (((char*)tmp->content)[0] == '|')
+			break ;
+		else if (ft_memcmp((char*)tmp->content, sign, ft_strlen(sign) + 1))
 			fd = open(tmp->content, O_CREAT | O_RDWR | flag, 0666);
 		tmp = tmp->next;
 	}

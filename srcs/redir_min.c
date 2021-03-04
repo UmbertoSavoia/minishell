@@ -30,13 +30,18 @@ static	int		open_descriptor(t_list *tmp)
 	{
 		if (((char*)tmp->content)[0] == '<')
 			ptr = tmp;
+		else if (((char*)tmp->content)[0] == '|')
+			break ;
 		else if ((fd = open(tmp->content, O_RDWR)) == -1)
 		{
 			cl = 3;
 			while (close(cl) != -1)
 				cl++;
-			printf(RED"minishell: %s: No such file or directory"NC"\n",
-			((char*)tmp->content));
+			ft_putstr_fd(RED, 2);
+			ft_putstr_fd("minishell:", 2);
+			ft_putstr_fd(((char*)tmp->content), 2);
+			ft_putstr_fd(": No such file or directory", 2);
+			ft_putendl_fd(NC, 2);
 			return (0);
 		}
 		tmp = tmp->next;
@@ -49,8 +54,11 @@ static	void	father_process(int fd, char **args, t_list *node)
 	while (fd > 2)
 		close(fd--);
 	ft_free_arr(args);
-	printf(RED"minishell: %s: command not found"NC"\n",
-	((char*)node->content));
+	ft_putstr_fd(RED, 2);
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(((char*)node->content), 2);
+	ft_putstr_fd(": command not found", 2);
+	ft_putendl_fd(NC, 2);
 }
 
 void			redir_min(t_list *node, char *sign, int fd)
