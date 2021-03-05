@@ -12,6 +12,8 @@
 # include <dirent.h>
 # include <string.h>
 # include <limits.h>
+# include <termios.h>
+# include <curses.h>
 
 # include "../libft/libft.h"
 # include "../get_next_line/get_next_line_bonus.h"
@@ -30,6 +32,8 @@
 # define DISPARI 1
 # define PARI 0
 
+# define CTRL_KEY(k) ((k) & 0x1f)
+
 typedef struct		s_env
 {
 	char			*key;
@@ -47,6 +51,12 @@ typedef struct		s_shell
 	char			*user;
 	char			**envp_real;
 	int				pid;
+	int				len_prompt;
+	int				curs;
+	struct termios	orig_termios;
+	struct termios	raw;
+	int				len_string;
+	char			final_string[LINE_MAX];
 }					t_shell;
 
 extern t_shell		g_shell;
@@ -170,5 +180,12 @@ char				**ft_list_to_arr(int i);
 void				skip_quote(char *str);
 
 char				**ft_env_to_arr(void);
+
+/*
+** TERMINAL **
+*/
+int					get_next_terminal(char **input);
+void				disable_raw_mode(void);
+void				enable_raw_mode(void);
 
 #endif

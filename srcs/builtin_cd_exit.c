@@ -82,6 +82,7 @@ void	built_exit_code(t_list *value)
 		exit(255);
 	}
 	i = ft_atoi((char*)value->content);
+	disable_raw_mode();
 	exit(i);
 }
 

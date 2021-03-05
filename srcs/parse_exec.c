@@ -49,8 +49,8 @@ static char		*ft_sgomitata(char *input)
 	num = 0;
 	while (input[i])
 	{
-		if (!ft_memcmp(">", &(input[i]), 1) ||
-		!ft_memcmp("<", &(input[i]), 1) || !ft_memcmp(">>", &(input[i]), 2) ||
+		if (!ft_memcmp("<", &(input[i]), 1) || !ft_memcmp(">>", &(input[i]), 2) ||
+		(!ft_memcmp(">", &(input[i]), 1) && ft_memcmp(">", &(input[i + 1]), 1)) ||
 		!ft_memcmp("|", &(input[i]), 1))
 			num++;
 		i++;
@@ -59,13 +59,23 @@ static char		*ft_sgomitata(char *input)
 	i = 0;
 	while (input[i])
 	{
-		if (!ft_memcmp(">", &(input[i]), 1) ||
-		!ft_memcmp("<", &(input[i]), 1) || !ft_memcmp(">>", &(input[i]), 2) ||
+		if (!ft_memcmp("<", &(input[i]), 1) || !ft_memcmp(">>", &(input[i]), 2) ||
+		(!ft_memcmp(">", &(input[i]), 1) && ft_memcmp(">", &(input[i + 1]), 1)) ||
 		!ft_memcmp("|", &(input[i]), 1))
 		{
-			new[j++] = ' ';
-			new[j++] = input[i++];
-			new[j++] = ' ';
+			if (!ft_memcmp(">>", &(input[i]), 2))
+			{
+				new[j++] = ' ';
+				new[j++] = input[i++];
+				new[j++] = input[i++];
+				new[j++] = ' ';
+			}
+			else
+			{
+				new[j++] = ' ';
+				new[j++] = input[i++];
+				new[j++] = ' ';
+			}
 		}
 		else
 			new[j++] = input[i++];
@@ -81,7 +91,7 @@ void	parse_exec(void)
 	int		i;
 	t_list	*tmp;
 
-	if (((i = get_next_line(0, &input))) < 0)
+	if (((i = get_next_terminal(&input))) < 0)
 	{
 		g_shell.exit_code = EBADF;
 		return ;

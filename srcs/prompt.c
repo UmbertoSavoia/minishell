@@ -26,6 +26,7 @@ void			print_prompt(void)
 
 	if (!g_shell.user)
 		g_shell.user = get_user();
+	//write(1, "\r", 1);
 	if (!errno)
 		ft_putstr_fd(BGBLKGRN" ✓"NC, 1);
 	else
@@ -38,4 +39,8 @@ void			print_prompt(void)
 	ft_putstr_fd((getcwd(tmp, PATH_MAX)), 1);
 	ft_putstr_fd(NC, 1);
 	ft_putstr_fd(BLUE" "NC, 1);
+	g_shell.len_prompt = 16 + ft_strlen(g_shell.user) + ft_strlen(tmp);
+	g_shell.curs = g_shell.len_prompt;
+	g_shell.len_string = 0;
+	ft_bzero(g_shell.final_string, LINE_MAX);
 }
