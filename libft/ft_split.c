@@ -17,7 +17,7 @@ static size_t	get_word(char const *s, char c)
 	size_t i;
 
 	i = 0;
-	while (*s)
+	while (s && *s)
 	{
 		if (*s != c)
 		{
@@ -63,7 +63,7 @@ char			**ft_split(char const *s, char c)
 	init(v, &i, 1);
 	if (!(ret = (char**)malloc(sizeof(char*) * get_word(s, c) + 1)))
 		return (0);
-	while (*s)
+	while (s && *s)
 	{
 		if (init(v, &i, 0) && (*s != c))
 		{

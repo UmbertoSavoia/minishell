@@ -2,15 +2,15 @@
 
 char	find_redir(int i)
 {
-	 if ((list_search(g_shell.table_list[i], ">", &ft_memcmp)))
+	if ((list_search(g_shell.table_list[i], "<", &ft_memcmp)))
+		redir_min(g_shell.table_list[i], "<", 0);
+	else if ((list_search(g_shell.table_list[i], ">", &ft_memcmp)))
 		redir_maj(g_shell.table_list[i], ">", O_TRUNC, 0);
 	else if ((list_search(g_shell.table_list[i], ">>", &ft_memcmp)))
 	{
 		errno = 0;
 		redir_maj(g_shell.table_list[i], ">>", O_APPEND, 0);
 	}
-	else if ((list_search(g_shell.table_list[i], "<", &ft_memcmp)))
-		redir_min(g_shell.table_list[i], "<", 0);
 	else
 		return (0);
 	return (1);
@@ -47,8 +47,6 @@ char	find_command(int i)
 		add_var_list(i, 1);
 	else if (findexec(i))
 		return (1);
-	else if ((relative_search(g_shell.table_list[i], "./", &ft_memcmp)))
-		relative_path(i);
 	else
 	{
 		ft_putstr_fd(RED, 2);

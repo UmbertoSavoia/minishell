@@ -16,8 +16,7 @@ static	void	child_process(int fd, char *path, char **args)
 	while (fd > 2)
 		close(fd--);
 	wait(&wstatus);
-	if (WIFEXITED(wstatus))
-		errno = 127;
+	errno = wstatus;
 	free(path);
 	ft_free_arr(args);
 }
@@ -32,7 +31,7 @@ static	int		open_descriptor(t_list *tmp)
 	{
 		if (((char*)tmp->content)[0] == '<')
 			ptr = tmp;
-		else if (((char*)tmp->content)[0] == '|')
+		else if (((char*)tmp->content)[0] == '|' ||  ((char*)tmp->content)[0] == '>')
 			break ;
 		else if ((fd = open(tmp->content, O_RDWR)) == -1)
 		{

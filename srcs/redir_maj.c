@@ -71,8 +71,7 @@ static	void	child_process(int fd, char *path, char **args)
 	while (fd > 2)
 		close(fd--);
 	wait(&wstatus);
-		if (WIFEXITED(wstatus))
-			errno = 127;
+	errno = wstatus;
 	free(path);
 	ft_free_arr(args);
 }

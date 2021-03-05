@@ -7,9 +7,6 @@ void	exec_pipe(int pip[][2], int j, int i)
 
 	k = 0;
 	g_shell.pid = fork();
-	wait(&wstatus);
-		if (WIFEXITED(wstatus))
-			errno = 127;
 	if (g_shell.pid == 0)
 	{
 		dup2(pip[k][1], 1);
@@ -23,6 +20,8 @@ void	exec_pipe(int pip[][2], int j, int i)
 			;
 		exit(0);
 	}
+	wait(&wstatus);
+	errno = wstatus;
 	while (k < (j - 1))
 	{
 		ft_lstremove_if_until(&g_shell.table_list[i], "|", &ft_memcmp, 0);
@@ -38,6 +37,11 @@ void	exec_pipe(int pip[][2], int j, int i)
 				close(pip[j][0]);
 				close(pip[j][1]);
 			}
+			t_list *tmp;
+			tmp = g_shell.table_list[i];
+			while (((char*)tmp->next->content)[0] != '|')
+				tmp = tmp->next;
+			tmp->next = 0;
 			if (find_redir(i) || find_command(i))
 				;
 			exit(0);
@@ -45,8 +49,7 @@ void	exec_pipe(int pip[][2], int j, int i)
 		close(pip[k][0]);
 		close(pip[k][1]);
 		wait(&wstatus);
-		if (WIFEXITED(wstatus))
-			errno = 127;
+		errno = wstatus;
 		k++;
 	}
 	g_shell.pid = fork();
@@ -63,8 +66,7 @@ void	exec_pipe(int pip[][2], int j, int i)
 	close(pip[k][0]);
 	close(pip[k][1]);
 	wait(&wstatus);
-		if (WIFEXITED(wstatus))
-			errno = 127;
+	errno = wstatus;
 	ft_lstremove_if_until(&g_shell.table_list[i], "|", &ft_memcmp, 0);
 }
 

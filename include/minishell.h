@@ -133,8 +133,6 @@ char				var_search(t_list *head, char c,
 int					findexec(int i);
 char				*get_path_command(t_list *node, int *found);
 
-void				relative_path(int i);
-
 /*
 ** REDIR **
 */
@@ -160,8 +158,6 @@ void				ft_lstremove_if_until(t_list **head, void *data,
 			int (*cmp)(const void*, const void*, size_t), void (*del)(void*));
 
 char				list_search(t_list *head, char *str,
-						int (*f)(const void*, const void*, size_t));
-char				relative_search(t_list *head, char *str,
 						int (*f)(const void*, const void*, size_t));
 void				clear_table_list(void);
 int					check_quote(char *line);

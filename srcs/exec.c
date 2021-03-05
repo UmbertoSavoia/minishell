@@ -14,7 +14,7 @@ char	*get_path_command(t_list *node, int *found)
 	if ((((char*)node->content)[0] == '.' || ((char*)node->content)[0] == '/') && (*found = -1))
 		return ((ret = ft_strdup((char*)node->content)));
 	len_command = ft_strlen((char*)node->content) + 1;
-	path = ft_split(get_value_env("PATH")->value, ':');
+	path = ft_split((get_value_env("PATH") ? get_value_env("PATH")->value : 0), ':');
 	while (path[j])
 	{
 		folder = opendir(path[j]);
@@ -50,17 +50,22 @@ int		findexec(int i)
 	path = get_path_command(g_shell.table_list[i], &j);
 	if (j == -1)
 	{
+		if (g_shell.table_list[i]->next &&
+			ft_strchr(((char*)g_shell.table_list[i]->next->content), '$'))
+			built_dollar(i, (char**)&(g_shell.table_list[i]->next->content), &wstatus);
 		tmp3 = ft_list_to_arr(i);
 		g_shell.pid = fork();
 		if (g_shell.pid == 0)
 		{
 			if ((execve(path, tmp3, g_shell.envp_real)) == -1)
+			{
 				printf(RED"minishell: %s: No such file or directory"NC"\n", path);
-			exit(0);
+				exit(1);
+			}
+			exit (0);
  		}
 		wait(&wstatus);
-		if (WIFEXITED(wstatus))
-			errno = 127;
+		errno = wstatus;
 		free(path);
 		ft_free_arr(tmp3);
 	}

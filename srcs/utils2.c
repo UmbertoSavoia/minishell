@@ -19,18 +19,6 @@ char	list_search(t_list *head, char *str,
 	return (0);
 }
 
-char	relative_search(t_list *head, char *str,
-	int (*f)(const void*, const void*, size_t))
-{
-	while (head)
-	{
-		if (!((*f)(str, head->content, ft_strlen(str))))
-			return (1);
-		head = head->next;
-	}
-	return (0);
-}
-
 void	clear_table_list(void)
 {
 	int		i;
