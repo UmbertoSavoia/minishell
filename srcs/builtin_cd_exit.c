@@ -82,7 +82,7 @@ void	built_exit_code(t_list *value)
 		exit(255);
 	}
 	i = ft_atoi((char*)value->content);
-	termios_reset_cooked_mode();
+	termios_reset_mode();
 	exit(i);
 }
 

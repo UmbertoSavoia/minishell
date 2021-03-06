@@ -96,9 +96,10 @@ void	parse_exec(void)
 		g_shell.exit_code = EBADF;
 		return ;
 	}
-	termios_reset_cooked_mode();
+	termios_reset_mode();
 	if (i == 0)
 		built_exit(-1);
+	ft_histadd_front(&g_shell.history, ft_histnew(input));
 	input = ft_sgomitata(input);
 	if ((!(check_quote(input)) && (errno = 22)) && ft_free(input))
 	{

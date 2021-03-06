@@ -7,7 +7,7 @@ void	print_error(int error)
 	exit(1);
 }
 
-int	termios_reset_cooked_mode(void)
+int	termios_reset_mode(void)
 {
 	struct termios new;
 
@@ -26,15 +26,6 @@ int	termios_reset_cooked_mode(void)
 	return (1);
 }
 
-void disable_raw_mode(void)
-{
-	int		ret;
-
-	ret = 0;
-	if ((ret = tcsetattr(STDIN_FILENO, TCSAFLUSH, &g_shell.orig_termios)) == -1)
-		print_error(ret);
-}
-
 void enable_raw_mode(void)
 {
 	int				ret;
@@ -43,9 +34,8 @@ void enable_raw_mode(void)
 	if ((ret = tcgetattr(STDIN_FILENO, &g_shell.orig_termios)) == -1)
 		print_error(ret);
 	g_shell.raw = g_shell.orig_termios;
-	g_shell.raw.c_iflag &= ~(/*BRKINT |*/ ICRNL |/* INPCK | ISTRIP |  */IXON);
-//	g_shell.raw.c_cflag |= (CS8);
-	g_shell.raw.c_lflag &= ~(ECHO | ICANON | IEXTEN /*| ISIG*/);						//attivare la funzione per andare ai signal
+	g_shell.raw.c_iflag &= ~(ICRNL |IXON);
+	g_shell.raw.c_lflag &= ~(ECHO | ICANON | IEXTEN);
 	g_shell.raw.c_cc[VMIN] = 0;
 	g_shell.raw.c_cc[VTIME] = 1;
 	if ((ret = tcsetattr(STDIN_FILENO, TCSAFLUSH, &g_shell.raw)) == -1)
@@ -164,6 +154,10 @@ int		key_arrow(void)
 			if ((start < g_shell.len_string) && g_shell.curs++)
 				write(1, "\x1b[C", 3);
 		}
+		else if (seq[1] == 'A')
+			navigate_history(UP);
+		else if (seq[1] == 'B')
+			navigate_history(DW);
 	}
 	return (1);
 }
@@ -194,16 +188,13 @@ int		get_next_terminal(char **input)
 	i = 0;
 	ret = 0;
 	ft_bzero(g_shell.final_string, sizeof(g_shell.final_string));
-	//if (ft_memcmp(&g_shell.orig_termios, &g_shell.raw, sizeof(struct termios)))
-		enable_raw_mode();
+	enable_raw_mode();
 	while (1)
 	{
 		c = editor_read_key();
 		if (c == '\r')
 		{
 			write(1, "\n\r", 2);
-			/* while (i++ < g_shell.len_string)
-				write(1, " ", 1); */
 			write(1, "\r", 1);
 			break;
 		}

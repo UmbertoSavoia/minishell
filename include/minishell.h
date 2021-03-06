@@ -31,6 +31,8 @@
 
 # define DISPARI 1
 # define PARI 0
+# define UP 2
+# define DW 3
 
 # define CTRL_KEY(k) ((k) & 0x1f)
 
@@ -41,13 +43,21 @@ typedef struct		s_env
 	struct s_env	*next;
 }					t_env;
 
+typedef struct		s_hist
+{
+	char			*content;
+	struct s_hist	*prev;
+	struct s_hist	*next;
+}					t_hist;
+
 typedef struct		s_shell
 {
 	t_env			*envp;
 	t_env			*var_list;
+	t_list			**table_list;
+	t_hist			*history;
 	int				exit_code;
 	char			**c_table;
-	t_list			**table_list;
 	char			*user;
 	char			**envp_real;
 	int				pid;
@@ -157,6 +167,16 @@ void				redir_min(t_list *node, char *sign, int fd);
 void	built_pipe(int i);
 
 /*
+** HISTORY **
+*/
+t_hist				*ft_histnew(void *content);
+void				ft_histadd_front(t_hist **lst, t_hist *new);
+void				ft_hist_clear(t_hist **lst, void (*del)(void*));
+void				ft_hist_delone(t_hist *lst, void (*del)(void*));
+
+void				navigate_history(int dir);
+
+/*
 ** UTILS **
 */
 char				*get_key_env(const char *env, int *len_value);
@@ -186,7 +206,6 @@ char				**ft_env_to_arr(void);
 */
 int					get_next_terminal(char **input);
 void				disable_raw_mode(void);
-void				enable_raw_mode(void);
-int					termios_reset_cooked_mode(void);
+int					termios_reset_mode(void);
 
 #endif
