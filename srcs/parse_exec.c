@@ -99,7 +99,7 @@ void	parse_exec(void)
 	termios_reset_mode();
 	if (i == 0)
 		built_exit(-1);
-	ft_histadd_front(&g_shell.history, ft_histnew(input));
+	g_shell.hist_size += ft_histadd_front(&g_shell.history, ft_histnew(input));
 	input = ft_sgomitata(input);
 	if ((!(check_quote(input)) && (errno = 22)) && ft_free(input))
 	{

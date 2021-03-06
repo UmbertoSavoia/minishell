@@ -56,6 +56,7 @@ typedef struct		s_shell
 	t_env			*var_list;
 	t_list			**table_list;
 	t_hist			*history;
+	int				hist_size;
 	int				exit_code;
 	char			**c_table;
 	char			*user;
@@ -170,10 +171,11 @@ void	built_pipe(int i);
 ** HISTORY **
 */
 t_hist				*ft_histnew(void *content);
-void				ft_histadd_front(t_hist **lst, t_hist *new);
+int					ft_histadd_front(t_hist **lst, t_hist *new);
 void				ft_hist_clear(t_hist **lst, void (*del)(void*));
 void				ft_hist_delone(t_hist *lst, void (*del)(void*));
 
+void				init_hist(void);
 void				navigate_history(int dir);
 
 /*

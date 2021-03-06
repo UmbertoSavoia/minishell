@@ -6,6 +6,7 @@ int		main(int ac, char **av, char **env)
 	(void)av;
 	ft_bzero(&g_shell, sizeof(t_shell));
 	init_env(env);
+	init_hist();
 	set_shlvl();
 	while (!g_shell.exit_code)
 	{

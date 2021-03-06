@@ -30,7 +30,7 @@ t_hist	*ft_histnew(void *content)
 	return (0);
 }
 
-void	ft_histadd_front(t_hist **lst, t_hist *nuovo)
+int		ft_histadd_front(t_hist **lst, t_hist *nuovo)
 {
 	int first;
 
@@ -38,13 +38,14 @@ void	ft_histadd_front(t_hist **lst, t_hist *nuovo)
 	if (!*lst)
 		first = 1;
 	if (!nuovo)
-		return ;
+		return (0);
 	while (*lst && (*lst)->prev)
 		*lst = (*lst)->prev;
 	nuovo->next = *lst;
 	*lst = nuovo;
 	if (!first)
 		nuovo->next->prev = *lst;
+	return (1);
 }
 
 void	ft_hist_clear(t_hist **lst, void (*del)(void*))
