@@ -65,7 +65,7 @@ int		findexec(int i)
 			exit (0);
  		}
 		wait(&wstatus);
-		errno = wstatus;
+		errno = (wstatus == 3) ? 131 : wstatus;
 		free(path);
 		ft_free_arr(tmp3);
 	}

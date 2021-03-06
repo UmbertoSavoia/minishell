@@ -13,6 +13,7 @@ void	built_unset(int i)
 	}
 	while (tmp != 0)
 	{
+		errno = 0;
 		if (((char*)tmp->content)[0] == '?')
 			break ;
 		if (g_shell.envp)
@@ -21,7 +22,6 @@ void	built_unset(int i)
 		if (g_shell.var_list)
 			remove_t_env(&g_shell.var_list,
 				tmp->content, &ft_memcmp, &free);
-		errno = 0;
 		tmp = tmp->next;
 	}
 	if (!tmp)

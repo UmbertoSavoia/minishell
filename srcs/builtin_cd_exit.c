@@ -25,6 +25,7 @@ void	refresh_pwd()
 
 void	cd_home(t_env *home)
 {
+	errno = 0;
 	if (!home)
 	{
 		ft_putendl_fd(RED"cd : HOME not set"NC, 1);
@@ -32,7 +33,6 @@ void	cd_home(t_env *home)
 		return ;
 	}
 	chdir(home->value);
-	errno = 0;
 }
 
 void	built_cd(int i)
@@ -42,6 +42,7 @@ void	built_cd(int i)
 	int		unused;
 
 	unused = 0;
+	errno = 0;
 	home = get_value_env("HOME");
 	tmp = g_shell.table_list[i]->next;
 	if ((!g_shell.table_list[i]->next))
@@ -58,7 +59,6 @@ void	built_cd(int i)
 		}
 	}
 	refresh_pwd();
-	errno = 0;
 }
 
 void	built_exit_code(t_list *value)
@@ -82,7 +82,7 @@ void	built_exit_code(t_list *value)
 		exit(255);
 	}
 	i = ft_atoi((char*)value->content);
-	disable_raw_mode();
+	termios_reset_cooked_mode();
 	exit(i);
 }
 

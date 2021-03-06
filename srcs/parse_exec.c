@@ -96,6 +96,7 @@ void	parse_exec(void)
 		g_shell.exit_code = EBADF;
 		return ;
 	}
+	termios_reset_cooked_mode();
 	if (i == 0)
 		built_exit(-1);
 	input = ft_sgomitata(input);

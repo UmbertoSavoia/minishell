@@ -36,6 +36,7 @@ void			built_echo(int i)
 	int		freeable;
 
 	freeable = 0;
+	errno = 0;
 	tmp = g_shell.table_list[i];
 	if (tmp->next)
 	{
@@ -51,5 +52,4 @@ void			built_echo(int i)
 	}
 	else
 		printf("\n");
-	errno = 0;
 }

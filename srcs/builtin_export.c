@@ -63,6 +63,7 @@ void	built_export(int i)
 {
 	t_list *tmp;
 
+	errno = 0;
 	tmp = g_shell.table_list[i]->next;
 	if ((!tmp || ((char*)g_shell.table_list[i]->next->content)[0] == '$')
 		&& print_export())
@@ -76,5 +77,4 @@ void	built_export(int i)
 	}
 	else if (var_search(tmp, '=', &ft_strchr))
 		add_env_full(i);
-	errno = 0;
 }

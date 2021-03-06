@@ -4,9 +4,9 @@ void	built_pwd(void)
 {
 	char tmp[PATH_MAX];
 
+	errno = 0;
 	getcwd(tmp, PATH_MAX);
 	ft_putendl_fd(tmp, 1);
-	errno = 0;
 }
 
 int		built_env(int i)
@@ -14,6 +14,7 @@ int		built_env(int i)
 	t_env *tmp;
 
 	tmp = g_shell.envp;
+	errno = 0;
 	if (g_shell.table_list[i]->next != 0)
 	{
 		ft_putendl_fd(RED"env: too many arguments"NC, 1);
@@ -26,6 +27,5 @@ int		built_env(int i)
 			printf("%s=%s\n", tmp->key, tmp->value);
 		tmp = tmp->next;
 	}
-	errno = 0;
 	return (1);
 }

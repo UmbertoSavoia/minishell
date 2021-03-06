@@ -21,7 +21,7 @@ void	exec_pipe(int pip[][2], int j, int i)
 		exit(0);
 	}
 	wait(&wstatus);
-	errno = wstatus;
+	errno = (wstatus == 3) ? 131 : wstatus;
 	while (k < (j - 1))
 	{
 		ft_lstremove_if_until(&g_shell.table_list[i], "|", &ft_memcmp, 0);
@@ -49,7 +49,7 @@ void	exec_pipe(int pip[][2], int j, int i)
 		close(pip[k][0]);
 		close(pip[k][1]);
 		wait(&wstatus);
-		errno = wstatus;
+		errno = (wstatus == 3) ? 131 : wstatus;
 		k++;
 	}
 	g_shell.pid = fork();
@@ -66,7 +66,7 @@ void	exec_pipe(int pip[][2], int j, int i)
 	close(pip[k][0]);
 	close(pip[k][1]);
 	wait(&wstatus);
-	errno = wstatus;
+	errno = (wstatus == 3) ? 131 : wstatus;
 	ft_lstremove_if_until(&g_shell.table_list[i], "|", &ft_memcmp, 0);
 }
 

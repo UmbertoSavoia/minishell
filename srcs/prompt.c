@@ -26,7 +26,6 @@ void			print_prompt(void)
 
 	if (!g_shell.user)
 		g_shell.user = get_user();
-	//write(1, "\r", 1);
 	if (!errno)
 		ft_putstr_fd(BGBLKGRN" ✓"NC, 1);
 	else

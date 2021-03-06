@@ -187,5 +187,6 @@ char				**ft_env_to_arr(void);
 int					get_next_terminal(char **input);
 void				disable_raw_mode(void);
 void				enable_raw_mode(void);
+int					termios_reset_cooked_mode(void);
 
 #endif

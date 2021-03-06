@@ -16,7 +16,7 @@ static	void	child_process(int fd, char *path, char **args)
 	while (fd > 2)
 		close(fd--);
 	wait(&wstatus);
-	errno = wstatus;
+	errno = (wstatus == 3) ? 131 : wstatus;
 	free(path);
 	ft_free_arr(args);
 }

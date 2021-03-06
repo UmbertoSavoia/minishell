@@ -7,6 +7,25 @@ void	print_error(int error)
 	exit(1);
 }
 
+int	termios_reset_cooked_mode(void)
+{
+	struct termios new;
+
+	if (tcgetattr(STDIN_FILENO, &new) == -1)
+	{
+		printf("tcgetattr can't get\n%s\n", strerror(errno));
+		return (0);
+	}
+	if (!ft_memcmp(&g_shell.orig_termios, &new, sizeof(struct termios)))
+		return (1);
+	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &g_shell.orig_termios) == -1)
+	{
+		printf("tcgetattr can't get\n%s\n", strerror(errno));
+		return (0);
+	}
+	return (1);
+}
+
 void disable_raw_mode(void)
 {
 	int		ret;
@@ -24,9 +43,9 @@ void enable_raw_mode(void)
 	if ((ret = tcgetattr(STDIN_FILENO, &g_shell.orig_termios)) == -1)
 		print_error(ret);
 	g_shell.raw = g_shell.orig_termios;
-	g_shell.raw.c_iflag &= ~(BRKINT | ICRNL | INPCK | ISTRIP | IXON);
-	g_shell.raw.c_cflag |= (CS8);
-	g_shell.raw.c_lflag &= ~(ECHO | ICANON | IEXTEN | ISIG);						//attivare la funzione per andare ai signal
+	g_shell.raw.c_iflag &= ~(/*BRKINT |*/ ICRNL |/* INPCK | ISTRIP |  */IXON);
+//	g_shell.raw.c_cflag |= (CS8);
+	g_shell.raw.c_lflag &= ~(ECHO | ICANON | IEXTEN /*| ISIG*/);						//attivare la funzione per andare ai signal
 	g_shell.raw.c_cc[VMIN] = 0;
 	g_shell.raw.c_cc[VTIME] = 1;
 	if ((ret = tcsetattr(STDIN_FILENO, TCSAFLUSH, &g_shell.raw)) == -1)

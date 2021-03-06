@@ -6,12 +6,12 @@ int		built_set(void)
 	char	*t;
 
 	tmp = g_shell.var_list;
+	errno = 0;
 	while (tmp)
 	{
 		t = !*tmp->value ? "\"\"" : tmp->value;
 		printf("%s=%s\n", tmp->key, t);
 		tmp = tmp->next;
 	}
-	errno = 0;
 	return (1);
 }
