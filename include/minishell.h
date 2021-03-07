@@ -109,6 +109,7 @@ void				print_prompt(void);
 */
 void				parse_exec(void);
 void				exec_commands(void);
+char				*ft_sgomitata_support(char *input, int num, int i, int j);
 
 /*
 ** FIND **
@@ -165,7 +166,7 @@ void				redir_min(t_list *node, char *sign, int fd);
 /*
 ** PIPE **
 */
-void	built_pipe(int i);
+void				built_pipe(int i);
 
 /*
 ** HISTORY **
@@ -181,7 +182,6 @@ void				navigate_history(int dir);
 ** UTILS **
 */
 char				*get_key_env(const char *env, int *len_value);
-void				env_clear(t_env *head);
 t_list				*ft_split_get_token(char *table, char c);
 t_list				**ft_split_list(char **table, char c);
 char				echo_chaos_handler(char *k, char *v, int *i, char *s);
@@ -201,6 +201,9 @@ char				**ft_list_to_arr(int i);
 void				skip_quote(char *str);
 
 char				**ft_env_to_arr(void);
+int					ft_envsize(t_env *lst);
+void				env_clear(t_env *head);
+void				calc_size(t_list *tmp, t_list *end, int *j);
 
 /*
 ** TERMINAL **

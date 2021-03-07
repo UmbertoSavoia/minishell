@@ -1,6 +1,6 @@
 #include "../include/minishell.h"
 
-void	exec_commands(void)
+void			exec_commands(void)
 {
 	int		i;
 	int		unused;
@@ -22,7 +22,7 @@ void	exec_commands(void)
 	}
 }
 
-void	trim_skip(void)
+void			trim_skip(void)
 {
 	int		i;
 	char	*tmp;
@@ -42,54 +42,44 @@ static char		*ft_sgomitata(char *input)
 	int		i;
 	char	*new;
 	int		num;
-	int		j;
 
-	j = 0;
 	i = 0;
 	num = 0;
 	while (input[i])
 	{
-		if (!ft_memcmp("<", &(input[i]), 1) || !ft_memcmp(">>", &(input[i]), 2) ||
-		(!ft_memcmp(">", &(input[i]), 1) && ft_memcmp(">", &(input[i + 1]), 1)) ||
-		!ft_memcmp("|", &(input[i]), 1))
+		if (!ft_memcmp("<", &(input[i]), 1) ||
+		!ft_memcmp(">>", &(input[i]), 2) || (!ft_memcmp(">", &(input[i]), 1) &&
+		ft_memcmp(">", &(input[i + 1]), 1)) || !ft_memcmp("|", &(input[i]), 1))
 			num++;
 		i++;
 	}
-	new = malloc(i + (num * 2) + 1);
-	i = 0;
-	while (input[i])
-	{
-		if (!ft_memcmp("<", &(input[i]), 1) || !ft_memcmp(">>", &(input[i]), 2) ||
-		(!ft_memcmp(">", &(input[i]), 1) && ft_memcmp(">", &(input[i + 1]), 1)) ||
-		!ft_memcmp("|", &(input[i]), 1))
-		{
-			if (!ft_memcmp(">>", &(input[i]), 2))
-			{
-				new[j++] = ' ';
-				new[j++] = input[i++];
-				new[j++] = input[i++];
-				new[j++] = ' ';
-			}
-			else
-			{
-				new[j++] = ' ';
-				new[j++] = input[i++];
-				new[j++] = ' ';
-			}
-		}
-		else
-			new[j++] = input[i++];
-	}
-	new[j] = 0;
+	new = ft_sgomitata_support(input, num, i, 0);
 	free(input);
 	return (new);
 }
 
-void	parse_exec(void)
+void			skip_cicle(void)
+{
+	t_list	*tmp;
+	int		i;
+
+	i = 0;
+	while (g_shell.table_list[i])
+	{
+		tmp = g_shell.table_list[i];
+		while (tmp)
+		{
+			skip_quote(((char*)tmp->content));
+			tmp = tmp->next;
+		}
+		i++;
+	}
+}
+
+void			parse_exec(void)
 {
 	char	*input;
 	int		i;
-	t_list	*tmp;
 
 	if (((i = get_next_terminal(&input))) < 0)
 	{
@@ -111,16 +101,6 @@ void	parse_exec(void)
 	trim_skip();
 	g_shell.table_list = ft_split_list(g_shell.c_table, ' ');
 	free(g_shell.c_table);
-	i = 0;
-	while (g_shell.table_list[i])
-	{
-		tmp = g_shell.table_list[i];
-		while (tmp)
-		{
-			skip_quote(((char*)tmp->content));
-			tmp = tmp->next;
-		}
-		i++;
-	}
+	skip_cicle();
 	exec_commands();
 }

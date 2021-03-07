@@ -43,16 +43,18 @@ int		findexec(int i)
 	char			*path;
 	int				j;
 	char			**tmp3;
+	int				freeable;
 	int				wstatus;
 
 	j = 0;
 	errno = 0;
+	freeable = 0;
 	path = get_path_command(g_shell.table_list[i], &j);
 	if (j == -1)
 	{
 		if (g_shell.table_list[i]->next &&
 			ft_strchr(((char*)g_shell.table_list[i]->next->content), '$'))
-			built_dollar(i, (char**)&(g_shell.table_list[i]->next->content), &wstatus);
+			built_dollar(i, (char**)&(g_shell.table_list[i]->next->content), &freeable);
 		tmp3 = ft_list_to_arr(i);
 		g_shell.pid = fork();
 		if (g_shell.pid == 0)
@@ -67,6 +69,8 @@ int		findexec(int i)
 		wait(&wstatus);
 		errno = (wstatus == 3) ? 131 : wstatus;
 		free(path);
+		if (freeable)
+			free(g_shell.table_list[i]->next->content);
 		ft_free_arr(tmp3);
 	}
 	return (j >= 0 ? 0 : 1);

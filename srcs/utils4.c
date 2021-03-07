@@ -36,3 +36,29 @@ char	**ft_env_to_arr(void)
 	ret[j] = 0;
 	return (ret);
 }
+
+void	env_clear(t_env *head)
+{
+	t_env	*tmp;
+	t_env	*cur;
+
+	cur = head;
+	while (cur)
+	{
+		tmp = cur->next;
+		free(cur->key);
+		free(cur->value);
+		free(cur);
+		cur = tmp;
+	}
+	cur = 0;
+}
+
+void	calc_size(t_list *tmp, t_list *end, int *j)
+{
+	while (tmp != end)
+	{
+		(*j)++;
+		tmp = tmp->next;
+	}
+}

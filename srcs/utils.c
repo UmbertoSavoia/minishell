@@ -40,21 +40,16 @@ char	*get_key_env(const char *env, int *len_value)
 	return (ret);
 }
 
-void	env_clear(t_env *head)
+void	split_quote_handler(char *table, int *i)
 {
-	t_env	*tmp;
-	t_env	*cur;
+	int x;
 
-	cur = head;
-	while (cur)
-	{
-		tmp = cur->next;
-		free(cur->key);
-		free(cur->value);
-		free(cur);
-		cur = tmp;
-	}
-	cur = 0;
+	x = 0;
+	x = table[*i];
+	*i += 1;
+	while (table[*i] != x)
+		*i += 1;
+	x = 0;
 }
 
 t_list	*ft_split_get_token(char *table, char c)
@@ -62,25 +57,16 @@ t_list	*ft_split_get_token(char *table, char c)
 	t_list	*ret;
 	int		i;
 	int		j;
-	char	x;
 
-	x = 0;
 	i = 0;
 	j = -1;
 	ret = 0;
-
 	while (table[i])
 	{
 		if (table[i] != c && j == -1)
 			j = i;
 		if (table[i] == '\'' || table[i] == '\"')
-		{
-			x = table[i];
-			i++;
-			while (table[i] != x)
-				i++;
-			x = 0;
-		}
+			split_quote_handler(table, &i);
 		else if (table[i] == c)
 		{
 			table[i] = 0;

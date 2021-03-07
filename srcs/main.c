@@ -1,9 +1,14 @@
 #include "../include/minishell.h"
 
-int		main(int ac, char **av, char **env)
+void	ft_useless(int ac, char **av)
 {
 	(void)ac;
 	(void)av;
+}
+
+int		main(int ac, char **av, char **env)
+{
+	ft_useless(ac, av);
 	ft_bzero(&g_shell, sizeof(t_shell));
 	init_env(env);
 	init_hist();

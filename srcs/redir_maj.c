@@ -3,7 +3,6 @@
 char			**ft_list_to_arr_delim(t_list *start, t_list *end)
 {
 	int		j;
-	int		len_list;
 	char	**ret;
 	t_list	*tmp;
 	char	*tmp_content;
@@ -13,14 +12,10 @@ char			**ft_list_to_arr_delim(t_list *start, t_list *end)
 	if (((char*)start->content)[0] == '.' || ((char*)start->content)[0] == '/')
 		start->content = ft_strrchr((char*)start->content, '/') + 1;
 	tmp = start;
-	len_list = 0;
-	while (tmp != end)
-	{
-		len_list++;
-		tmp = tmp->next;
-	}
-	ret = malloc(len_list * sizeof(char**) + 1);
+	calc_size(tmp, end, &j);
+	ret = malloc(j * sizeof(char**) + 1);
 	tmp = start;
+	j = 0;
 	while (tmp != end)
 	{
 		ret[j] = ft_strdup(tmp->content);
@@ -113,8 +108,5 @@ void			redir_maj(t_list *node, char *sign, int flag, int fd)
 	}
 	args = ft_list_to_arr_delim(node, finded);
 	path = get_path_command(node, &j);
-	if (j == -1)
-		child_process(fd, path, args);
-	else
-		father_process(fd, args, node);
+	(j == -1) ? child_process(fd, path, args) : father_process(fd, args, node);
 }

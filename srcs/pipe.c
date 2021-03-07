@@ -1,5 +1,55 @@
 #include "../include/minishell.h"
 
+void	pipe_close(int j, int pip[][2])
+{
+	while (j > 0)
+	{
+		j--;
+		close(pip[j][0]);
+		close(pip[j][1]);
+	}
+}
+
+void	multi_pipe_cicle(int *k, int j, int pip[][2], int i)
+{
+	t_list	*tmp;
+	int		wstatus;
+
+	while (*k < (j - 1))
+	{
+		ft_lstremove_if_until(&g_shell.table_list[i], "|", &ft_memcmp, 0);
+		if ((g_shell.pid = fork()) == 0)
+		{
+			dup2(pip[(*k)++][0], 0);
+			dup2(pip[*k][1], 1);
+			pipe_close(j, pip);
+			tmp = g_shell.table_list[i];
+			while (((char*)tmp->next->content)[0] != '|')
+				tmp = tmp->next;
+			tmp->next = 0;
+			if (find_redir(i) || find_command(i))
+				;
+			exit(0);
+		}
+		close(pip[*k][0]);
+		close(pip[*k][1]);
+		wait(&wstatus);
+		errno = (wstatus == 3) ? 131 : wstatus;
+		(*k)++;
+	}
+}
+
+void	do_last_command(int pip[][2], int k, int i)
+{
+	close(pip[k][1]);
+	dup2(pip[k][0], 0);
+	close(pip[k][0]);
+	ft_lstremove_if_until(&g_shell.table_list[i], "|", &ft_memcmp, 0);
+	if (find_redir(i) || find_command(i))
+		;
+	exit(0);
+}
+
 void	exec_pipe(int pip[][2], int j, int i)
 {
 	int k;
@@ -10,59 +60,17 @@ void	exec_pipe(int pip[][2], int j, int i)
 	if (g_shell.pid == 0)
 	{
 		dup2(pip[k][1], 1);
-		while (j > 0)
-		{
-			j--;
-			close(pip[j][0]);
-			close(pip[j][1]);
-		}
+		pipe_close(j, pip);
 		if (find_redir(i) || find_command(i))
 			;
 		exit(0);
 	}
 	wait(&wstatus);
 	errno = (wstatus == 3) ? 131 : wstatus;
-	while (k < (j - 1))
-	{
-		ft_lstremove_if_until(&g_shell.table_list[i], "|", &ft_memcmp, 0);
-		g_shell.pid = fork();
-		if (g_shell.pid == 0)
-		{
-			dup2(pip[k][0], 0);
-			k++;
-			dup2(pip[k][1], 1);
-			while (j > 0)
-			{
-				j--;
-				close(pip[j][0]);
-				close(pip[j][1]);
-			}
-			t_list *tmp;
-			tmp = g_shell.table_list[i];
-			while (((char*)tmp->next->content)[0] != '|')
-				tmp = tmp->next;
-			tmp->next = 0;
-			if (find_redir(i) || find_command(i))
-				;
-			exit(0);
-		}
-		close(pip[k][0]);
-		close(pip[k][1]);
-		wait(&wstatus);
-		errno = (wstatus == 3) ? 131 : wstatus;
-		k++;
-	}
+	multi_pipe_cicle(&k, j, pip, i);
 	g_shell.pid = fork();
 	if (g_shell.pid == 0)
-	{
-		close(pip[k][1]);
-		dup2(pip[k][0], 0);
-		close(pip[k][0]);
-		ft_lstremove_if_until(&g_shell.table_list[i], "|", &ft_memcmp, 0);
-		if (find_redir(i) || find_command(i))
-			;
-		exit(0);
-	}
+		do_last_command(pip, k, i);
 	close(pip[k][0]);
 	close(pip[k][1]);
 	wait(&wstatus);

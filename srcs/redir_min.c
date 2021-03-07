@@ -31,18 +31,17 @@ static	int		open_descriptor(t_list *tmp)
 	{
 		if (((char*)tmp->content)[0] == '<')
 			ptr = tmp;
-		else if (((char*)tmp->content)[0] == '|' ||  ((char*)tmp->content)[0] == '>')
+		else if (((char*)tmp->content)[0] == '|' ||
+		((char*)tmp->content)[0] == '>')
 			break ;
 		else if ((fd = open(tmp->content, O_RDWR)) == -1)
 		{
 			cl = 3;
 			while (close(cl) != -1)
 				cl++;
-			ft_putstr_fd(RED, 2);
-			ft_putstr_fd("minishell:", 2);
+			ft_putstr_fd("\x1b[31m \bminishell:", 2);
 			ft_putstr_fd(((char*)tmp->content), 2);
-			ft_putstr_fd(": No such file or directory", 2);
-			ft_putendl_fd(NC, 2);
+			ft_putendl_fd(": No such file or directory \033[0m", 2);
 			return (0);
 		}
 		tmp = tmp->next;
