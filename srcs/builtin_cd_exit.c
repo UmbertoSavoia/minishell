@@ -111,6 +111,7 @@ void	built_exit(int i)
 			clear_table_list();
 		if (g_shell.var_list)
 			env_clear(g_shell.var_list);
+		ft_hist_clear(&g_shell.history);
 		free(g_shell.user);
 		ft_putendl_fd("exit", 1);
 		exit(0);

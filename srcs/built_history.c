@@ -32,23 +32,18 @@ t_hist	*ft_histnew(void *content)
 
 int		ft_histadd_front(t_hist **lst, t_hist *nuovo)
 {
-	int first;
-
-	first = 0;
-	if (!*lst)
-		first = 1;
 	if (!nuovo)
 		return (0);
 	while (*lst && (*lst)->prev)
 		*lst = (*lst)->prev;
-	nuovo->next = *lst;
-	*lst = nuovo;
-	if (!first)
-		nuovo->next->prev = *lst;
+	(*lst)->next->prev = nuovo;
+	nuovo->next = (*lst)->next;
+	(*lst)->next = nuovo;
+	nuovo->prev = *lst;
 	return (1);
 }
 
-void	ft_hist_clear(t_hist **lst, void (*del)(void*))
+void	ft_hist_clear(t_hist **lst)
 {
 	t_hist *temp;
 	t_hist *list;
@@ -59,20 +54,10 @@ void	ft_hist_clear(t_hist **lst, void (*del)(void*))
 		*lst = 0;
 		while (list)
 		{
-			list->next->prev = 0;
 			temp = list->next;
-			ft_hist_delone(list, del);
+			free(list->content);
+			free(list);
 			list = temp;
 		}
-	}
-}
-
-void	ft_hist_delone(t_hist *lst, void (*del)(void*))
-{
-	if (lst)
-	{
-		if (del)
-			del(lst->content);
-		free(lst);
 	}
 }

@@ -172,8 +172,7 @@ void	built_pipe(int i);
 */
 t_hist				*ft_histnew(void *content);
 int					ft_histadd_front(t_hist **lst, t_hist *new);
-void				ft_hist_clear(t_hist **lst, void (*del)(void*));
-void				ft_hist_delone(t_hist *lst, void (*del)(void*));
+void				ft_hist_clear(t_hist **lst);
 
 void				init_hist(void);
 void				navigate_history(int dir);
