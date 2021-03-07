@@ -170,8 +170,6 @@ int		process_keypress(char c)
 		return (0);
 	else if ((c == 127) && (g_shell.curs > g_shell.len_prompt))
 		key_del();
-	else if (c == '\\')
-		return (1);
 	else if (' ' <= c && c <= 126)
 		key_char(c);
 	else if (c == '\x1b')
