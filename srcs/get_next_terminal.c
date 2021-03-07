@@ -42,7 +42,7 @@ void enable_raw_mode(void)
 		print_error(ret);
 }
 
-char	*escape_cursor_create(int pos)
+char	*escape_cursor_create(int pos, char *c)
 {
 	char	*ret;
 	char	*temp;
@@ -56,10 +56,48 @@ char	*escape_cursor_create(int pos)
 	num = ft_itoa(pos);
 	len_num = ft_strlen(num);
 	temp = ft_strjoin("\x1b[", num);
-	ret = ft_strjoin(temp, "D");
+	ret = ft_strjoin(temp, c);
 	free(temp);
 	free(num);
 	return (ret);
+}
+
+int		ft_strrchr_mod(const char *s, const char *end, int c)
+{
+	int		i;
+	int		ret;
+
+	ret = 0;
+	i = 0;
+	while (s != end)
+	{
+		if (*s == (unsigned char)c)
+			ret = i;
+		if (*s == 0)
+			break ;
+		s++;
+		i++;
+	}
+	return (ret);
+}
+
+int		ft_strchr_mod(const char *s, const char *end, int c)
+{
+	int		i;
+
+	i = 0;
+	if (*s == (unsigned char)c)
+		s++;
+	while (s != end)
+	{
+		if (*s == (unsigned char)c)
+			return (i);
+		if (*s == 0)
+			break ;
+		i++;
+		s++;
+	}
+	return (0);
 }
 
 char editor_read_key(void)
@@ -91,7 +129,7 @@ int		key_del(void)
 	len_print = (g_shell.final_string + g_shell.len_string) - &g_shell.final_string[g_shell.curs - g_shell.len_prompt];
 	write(1, &g_shell.final_string[g_shell.curs - g_shell.len_prompt], len_print);
 	write(1, " ", 1);
-	escape = escape_cursor_create((g_shell.len_string + g_shell.len_prompt) - g_shell.curs + 1);
+	escape = escape_cursor_create((g_shell.len_string + g_shell.len_prompt) - g_shell.curs + 1, "D");
 	write(1, escape, ft_strlen(escape));
 	free(escape);
 
@@ -118,7 +156,7 @@ int		key_char(char c)
 		g_shell.len_string++;
 		len_print = (g_shell.final_string + g_shell.len_string) - &g_shell.final_string[at];
 		write(1, &g_shell.final_string[at], len_print);
-		escape = escape_cursor_create((g_shell.len_string - 2 + g_shell.len_prompt) - g_shell.curs + 1);
+		escape = escape_cursor_create((g_shell.len_string - 2 + g_shell.len_prompt) - g_shell.curs + 1, "D");
 		g_shell.curs++;
 		write(1, escape, ft_strlen(escape));
 		free(escape);
@@ -136,14 +174,82 @@ int		key_char(char c)
 int		key_arrow(void)
 {
 	char	seq[3];
+	char	*escape;
 	int		start;
+	int		pos_space;
 
 	start = 0;
 	read(STDIN_FILENO, &seq[0], 1);
 	read(STDIN_FILENO, &seq[1], 1);
 	if (seq[0] == '[')
 	{
-		if (seq[1] == 'D')
+		if (seq[1] >= '0' && seq[1] <= '9')
+		{
+			read(STDIN_FILENO, &seq[2], 1);
+			if (seq[2] == ';')
+			{
+				read(STDIN_FILENO, &seq[1], 1);
+				read(STDIN_FILENO, &seq[2], 2);
+				if (seq[1] == '5')
+				{
+					if (seq[2] == 'D')
+					{
+						if (g_shell.curs > g_shell.len_prompt)
+						{
+							start = g_shell.curs - g_shell.len_prompt - 1;
+							pos_space = ft_strrchr_mod(g_shell.final_string, &g_shell.final_string[start], ' ');
+							if (pos_space > 0)
+							{
+								escape = escape_cursor_create(start - pos_space, "D");
+								write(1, escape, strlen(escape));
+								g_shell.curs = g_shell.curs - (start - pos_space);
+							}
+							else if (pos_space == 0 && g_shell.curs > g_shell.len_prompt)
+							{
+								start = g_shell.curs - g_shell.len_prompt;
+								escape = escape_cursor_create(start, "D");
+								write(1, escape, strlen(escape));
+								g_shell.curs = g_shell.len_prompt;
+							}
+						}
+					}
+					else if (seq[2] == 'C')
+					{
+						if ((g_shell.curs - g_shell.len_prompt) < g_shell.len_string)
+						{
+							start = g_shell.curs - g_shell.len_prompt;
+							pos_space = ft_strchr_mod(&g_shell.final_string[start], &g_shell.final_string[g_shell.len_string], ' ');
+							if (pos_space > 0 && (g_shell.curs - g_shell.len_prompt) < g_shell.len_string)
+							{
+								escape = escape_cursor_create(pos_space, "C");
+								write(1, escape, strlen(escape));
+								g_shell.curs += pos_space;
+							}
+							else if (pos_space == 0)
+							{
+								start = g_shell.curs - g_shell.len_prompt;
+								escape = escape_cursor_create(g_shell.len_string - start, "C");
+								write(1, escape, strlen(escape));
+								g_shell.curs = g_shell.len_string + g_shell.len_prompt;
+							}
+						}
+					}
+				}
+			}
+		}
+		else if (seq[1] == 'H')
+		{
+			escape = escape_cursor_create(g_shell.len_prompt + 1, "G");
+			write(1, escape, strlen(escape));
+			g_shell.curs = g_shell.len_prompt;
+		}
+		else if (seq[1] == 'F')
+		{
+			escape = escape_cursor_create(g_shell.len_string + g_shell.len_prompt + 1, "G");
+			write(1, escape, strlen(escape));
+			g_shell.curs = g_shell.len_string + g_shell.len_prompt;
+		}
+		else if (seq[1] == 'D')
 		{
 			if ((g_shell.curs > g_shell.len_prompt) && g_shell.curs--)
 				write(1, "\x1b[D", 3);
