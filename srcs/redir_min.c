@@ -79,7 +79,7 @@ void			redir_min(t_list *node, char *sign, int fd)
 	if (!(fd = open_descriptor(tmp)))
 		return ;
 	args = ft_list_to_arr_delim(node, finded);
-	path = get_path_command(node, &j);
+	path = get_path_command(node->content, &j);
 	if (j == -1)
 		child_process(fd, path, args);
 	else

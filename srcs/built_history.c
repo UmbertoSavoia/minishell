@@ -32,14 +32,17 @@ t_hist	*ft_histnew(void *content)
 
 int		ft_histadd_front(t_hist **lst, t_hist *nuovo)
 {
+	t_hist	*tmp;
+
 	if (!nuovo)
 		return (0);
 	while (*lst && (*lst)->prev)
 		*lst = (*lst)->prev;
-	(*lst)->next->prev = nuovo;
-	nuovo->next = (*lst)->next;
+	tmp = (*lst)->next;
 	(*lst)->next = nuovo;
+	nuovo->next = tmp;
 	nuovo->prev = *lst;
+	tmp->prev = nuovo;
 	return (1);
 }
 
@@ -54,6 +57,9 @@ void	ft_hist_clear(t_hist **lst)
 		*lst = 0;
 		while (list)
 		{
+		(list->prev) ? printf("{%s}\n", list->prev->content) : 0;
+			printf("[%s]\n", list->content);
+		(list->next) ? printf("(%s)\n", list->next->content) : 0;
 			temp = list->next;
 			free(list->content);
 			free(list);

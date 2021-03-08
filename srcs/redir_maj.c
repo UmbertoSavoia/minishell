@@ -107,6 +107,6 @@ void			redir_maj(t_list *node, char *sign, int flag, int fd)
 		tmp = tmp->next;
 	}
 	args = ft_list_to_arr_delim(node, finded);
-	path = get_path_command(node, &j);
+	path = get_path_command(node->content, &j);
 	(j == -1) ? child_process(fd, path, args) : father_process(fd, args, node);
 }

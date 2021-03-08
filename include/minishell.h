@@ -34,7 +34,21 @@
 # define UP 2
 # define DW 3
 
+# define GVE get_value_env
+# define GNC g_shell.table_list[i]->next->content
+
 # define CTRL_KEY(k) ((k) & 0x1f)
+
+typedef struct		s_path
+{
+	char			**path;
+	DIR				*folder;
+	size_t			lc;
+	struct dirent	*entry;
+	int				j;
+	char			*tmp2;
+	char			*ret;
+}					t_path;
 
 typedef struct		s_env
 {
@@ -153,7 +167,7 @@ char				var_search(t_list *head, char c,
 ** EXEC **
 */
 int					findexec(int i);
-char				*get_path_command(t_list *node, int *found);
+char				*get_path_command(char *node, int *found);
 
 /*
 ** REDIR **
@@ -167,6 +181,12 @@ void				redir_min(t_list *node, char *sign, int fd);
 ** PIPE **
 */
 void				built_pipe(int i);
+void				exec_pipe(int pip[][2], int j, int i);
+void				pipe_close(int j, int pip[][2]);
+void				multi_pipe_cicle(int *k, int j, int pip[][2], int i);
+void				do_last_command(int pip[][2], int k, int i);
+void				open_pipe(int j, int i);
+
 
 /*
 ** HISTORY **
@@ -196,7 +216,7 @@ char				ft_free(void *data);
 
 t_env				*get_value_set(char *key);
 t_env				*node_dup(t_env *node);
-void				ft_free_arr(char **arr);
+int					ft_free_arr(char **arr);
 char				**ft_list_to_arr(int i);
 void				skip_quote(char *str);
 
@@ -211,5 +231,24 @@ void				calc_size(t_list *tmp, t_list *end, int *j);
 int					get_next_terminal(char **input);
 void				disable_raw_mode(void);
 int					termios_reset_mode(void);
+
+void				print_error(int error);
+int					ft_strrchr_mod(const char *s, const char *end, int c);
+int					ft_strchr_mod(const char *s, const char *end, int c);
+char				*escape_cursor_create(int pos, char *c);
+
+int					process_keypress(char c);
+char				editor_read_key(void);
+void				enable_raw_mode(void);
+
+int					key_del(void);
+int					key_char(char c);
+int					key_arrow(void);
+
+void				ctrl_left(void);
+void				ctrl_right(void);
+
+void				insert_char_in_the_middle(char c);
+int					key_char(char c);
 
 #endif

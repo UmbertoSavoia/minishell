@@ -58,7 +58,7 @@ char	**ft_list_to_arr(int i)
 	return (ret);
 }
 
-void	ft_free_arr(char **arr)
+int		ft_free_arr(char **arr)
 {
 	int i;
 
@@ -68,6 +68,7 @@ void	ft_free_arr(char **arr)
 	free(arr[i]);
 	free(arr);
 	arr = 0;
+	return (1);
 }
 
 void	skip_quote(char *str)
