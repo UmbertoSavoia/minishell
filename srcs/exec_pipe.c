@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cromaldeusavoia <marvin@42.fr>             +#+  +:+       +#+        */
+/*   By: cromalde <cromalde@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/08 13:08:31 by cromalde          #+#    #+#             */
-/*   Updated: 2021/03/08 13:28:24 by cromaldeusa      ###   ########.fr       */
+/*   Updated: 2021/03/08 16:26:52 by cromalde         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	exec_pipe(int pip[][2], int j, int i)
 {
 	int k;
 	int wstatus;
+	t_list	*tmp;
 
 	k = 0;
 	g_shell.pid = fork();
@@ -23,6 +24,10 @@ void	exec_pipe(int pip[][2], int j, int i)
 	{
 		dup2(pip[k][1], 1);
 		pipe_close(j, pip);
+		tmp = g_shell.table_list[i];
+		while (((char*)tmp->next->content)[0] != '|')
+			tmp = tmp->next;
+		tmp->next = 0;
 		if (find_redir(i) || find_command(i))
 			;
 		exit(0);
