@@ -35,6 +35,7 @@ void	key_home_end(char c)
 		escape = escape_cursor_create(g_shell.len_prompt + 1, "G");
 		write(1, escape, strlen(escape));
 		g_shell.curs = g_shell.len_prompt;
+		free(escape);
 	}
 	else if (c == 'F')
 	{
@@ -42,6 +43,7 @@ void	key_home_end(char c)
 			g_shell.len_prompt + 1, "G");
 		write(1, escape, strlen(escape));
 		g_shell.curs = g_shell.len_string + g_shell.len_prompt;
+		free(escape);
 	}
 }
 

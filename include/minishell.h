@@ -187,7 +187,6 @@ void				multi_pipe_cicle(int *k, int j, int pip[][2], int i);
 void				do_last_command(int pip[][2], int k, int i);
 void				open_pipe(int j, int i);
 
-
 /*
 ** HISTORY **
 */

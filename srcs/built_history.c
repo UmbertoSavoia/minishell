@@ -57,9 +57,6 @@ void	ft_hist_clear(t_hist **lst)
 		*lst = 0;
 		while (list)
 		{
-		(list->prev) ? printf("{%s}\n", list->prev->content) : 0;
-			printf("[%s]\n", list->content);
-		(list->next) ? printf("(%s)\n", list->next->content) : 0;
 			temp = list->next;
 			free(list->content);
 			free(list);

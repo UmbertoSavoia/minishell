@@ -17,7 +17,6 @@ void	navigate_next(int len)
 	write(1, "\x1b[1K", 4);
 	write(1, "\r", 1);
 	print_prompt();
-	(g_shell.history->next) ? g_shell.history = g_shell.history->next : 0;
 	ft_memcpy(g_shell.final_string, g_shell.history->content, len);
 	g_shell.len_string = len;
 	g_shell.curs += len;
@@ -49,6 +48,7 @@ void	navigate_history(int dir)
 		size = g_shell.hist_size;
 	if (dir == UP && size >= 2)
 	{
+		(g_shell.history->next) ? g_shell.history = g_shell.history->next : 0;
 		len = ft_strlen((char*)g_shell.history->content);
 		navigate_next(len);
 		write(1, ((char*)g_shell.history->content), len);

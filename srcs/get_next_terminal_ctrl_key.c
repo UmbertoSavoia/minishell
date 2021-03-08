@@ -16,6 +16,7 @@ void	ctrl_left(void)
 			escape = escape_cursor_create(start - pos_space, "D");
 			write(1, escape, strlen(escape));
 			g_shell.curs = g_shell.curs - (start - pos_space);
+			free(escape);
 		}
 		else if (pos_space == 0 && g_shell.curs > g_shell.len_prompt)
 		{
@@ -23,6 +24,7 @@ void	ctrl_left(void)
 			escape = escape_cursor_create(start, "D");
 			write(1, escape, strlen(escape));
 			g_shell.curs = g_shell.len_prompt;
+			free(escape);
 		}
 	}
 }
@@ -44,6 +46,7 @@ void	ctrl_right(void)
 			escape = escape_cursor_create(pos_space, "C");
 			write(1, escape, strlen(escape));
 			g_shell.curs += pos_space;
+			free(escape);
 		}
 		else if (pos_space == 0)
 		{
@@ -51,6 +54,7 @@ void	ctrl_right(void)
 			escape = escape_cursor_create(g_shell.len_string - start, "C");
 			write(1, escape, strlen(escape));
 			g_shell.curs = g_shell.len_string + g_shell.len_prompt;
+			free(escape);
 		}
 	}
 }
